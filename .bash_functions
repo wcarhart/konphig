@@ -516,11 +516,65 @@ lsf() {
 	done < "$source"
 }
 
+# function that does nothing (great for testing purposes)
+dummy() {
+	return
+}
 
+# search through command history
+histg() {
+	if [ $# -ne 1 ] ; then
+		echo "histg: err: incorrect number of arguments"
+	else
+		history | grep $1
+	fi
+}
 
+# intercept the `stderr` and `stdout` of a process
+intercept() {
+	strace -ff -e trace=write -e write=1,2 -p $1
+}
 
+# show number of unread emails in your Gmail inbox
+gmail() {
+	if [ $# -ne 1 ] ; then
+		echo "gmail: err: incorrect number of arguments"
+	else
+		curl -u "$1" --silent "https://mail.google.com/mail/feed/atom" | sed -e 's/<\/fullcount.*/\n/' | sed -e 's/.*fullcount>//'
+	fi
+}
 
+# show my current public IP address
+publicip() {
+	myip="$(dig +short myip.opendns.com @resolver1.opendns.com)"
+	echo $myip
+}
 
+# get location for your public IP address
+getlocation() {
+	myip="$(dig +short myip.opendns.com @resolver1.opendns.com)"
+	details="$(lynx -dump "$(publicip)".ip-adress.com | egrep 'City|State Code|Country Code')"
+	frmt="IP:\t$myip\n"
+	index=0
+	while IFS= read -r line ; do
+		if [ $index -eq 0 ] ; then
+			city="$(echo $line | cut -d " " -f2-)\n"
+			let index=index+1
+		elif [ $index -eq 1 ] ; then
+			country="$(echo $line | cut -d " " -f3-)\n"
+			let index=index+1
+		else
+			state="$(echo $line | cut -d " " -f3-)\n"
+			let index=index+1
+		fi
+	done <<< "$details"
+
+	location="$city"
+	location+=", $state"
+	location+=" country"
+	frmt+="$location"
+	echo -e $frmt | column -t -s $'\t'
+}
 
 
 
