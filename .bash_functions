@@ -1,3 +1,4 @@
+# .bash_functions
 # list of bash functions
 
 # extracts compressed and zipped files automatically
