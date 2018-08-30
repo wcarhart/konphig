@@ -11,9 +11,9 @@ This repo contains various configuration files so they don't have to be recreate
  
 ### BASH
 The BASH configurations contain the general `.bashrc` and `.bash_profile` files, but also:
- * `bash_functions` - file for BASH functions ([see here]() for separate BASH function documentation)
- * `bash_aliases` - file for BASH aliases
- * `bash_variables` - file for BASH variables
+ * `.bash_functions` - file for BASH functions ([see here](https://github.com/wcarhart/Konphig/blob/master/functions.md) for separate BASH function documentation)
+ * `.bash_aliases` - file for BASH aliases
+ * `.bash_variables` - file for BASH variables
 
 ### git
 Basic `git` configurations, also including some helpful `git` aliases.
