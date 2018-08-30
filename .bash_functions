@@ -48,9 +48,9 @@ adda() {
 		echo "adda: err: incorrect number of arguments"
 	else
 		if [ ! ~/.bash_aliases ] ; then
-			F=~/.bash_aliases
-		else
 			F=~/.bashrc
+		else
+			F=~/.bash_aliases
 		fi
 
 		echo "alias $1='$2'" >> $F
@@ -64,9 +64,9 @@ addv() {
 		echo "addv: err: incorrect number of arguments"
 	else
 		if [ ! ~/.bash_exports ] ; then
-			F=~/.bash_exports
-		else
 			F=~/.bashrc
+		else
+			F=~/.bash_exports
 		fi
 
 		echo "export $1=$2" >> $F
@@ -268,6 +268,257 @@ up() {
 down() {
 	return
 }
+
+# cycle through different prompts (different PS1 variables)
+# TODO
+dp() {
+	numprompts=3
+	if [ $# -ne 1 ] ; then
+		echo "dp: err: incorrect number of arguments"
+	elif [ $1 -gt $numprompts ] ; then
+		echo "dp: err: prompt index out of bounds, attempted to select prompt $1 of only $numprompts total"
+	else
+		#PS1=...
+		return
+	fi
+}
+
+# show most commonly used commands
+common() {
+	if [ $# -eq 0 ] ; then
+		num="10"
+	else
+		num=$1
+	fi
+	CMD="-n$num"
+	history | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl | head $CMD
+}
+
+# kill process by name
+kp() {
+	if [ $# -ne 1 ] ; then
+		echo "kp: err: incorrect number of arguments"
+	else
+		ps aux | grep $1 > /dev/null
+		mypid=$(pidof $1)
+		if [ "$mypid" != "" ] ; then
+			kill -9 $(pidof $1)
+			if [[ "$?" == "0" ]] ; then
+				echo "PID $mypid ($1) killed"
+			fi
+		else
+			echo "kp: err: no processes killed, could not find PID for process $1"
+		fi
+	fi
+}
+
+# add to PATH variable
+pathadd() {
+	if [ $# -eq 0 ] ; then
+		echo "pathadd: err: incorrect number of arguments"
+	fi
+	newelement=${1%/}
+	if [ -d "$1" ] && ! echo $PATH | grep -E -q "(^|:)$newelement($|:)" ; then
+		if [ "$2" == "after" ] ; then
+			PATH="$PATH:$newelement"
+		else
+			PATH="$newelement:$PATH"
+		fi
+	fi
+}
+
+# remove from PATH variable
+pathrm() {
+	PATH="$(echo $PATH | sed -e "s;\(^\|:\)${1%/}\(:\|\$\);\1\2;g" -e 's;^:\|:$;;g' -e 's;::;:;g')"
+}
+
+# remove duplicates from PATH variable (deduplicate)
+pathdedup() {
+	PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))')"
+}
+
+# move most recently downloaded item(s) to the current directory (only works on MacOS)
+snag() {
+	if [ $# -eq 0 ] ; then
+		num=1
+	else
+		num=$1
+	fi
+	files="$(ls -t ~/Downloads | head -$num)"
+	for file in $files; do
+		mv ~/Downloads/$file .
+	done
+}
+
+# get the default branch for a git repo
+gitdefault() {
+	if [ $# -eq 1 ] ; then
+		rem=1
+	else
+		rem="origin"
+	fi
+	git remote show $rem | grep "HEAD branch" | cut -d ":" -f 2
+}
+
+# remove all subdirectories from a directory
+rmd() {
+	if [ $# -eq 0 ] ; then
+		rm -rf -- */
+	elif [ $# -eq 1 ] ; then
+		rm -rf -- $1/*/
+	else
+		echo "rmd: err: incorrect number of arguments"
+	fi
+}
+
+# generate a random string of specified length, great for passwords
+random() {
+	if [ $# -eq 0 ] ; then
+		num=30
+	else
+		num=$1
+	fi
+	strings /dev/urandom/ | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo
+}
+
+# make a shell script out of the last x commands
+makes() {
+	if [ $# -eq 0 ] ; then
+		num=1
+		name="script.sh"
+	elif [ $# -eq 1 ] ; then
+		num=$1
+		name="script.sh"
+	elif [ $# -eq 2 ] ; then
+		num=$1
+		name=$2
+	else
+		echo "makes: err: incorrect number of arguments"
+	fi
+
+	rando="$(strings /dev/urandom/ | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
+	fc -rnl | head -$num > $rando
+	tac $rando > $name
+	rm -rf $rando
+}
+
+# make a BASH function out of the last x commands
+makef() {
+	if [ ! ~/.bash_functions ] ; then
+		source=~/.bashrc
+	else
+		source=~/.bash_functions
+	fi
+
+	if [ $# -eq 0 ] ; then
+		num=1
+		rando="$(strings /dev/urandom/ | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
+		name="function_$rando"
+	elif [ $# -eq 1 ] ; then
+		num=$1
+		rando="$(strings /dev/urandom/ | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
+		name="function_$rando"
+	elif [ $# -eq 2 ] ; then
+		num=$1
+		name=$2
+		rando="$(strings /dev/urandom/ | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
+	else
+		echo "makef: err: incorrect number of arguments"
+	fi
+
+	num="$(($num + 1))"
+
+	printf "\n" >> $source
+	printf "$name() {\n" >> $source
+	fc -rnl | head -$num > $rando
+	tac $rando > .tempfile
+
+	index=0
+	while IFS='' read -r CMD || [[ -n "$CMD" ]] ; do
+		if [ $index -eq 0 ] ; then
+			index+=1
+			continue
+		fi
+		printf "$CMD\n" >> $source
+	done < ".tempfile"
+
+	printf "}\n" >> $source
+
+	rm -rf .tempfile
+	rm -rf $rando
+	source ~/.bashrc
+}
+
+# remove a BASH Function by name
+# TODO: need to account for other cases (i.e. `name () {`, `name (){`, `name(){`), only does `name() {` right now
+removef() {
+	if [ $# -ne 1 ] ; then
+		echo "removef: err: incorrect number of arguments"
+	else
+		if [ ~/.bash_functions ] ; then
+			source=~/.bash_functions
+		else
+			source=~/.bashrc
+		fi
+
+		rando="$(strings /dev/urandom/ | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
+		title="$1() {"
+		edit=0
+		found=0
+		count=0
+		while IFS='' read -r line || [[ -n "$line" ]] ; do
+			if [ "$title" == "$line" ] && [ $edit -eq 0 ] ; then
+				edit=1
+				found=1
+			elif [ "$line" == "}" ] && [ $edit -eq 1 ] ; then
+				edit=0
+				count="$(($count + 1))"
+			else
+				if [ $edit -eq 0 ] ; then
+					printf "%s\n" "$line" >> $rando
+				fi
+			fi
+		done < "$source"
+
+		cat $rando > $source
+		rm -rf $rando
+		if [ $found -eq 0 ] ; then
+			echo "$1 not found in $source"
+		else
+			if [ $count -eq 1 ] ; then
+				echo "Removed $1 from $source"
+				source ~/.bashrc
+			else
+				echo "Removed $1 $count times from $source"
+				source ~/.bashrc
+			fi
+		fi
+	fi
+}
+
+# list all BASH functions
+lsf() {
+	if [ ~/.bash_functions ] ; then
+		source=~/.bash_functions
+	else
+		source=~/.bashrc
+	fi
+
+	while IFS='' read -r line || [[ -n $line ]] ; do
+		let="$(echo $line | fold -w1)"
+		chars="$(echo $let | tr -d '\040\011\012\015')"
+
+		if [[ ( "${chars[*]: -1}" == "{" ) && ( "${chars: -2:1}" == ")" && "${chars: -3:1}" == "(" ) ]] ; then
+			len=${#chars}
+			len="$(($len - 1))"
+			echo "${chars:0:$len}"
+		fi
+	done < "$source"
+}
+
+
+
+
 
 
 
