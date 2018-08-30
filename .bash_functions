@@ -576,11 +576,289 @@ getlocation() {
 	echo -e $frmt | column -t -s $'\t'
 }
 
+# make it look like you're busy
+busy() {
+	cat /dev/urandom/ | hexdump -C | grep "ca fe"
+}
 
+# sort by size of current directory
+sbs() {
+	du -b --max-depth 1 | sort -nr | perl -pe 's{([0-9]+)}{sprintf "%.1f%s", $1/2**30, "G"): $1/2**20, "M"): $1>=2**10? ($1/2**10, "K"): ($1, "")}e'
+}
 
+# make directory prefixed with the date
+mkdate() {
+	local dir="$(date +%F)-$1"
+	mkdir $dir
+}
 
+# make directory prefixed with the date and change into it
+mkcddate() {
+	local dir="$(date +%F)-$1"
+	mkdir $dir
+	cd $dir
+}
 
+# sound the alarm
+siren() {
+	printf '\033[5m\033[91m%b\033[0m' '\'{127,105,105,40,127,117,117} && echo
+}
 
+# do you really need a description
+rickroll() {
+	string="$(printf '%b' '\'{116,145,166,145,162,040,147,157,156,156,141,040,147,151,166,145,040,171,157,165,040,165,160,056,056,056})"
+	yes "$string"
+}
 
+# reverse input()
+rev() {
+	if [ $# -eq 0 ] ; then
+		__=""
+		_stdin=""
 
+		read -N1 -t1 __ && {
+			(( $? <= 128 )) && {
+				IFS= read -rd '' _stdin
+				_stdin="$__$_stdin"
+			}
+		}
 
+		val=$_stdin
+		if [[ "$val" == "" ]] ; then
+			echo "rev: err: no input found on stdin"
+			return
+		fi
+	else
+		if [ $# -ne 1 ] ; then
+			echo "rev: err: incorrect number of arguments"
+			return
+		fi
+		val=$1
+	fi
+	echo $val | sed $'s/./&\\\n/g' | sed -ne $'x;H;${x;s/\\n//g;p;}'
+}
+
+# detect os type
+ostype() {
+	os="$(uname -s)"
+	case "${os}" in
+		Linux*)		machine=Linux	;;
+		Darwin*)	machine=Mac 	;;
+		CYGWIN*)	machine=Cygwin  ;;
+		MINGW*)		machine=MinGw 	;;
+		*)			machine="UNKNOWN: ${unameOut}"
+	esac
+	echo "$machine"
+}
+
+# list all cows
+lscows() {
+	type cowsay >/dev/null 2>&1 || { echo -e >&2 "lscows: err: \`cowsay\` is required but not installed (use \`apt-get install cowsay\` or \`brew install cowsay\` to install)"; return; }
+	cows="$(cowsay -l | tail -n +2 | tr ' ' '\n')"
+	for cow in $cows; do cowsay -f $cow $cow; done
+}
+
+# random animal speech
+randimal() {
+	os="$(ostype)"
+
+	if [[ "$1" == "--install" ]] ; then
+		type cowsay >/dev/null 2>&1 || {
+			if [[ "$os" == "Linux" ]] ; then
+				apt-get install cowsay
+			else
+				brew install cowsay
+			fi
+		}
+		type fortune >/dev/null 2>&1 || {
+			if [[ "$os" == "Linux" ]] ; then
+				apt-get install fortune
+			else
+				brew install fortune
+			fi
+		}
+		type lolcat >/dev/null 2>&1 || {
+			if [[ "$os" == "Linux" ]] ; then
+				apt-get install lolcat
+			else
+				brew install lolcat
+			fi
+		}
+		shift
+	fi
+
+	type cowsay >/dev/null 2>&1 || { echo -e >&2 "randimal: err: \`cowsay\` is required but not installed (use \`apt-get install cowsay\` or \`brew install cowsay\` to install)"; return; }
+	type fortune >/dev/null 2>&1 || { echo -e >&2 "randimal: err: \`fortune\` is required but not installed (use \`apt-get install fortune\` or \`brew install fortune\` to install)"; return; }
+	type lolcat >/dev/null 2>&1 || { echo -e >&2 "randimal: err: \`lolcat\` is required but not installed (use \`apt-get install lolcat\` or \`brew install lolcat\` to install)"; return; }
+
+	if [[ "$os" == "Linux" ]] ; then
+		type shuf >/dev/null 2>&1 || { echo -e >&2 "randimal: err: \`shuf\` is required but not installed (use \`apt-get install shuf\` install)"; return; }
+		if [ $# -eq 0 ] ; then
+			fortune | cowsay -f `cowsay -l | tail -n +2 | tr ' ' '\n' | shuf -n 1` | lolcat
+		else
+			echo $1 | cowsay -f `cowsay -l | tail -n +2 | tr ' ' '\n' | shuf -n 1` | lolcat
+		fi
+	else
+		type gshuf >/dev/null 2>&1 || { echo -e >&2 "randimal: err: \`shuf\` is required but not installed (use \`brew install shuf\` install)"; return; }
+		if [ $# -eq 0 ] ; then
+			fortune | cowsay -f `cowsay -l | tail -n +2 | tr ' ' '\n' | gshuf -n 1` | lolcat
+		else
+			echo $1 | cowsay -f `cowsay -l | tail -n +2 | tr ' ' '\n' | gshuf -n 1` | lolcat
+		fi
+	fi
+}
+
+# list what kinds of files are in a directory
+what() {
+	if [ $# -eq 0 ] ; then
+		dir="."
+	else
+		dir="$1"
+	fi
+	find $dir -type f | perl -ne 'print "." . $1 if m/\.([^.\/]+)$/'
+}
+
+# show percentage of each filetype in directory and its subdirectories
+per() {
+	if [ $# -eq 0 ] ; then
+		dir="."
+	else
+		dir="$1"
+	fi
+	stats="$(find $dir -type f | sed 's/.*\.//' | sort | uniq -c)"
+
+	total=0
+	index=0
+	for stat in $stats; do
+		if (( $index % 2 == 0 )) ; then
+			total="$(($total + $stat))"
+		fi
+		index="$(($index + 1))"
+	done
+
+	index=0
+	num=0
+	word=0
+	out=""
+	for stat in $stats; do
+		if [ $index -eq 0 ] ; then
+			num="$stat"
+			word=$stat
+		else
+			word="$word $stat"
+		fi
+		index="$(($index + 1))"
+		if (( $index % 2 == 0 )) ; then
+			per="$(echo "scale=10; $num/$total" | bc)"
+			per="$(echo "scale=10; $per * 100" | bc)"
+			per="$(echo "scale=2; $per/1" | bc)"
+			out="$out\n$word ($per%)"
+			index=0
+			word=""
+		fi
+	done
+
+	echo -e $out | column -t
+}
+
+# list all files of specific type
+show() {
+	if [ $# -eq 0 ] ; then
+		echo "show: err: incorrect number of arguments"
+	elif [ $# -eq 1 ] ; then
+		find . -type f -name "*.$1"
+	else
+		while [ $# -ne 0 ] ; do
+			printf "\033[94m.$1 files:\033[0m\n"
+			find . -type f -name "*.$1"
+			shift
+		done
+	fi
+}
+
+# get disk usage in a nicer format
+dup() {
+	if [ $# -ne 0 ] ; then
+		if [[ -d $1 ]] ; then
+			cd "$1"
+		else
+			echo "dup: err: $1 is not a valid directory"
+			return
+		fi
+	fi
+
+	du -sh --apparent-size *
+	DU="$(du -sh --apparent-size .)"
+	read -ra ARR <<<"$DU"
+	echo " TOTAL: ${ARR[0]}"
+
+	if [[ $# -ne 0 ]] ; then
+		cd - > /dev/null
+	fi
+}
+
+# get disk usage for specific filetype
+duf() {
+	if [ $# -eq 0 ] ; then
+		echo "duf: err: incorrect number of arguments"
+	else
+		for arg in "$@"; do
+			size="$(find . -name "*.$1" -print0 | xargs -0 du --apparent-size -ch | tail -n1)"
+			read -ra ARR <<<"$SIZE"
+			echo "$1: ${ARR[0] - $1}"
+			shift
+		done
+	fi
+}
+
+# clear a file
+clear() {
+	if [ $# -eq 0 ] ; then
+		command clear
+	else
+		for file in "$@"; do
+			> "$file"
+		done
+	fi
+}
+
+# select files at random from a directory
+get() {
+	if [ $# -eq 0 ] ; then
+		num=1
+	else
+		num=$1
+	fi
+	ls -p | grep -v / | sort -R | tail -$num | while read file; do
+		echo $file
+	done
+}
+
+# remove files at random
+del() {
+	if [ $# -eq 0 ] ; then
+		num=1
+	else
+		num=$1
+	fi
+	ls -p | grep -v / | sort -R | tail -$num | while read file; do
+		rm -rf $file
+	done
+}
+
+# grep line by line
+lbl() {
+	if [ $# -ne 2 ] ; then
+		echo "lbl: err: incorrect number of arguments"
+	else
+		while IFS= read -r result; do
+			echo $result
+			read </dev/tty
+		done < <(grep "$1" $2)
+	fi
+}
+
+# pause execution
+pause() {
+	read -n 0 -rsp $'Press any key to continue...\n'
+}
