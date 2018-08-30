@@ -10,6 +10,12 @@ fi
 
 # user specific aliases and functions
 bind 'set completion-ignore-case on'
-source ~/.bash_functions
-source ~/.bash_aliases
-source ~/.bash_exports
+if [ -f ~/.bash_functions ]; then
+  source ~/.bash_functions
+]
+if [ -f ~/.bash_aliases ]; then
+  source ~/.bash_aliases
+]
+if [ -f ~/.bash_exports ]; then
+  source ~/.bash_exports
+]
