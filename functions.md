@@ -2,56 +2,29 @@
 This is the general documentation for the BASH functions written in `.bash_functions`.
 
 ### Contents
-| File Manipulation | Processes  | Statistics | Environment | Miscellaneous | Useless |
-| ----------------- | ---------- | ---------- | ----------- | ------------- | ------- |
-| [extract]()       | [psgrep]() |            | [adda]()    | [fixlines]()  |         |
-| [grab]()          |            |            | [addv]()    |               |         |
+| File Manipulation | Processes  | Statistics & Tools | Environment   | Miscellaneous   | Useless      |
+|:-----------------:|:----------:|:------------------:|:-------------:|:---------------:|:------------:|
+| [extract]()       | [psgrep]() | [md5c]()           | [adda]()      | [fixlines]()    | [dummy]()    |
+| [grab]()          | [kp]()     | [cf]()             | [addv]()      | [gitdefault]()  | [busy]()     |
+| [ranf]()          |            | [up]()             | [dp]()        | [random]()      | [siren]()    |
+| [rmr]()           |            | [down]()           | [pathadd]()   | [makes]()       | [rickroll]() |
+| [mvcd]()          |            | [common]()         | [pathrm]()    | [makef]()       |              |
+| [mvrm]()          |            | [snag]()           | [pathdedup]() | [removef]()     |              |
+| [cpcd]()          |            | [histg]()          |               | [lsf]()         |              |
+| [cppcd]()         |            | [intercept]()      |               | [gmail]()       |              |
+| [mkcd]()          |            | [sbs]()            |               | [publicip]()    |              |
+| [mkmv]()          |            | [cdls]()           |               | [getlocation]() |              |
+| [mkmvcd]()
+| [mkcp]()
+| [mkcpcd]()
+| [rmd]()
+| [mkdate]()
+| [mkcddate]()
 
 
 
-
- * [ranf]()
- * [rmr]()
- * [mvcd]()
- * [mvrm]()
- * [cpcd]()
- * [cppcd]()
- * [cdls]()
- * [mkcd]()
- * [mkmv]()
- * [mkmvcd]()
- * [mkcp]()
- * [mkcpcd]()
- * [md5c]()
- * [cf]()
- * [up]()
- * [down]()
- * [dp]()
- * [common]()
- * [kp]()
- * [pathadd]()
- * [pathrm]()
- * [pathdedup]()
- * [snag]()
- * [gitdefault]()
- * [rmd]()
- * [random]()
- * [makes]()
- * [makef]()
- * [removef]()
- * [lsf]()
- * [dummy]()
- * [histg]()
- * [intercept]()
- * [gmail]()
- * [publicip]()
- * [getlocation]()
- * [busy]()
- * [sbs]()
- * [mkdate]()
- * [mkcddate]()
- * [siren]()
- * [rickroll]()
+ * 
+ * 
  * [rev]()
  * [ostype]()
  * [lscows]()
