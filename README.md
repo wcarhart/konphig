@@ -4,10 +4,10 @@ Config files for safe keeping 😏
 This repo contains various configuration files so they don't have to be recreated. They are designed for Linux environments but most will work in MacOS as well.
 
 ## Overview
- * [BASH]()
- * [git]()
- * [vim]()
- * [tmux]()
+ * [BASH](https://github.com/wcarhart/Konphig#bash)
+ * [git](https://github.com/wcarhart/Konphig#git)
+ * [vim](https://github.com/wcarhart/Konphig#vim)
+ * [tmux](https://github.com/wcarhart/Konphig#tmux)
  
 ### BASH
 The BASH configurations contain the general `.bashrc` and `.bash_profile` files, but also:
