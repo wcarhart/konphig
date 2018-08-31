@@ -533,7 +533,11 @@ histg() {
 
 # intercept the `stderr` and `stdout` of a process
 intercept() {
-	strace -ff -e trace=write -e write=1,2 -p $1
+	if [ $# -ne 1 ] ; then
+		echo "intercept: err: incorrect number of arguments"
+	else
+		strace -ff -e trace=write -e write=1,2 -p $1
+	fi
 }
 
 # show number of unread emails in your Gmail inbox
