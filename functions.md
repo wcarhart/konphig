@@ -1,8 +1,8 @@
 # BASH Functions
-This is the general documentation for the BASH functions written in `.bash_functions`.
+This is the general documentation for the `BASH` functions written in `.bash_functions`.
 
 ### Contents
-| File Manipulation | Statistics & Tools | Environment   | Miscellaneous   | Useless      |
+| [File Manipulation](https://github.com/wcarhart/Konphig/blob/master/functions.md#file-manipulation) | [Statistics & Tools](https://github.com/wcarhart/Konphig/blob/master/functions.md#statistics--tools) | [Environment](https://github.com/wcarhart/Konphig/blob/master/functions.md#environment) | [Miscellaneous](https://github.com/wcarhart/Konphig/blob/master/functions.md#miscellaneous) | [Useless](https://github.com/wcarhart/Konphig/blob/master/functions.md#useless) |
 |:-----------------:|:------------------:|:-------------:|:---------------:|:------------:|
 | [extract](https://github.com/wcarhart/Konphig/blob/master/functions.md#extract) | [md5c](https://github.com/wcarhart/Konphig/blob/master/functions.md#md5c) | [adda](https://github.com/wcarhart/Konphig/blob/master/functions.md#adda) | [fixlines](https://github.com/wcarhart/Konphig/blob/master/functions.md#fixlines) | [dummy](https://github.com/wcarhart/Konphig/blob/master/functions.md#dummy)
 | [grab](https://github.com/wcarhart/Konphig/blob/master/functions.md#grab) | [cf](https://github.com/wcarhart/Konphig/blob/master/functions.md#cf) | [addv](https://github.com/wcarhart/Konphig/blob/master/functions.md#addv) | [gitdefault](https://github.com/wcarhart/Konphig/blob/master/functions.md#gitdefault) | [busy](https://github.com/wcarhart/Konphig/blob/master/functions.md#busy)
