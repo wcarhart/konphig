@@ -116,7 +116,6 @@ mvrm() {
 	if [ $# -ne 2 ] ; then
 		echo "mvrm: err: incorrect number of arguments"
 	else
-		if 
 		mv "$@"
 		OLD=$PWD
 		for last; do true; done
