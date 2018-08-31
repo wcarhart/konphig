@@ -379,7 +379,7 @@ random() {
 	else
 		num=$1
 	fi
-	strings /dev/urandom/ | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo
+	strings /dev/urandom | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo
 }
 
 # make a shell script out of the last x commands
@@ -397,7 +397,7 @@ makes() {
 		echo "makes: err: incorrect number of arguments"
 	fi
 
-	rando="$(strings /dev/urandom/ | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
+	rando="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
 	fc -rnl | head -$num > $rando
 	tac $rando > $name
 	rm -rf $rando
@@ -413,16 +413,16 @@ makef() {
 
 	if [ $# -eq 0 ] ; then
 		num=1
-		rando="$(strings /dev/urandom/ | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
+		rando="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
 		name="function_$rando"
 	elif [ $# -eq 1 ] ; then
 		num=$1
-		rando="$(strings /dev/urandom/ | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
+		rando="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
 		name="function_$rando"
 	elif [ $# -eq 2 ] ; then
 		num=$1
 		name=$2
-		rando="$(strings /dev/urandom/ | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
+		rando="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
 	else
 		echo "makef: err: incorrect number of arguments"
 	fi
@@ -462,7 +462,7 @@ removef() {
 			source=~/.bashrc
 		fi
 
-		rando="$(strings /dev/urandom/ | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
+		rando="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
 		title="$1() {"
 		edit=0
 		found=0
@@ -583,7 +583,7 @@ getlocation() {
 
 # make it look like you're busy
 busy() {
-	cat /dev/urandom/ | hexdump -C | grep "ca fe"
+	cat /dev/urandom | hexdump -C | grep "ca fe"
 }
 
 # sort by size of current directory
