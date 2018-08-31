@@ -588,7 +588,21 @@ busy() {
 
 # sort by size of current directory
 sbs() {
-	du -b --max-depth 1 | sort -nr | perl -pe 's{([0-9]+)}{sprintf "%.1f%s", $1/2**30, "G"): $1/2**20, "M"): $1>=2**10? ($1/2**10, "K"): ($1, "")}e'
+	if [ $# -ne 0 ] ; then
+		if [ $# -eq 1 ] ; then
+			if [ -d $1 ] ; then
+				cd $1
+			else
+				echo "sbs: err: $1 is not a valid directory"
+			fi
+		fi
+	fi
+
+	du -hs * | sort -h
+	
+	if [ $# -ne 0 ] ; then
+		cd -
+	fi
 }
 
 # make directory prefixed with the date
