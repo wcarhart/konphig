@@ -481,17 +481,115 @@ Dependencies: `echo`, `read`, `grep`
 
 ---
 ## Environment
+These functions all have to do with monitoring or modifying the environment (shell, operating system, etc.).
 #### adda
+*add alias* - adds an alias on the fly
+
+Usage: `adda alias full_command`
+```
+$ adda e echo
+$ e "Hello, world!"
+Hello, world!
+```
+Dependencies: `echo`, `source`
+
+---
 #### addv
+*add variable* - adds a variable on the fly
+
+Usage: `addv variable value`
+```
+$ addv shortcut /long/path/to/a/remote/directory/thats/annoying/to/type/a/lot
+$ cd $shortcut
+$ pwd
+/long/path/to/a/remote/directory/thats/annoying/to/type/a/lot/
+```
+Dependencies: `echo`, `source`
+
+---
 #### dp
+*different prompt* - switch between different prompts (`PS1` variables)
+
+This function is a WIP.
+
+---
 #### pathadd
+*path add* - add to the `PATH` system variable
+
+Usage: `pathadd path`
+```
+$ pathadd /new/path/          # prepends to PATH
+$ pathadd /new/path/ after    # appends to PATH
+```
+Dependencies: `echo`, `grep`
+
+---
 #### pathrm
+*path remove* - remove from the `PATH` system variable
+
+Usage `pathrm path`
+```
+$ echo $PATH
+/usr/bin/:/usr/sbin/
+$ pathrm /usr/sbin/
+$ echo $PATH
+/usr/bin/
+```
+Dependencies: `echo`, `sed`
+
+---
 #### pathdedup
+*path deduplicate* - deduplicate (remove duplicates) from the `PATH` system variable
+
+Usage: `pathdedup`
+```
+$ echo $PATH
+/usr/bin/:/usr/bin/:/usr/sbin/
+$ pathdedup
+/usr/bin/:/usr/sbin
+```
+Dependencies: `perl`, `grep`
+
+---
 #### ostype
+*operating system type* - attempt to print the operating system type (at a high level)
+
+Usage: `ostype`
+```
+$ ostype
+Linux
+```
+Dependencies: `uname`, `echo`
+
+---
 #### kp
+*kill process* - kills a process by name
+
+Usage `kp process_name`
+```
+$ kp netem
+PID 3345 (netem) killed
+$ kp sdfasd
+no processes killed, could not find PID for process sdfasd
+```
+Dependencies: `echo`, `ps`, `grep`, `kill`
+
+---
 #### psgrep
+*process list grep* - grep (search) for a process by name
+
+Usage: `psgrep process_name`
+```
+$ psgrep bash
+wcarhart         12373   0.0  0.0  4296240   2488 s000  S    Tue02AM   0:02.90 -bash
+```
+Dependencies: `ps`, `grep`, `echo`
+
+---
 
 ## Miscellaneous
+Miscellaneous functions for general use.
+
 #### fixlines
 #### gitdefault
 #### random
