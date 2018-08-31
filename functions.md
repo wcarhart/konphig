@@ -221,6 +221,8 @@ Dependencies: `grep`, `sort`, `tail`, `ls`, `read`
 ---
 
 ## Statistics & Tools
+These functions show statistics about the system, environment, and files, or act as general tools.
+
 #### md5c
 *MD5 checksum check* - checks the `md5sum` for two files, prints `PASS` if the two `md5sum`s are the same and `FAIL` if they are different
 
@@ -374,13 +376,13 @@ Dependencies: `read`, `echo`, `sed`
 Usage: `what [directory]`
 ```
 $ what
-txt
-md
-py
+.txt
+.md
+.py
 $ what dir0
-java
+.java
 Makefile
-c
+.c
 ```
 Dependencies: `find`, `perl`
 
@@ -392,7 +394,7 @@ Usage: `per [directory]`
 ```
 $ per
 101  txt  (100.00%)
-$ per dir0
+$ per ../dir0
 5    py   (50.00%)
 5    c    (50.00%)
 ```
@@ -400,11 +402,84 @@ Dependencies: `find`, `sed`, `sort`, `uniq`, `echo`, `bc`, `column`
 
 ---
 #### show
-#### dup
-#### duf
-#### get
-#### lbl
+*show* - recursively list all files of a specific type
 
+Usage: `show filetype`
+```
+$ ls
+dir0/
+file0.txt
+file1.txt
+file2.txt
+file0.md
+file1.md
+$ show txt
+file0.txt
+file1.txt
+file2.txt
+dir0/file0.txt
+dir0/file1.txt
+```
+Dependencies: `echo`, `find`, `shift`, `printf`
+
+---
+#### dup
+*disk usage pretty* - present the disk usage (`du`) output in a nicer format
+
+Usage: `dup [directory]`
+```
+$ dup
+52K    file.txt
+15K    file2.txt
+ TOTAL: 67K
+```
+Dependencies: `echo`, `cd`, `read`, `du`
+
+---
+#### duf
+*disk usage by filetype* - get the disk usage by filetype
+
+Usage: `duf filetype`
+```
+$ duf py
+py: 30K
+$ duf py md
+py: 30K
+md: 4.7K
+```
+Dependencies: `echo`, `find`, `read`, `shift`
+
+---
+#### get
+*get* - get a file (default) or multiple files at random from the current directory
+
+Usage `get [number_of_files]`
+```
+$ ls
+file0.txt
+file1.txt
+file2.txt
+$ get
+file2.txt
+$ get 2
+file0.txt
+file1.txt
+```
+Dependencies: `echo`, `ls`, `grep`, `sort`, `tail`, `read`
+#### lbl
+*grep line-by-line* - searches through a file line-by-line and pauses at each line (waits for user input)
+
+Usage: `lbl term file`
+```
+$ lbl def program.py
+def hello():
+
+def world(param):
+
+```
+Dependencies: `echo`, `read`, `grep`
+
+---
 ## Environment
 #### adda
 #### addv
