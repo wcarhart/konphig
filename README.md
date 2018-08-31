@@ -15,6 +15,16 @@ The BASH configurations contain the general `.bashrc` and `.bash_profile` files,
  * `.bash_aliases` - file for BASH aliases
  * `.bash_variables` - file for BASH variables
 
+`BASH` configurations adhere to the following architecture:
+```
+.bashrc
+| | | |
+| | | .bash_profile
+| | .bash_functions  (where functions are saved)
+| .bash_aliases      (where aliases are saved)
+.bash_variables      (where variables are saved)
+```
+
 ### git
 Basic `git` configurations, also including some helpful `git` aliases.
 
