@@ -591,21 +591,260 @@ Dependencies: `ps`, `grep`, `echo`
 Miscellaneous functions for general use.
 
 #### fixlines
+*fix lines* - repair line endings
+
+Usage: `fixlines file`
+```
+$ fixlines file0.txt          # changes \r\n in file0.txt to just \n
+```
+Dependencies: `perl`
+
+---
 #### gitdefault
+*git default* - get the default branch for a `git` repository
+
+Usage: `gitdefault [remote_name]` (from within a `git` repository)
+```
+$ gitdefault        # assumes by default that the remote is name origin
+master
+$ gitdefault my_remote
+develop
+```
+Dependencies: `git`, `grep`, `cut`
+
+---
 #### random
+*random* - generates a random alphanumeric string of length 30 (default) or specified length
+
+Usage: `random [length]`
+```
+$ random
+1k42nJmdk&WJ3bhasN9DL8n3nd0qxE
+$ random 5
+Po05B
+```
+Dependencies: `strings`, `urandom`, `grep`, `head`, `tr`, `echo`
+
+---
 #### makes
+*make script* - makes a script (default named `script.sh`) in the current directory of the last previous command (default) or previous specified amount of commands
+
+Usage: `makes [number_of_commands] [name_of_script]`
+```
+$ ls
+file0.txt
+file1.txt
+$ makes                  # makes a script of the previous command (`ls`) in a script called `./script.sh`
+$ ls
+file0.txt
+file1.txt
+script.sh
+$ cat script.sh
+ls
+```
+```
+$ clear
+$ ls
+file0.txt
+file1.txt
+$ makes 2                # makes a script of the previous two commands (`clear` & `ls`) in a script called `./script.sh`
+$ ls
+file0.txt
+file1.txt
+script.sh
+$ cat script.sh
+clear
+ls
+```
+```
+$ clear
+$ ls
+$ makes 2 test.sh        # makes a script of the previous two commands (`clear` & `ls`) in a script called `test.sh`
+$ ls
+file0.txt
+file1.txt
+test.sh
+$ cat test.sh
+clear
+ls
+```
+Dependencies: `echo`, `strings`, `urandom`, `fc`, `tac`, `head`, `rm`, `grep`, `tr`
+
+---
 #### makef
+*make function* - makes a `BASH` function in either `.bashrc` or `.bash_functions` (depending on configuration, which is auto-detected by the function) of the last previous command (default) or previous specified amount of commands; function can be named or defaults to a random string
+
+Usage: `makef [number_of_commands] [name_of_function]
+```
+$ ls
+file0.txt
+file1.txt
+$ makef                  # makes a function of the previous command (`ls`) in a randomly named function
+$ cat ~/.bashrc          # if a .bash_functions file exists, function will be saved there instead
+function_wn39d() {
+     ls
+}
+```
+```
+$ clear
+$ ls
+file0.txt
+file1.txt
+$ makef 2                # makes a function of the previous two commands (`clear` & `ls`) in a randomly named function
+$ cat ~/.bashrc          # if a .bash_functions file exists, function will be saved there instead
+function_s6U54() {
+     clear
+     ls >
+}
+```
+```
+$ clear
+$ ls
+file0.txt
+file1.txt
+$ makef 2 cls            # makes a function of the previous two commands (`clear` & `ls`) in a function named `cls` (clear and ls)
+$ cat ~/.bashrc          # if a .bash_functions file exists, function will be saved there instead
+cls() {
+     clear
+     ls
+}
+```
+Dependencies: `strings`, `urandom`, `echo`, `printf`, `fc`, `head`, `tac`, `read`, `rm`, `source`, `tr`, `grep`
+
+---
 #### removef
+*remove function* - removes a function from either the `.bashrc` or `.bash_functions` file
+
+Usage: `removef function_name`
+```
+$ removef cls
+Removed cls from .bashrc
+$ remove cls
+cls not found in .bashrc
+```
+Dependencies: `echo`, `strings`, `urandom`, `grep`, `head`, `tr`, `grep`, `read`, `printf`, `source`, `cat`, `rm`
+
+---
 #### lsf
+*list functions* - lists all functions from either the `.bashrc` or `.bash_functions` file
+
+Usage: `lsf`
+```
+$ lsf
+cls()
+up()
+siren()
+$ removef cls
+$ lsf
+up()
+siren()
+```
+Dependencies: `read`, `echo`, `fold`, `tr`
+
+---
 #### gmail
+*gmail* - show number of unread emails in your Gmail inbox
+
+Usage `gmail email`
+```
+$ gmail me@email.com
+45
+```
+Dependencies: `echo`, `curl`, `sed`
+
+---
 #### publicip
+*public ip address* - show your public IP address
+
+Usage: `publicip`
+```
+$ publicip
+105.38.27.128
+```
+Dependencies: `echo`, `dig`
+
+---
 #### getlocation
+*get location* - get the location associated with your public IP address
+
+Usage: `getlocation`
+```
+$ getlocation
+IP: 105.38.27.128
+Location: San Francisco, CA, USA
+```
+Dependencies: `dig`, `lynx`, `egrep`, `read`, `echo`, `cut`, `column`
+
+---
 #### pause
+*pause* - pause execution of the current process and wait for user input
+
+Usage: `pause`
+```
+$ pause
+Press any key to continue...
+```
+Dependencies: `read`
+
+---
 
 ## Useless
+These functions have either funny outputs or don't have a specific useful purpose :)
+
 #### dummy
+*dummy* - function that does nothing (great for testing purposes)
+
+Usage: `dummy`
+```
+$ dummy                  # does nothing
+$
+```
+Dependencies: none
+
+---
 #### busy
+*busy* - output on the terminal to make it look like you're busy
+
+Usage: `busy`
+```
+$ busy                   # draws a bunch of meaningless graphs on the terminal to monitor real but meaningless processes
+```
+Dependencies: `cat`, `hexdump`, `grep`
+
+---
 #### siren
+*siren* - sound the alarm
+
+Usage: `siren`
+```
+$ siren                  # guess you'll have to try this one out to see what it does
+```
+Dependencies: `printf`
+
+---
 #### rickroll
+*rickroll* - do you really need a description
+
+Usage: `rickroll`
+```
+$ rickroll               # guess you'll have to try this one out to see what it does
+```
 #### lscows
+*list cows* - list all of the available cow artwork for `cowsay`
+
+Usage: `lscows`
+```
+$ lscows                 # guess you'll have to try this one out to see what it does
+```
+Dependencies: `cowsay`, `echo`, `tail`, `tr`
+
+---
 #### randimal
+*randimal* - draws a randimal one the terminal screen with some helpful advice
+
+Usage: `randimal [text]`
+```
+$ randimal                    # guess you'll have to try this one out to see what it does
+$ randimal "Hello, world!"    # guess you'll have to try this one out to see what it does
+```
+Dependencies: `cowsay`, `fortune` `uname`, `echo`, `lolcat`, `brew` or `apt-get`, `shift`, `type`, `tail`, `tr`, `shuf` or `gshuf`
