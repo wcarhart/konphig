@@ -4,24 +4,24 @@ This is the general documentation for the BASH functions written in `.bash_funct
 ### Contents
 | File Manipulation | Statistics & Tools | Environment   | Miscellaneous   | Useless      |
 |:-----------------:|:------------------:|:-------------:|:---------------:|:------------:|
-| [extract]()       | [md5c]()           | [adda]()      | [fixlines]()    | [dummy]()    |
-| [grab]()          | [cf]()             | [addv]()      | [gitdefault]()  | [busy]()     |
-| [ranf]()          | [up]()             | [dp]()        | [random]()      | [siren]()    |
-| [rmr]()           | [down]()           | [pathadd]()   | [makes]()       | [rickroll]() |
-| [mvcd]()          | [common]()         | [pathrm]()    | [makef]()       | [lscows]()   |
-| [mvrm]()          | [snag]()           | [pathdedup]() | [removef]()     | [randimal]() |
-| [cpcd]()          | [histg]()          | [ostype]()    | [lsf]()         |              |
-| [cppcd]()         | [intercept]()      | [kp]()        | [gmail]()       |              |
-| [mkcd]()          | [sbs]()            | [psgrep]()    | [publicip]()    |              |
-| [mkmv]()          | [cdls]()           |               | [getlocation]() |              |
-| [mkmvcd]()        | [rev]()            |               | [pause]()       |              |
-| [mkcp]()          | [what]()           |               |                 |              |
-| [mkcpcd]()        | [per]()            |               |                 |              |
-| [rmd]()           | [show]()           |               |                 |              |
-| [mkdate]()        | [dup]()            |               |                 |              |
-| [mkcddate]()      | [duf]()            |               |                 |              |
-| [clear]()         | [get]()            |               |                 |              |
-| [del]()           | [lbl]()            |               |                 |              |
+| [extract](https://github.com/wcarhart/Konphig/blob/master/functions.md#extract) | [md5c](https://github.com/wcarhart/Konphig/blob/master/functions.md#md5c) | [adda](https://github.com/wcarhart/Konphig/blob/master/functions.md#adda) | [fixlines](https://github.com/wcarhart/Konphig/blob/master/functions.md#fixlines) | [dummy](https://github.com/wcarhart/Konphig/blob/master/functions.md#dummy)
+| [grab](https://github.com/wcarhart/Konphig/blob/master/functions.md#grab) | [cf](https://github.com/wcarhart/Konphig/blob/master/functions.md#cf) | [addv](https://github.com/wcarhart/Konphig/blob/master/functions.md#addv) | [gitdefault](https://github.com/wcarhart/Konphig/blob/master/functions.md#gitdefault) | [busy](https://github.com/wcarhart/Konphig/blob/master/functions.md#busy)
+| [ranf](https://github.com/wcarhart/Konphig/blob/master/functions.md#ranf) | [up](https://github.com/wcarhart/Konphig/blob/master/functions.md#up) | [dp](https://github.com/wcarhart/Konphig/blob/master/functions.md#dp) | [random](https://github.com/wcarhart/Konphig/blob/master/functions.md#random) | [siren](https://github.com/wcarhart/Konphig/blob/master/functions.md#siren)
+| [rmr](https://github.com/wcarhart/Konphig/blob/master/functions.md#rmr) | [down](https://github.com/wcarhart/Konphig/blob/master/functions.md#down) | [pathadd](https://github.com/wcarhart/Konphig/blob/master/functions.md#pathadd) | [makes](https://github.com/wcarhart/Konphig/blob/master/functions.md#makes) | [rickroll](https://github.com/wcarhart/Konphig/blob/master/functions.md#rickroll)
+| [mvcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mvcd) | [common](https://github.com/wcarhart/Konphig/blob/master/functions.md#common) | [pathrm](https://github.com/wcarhart/Konphig/blob/master/functions.md#pathrm) | [makef](https://github.com/wcarhart/Konphig/blob/master/functions.md#makef) | [lscows](https://github.com/wcarhart/Konphig/blob/master/functions.md#lscows)
+| [mvrm](https://github.com/wcarhart/Konphig/blob/master/functions.md#mvrm) | [snag](https://github.com/wcarhart/Konphig/blob/master/functions.md#snag) | [pathdedup](https://github.com/wcarhart/Konphig/blob/master/functions.md#pathdedup) | [removef](https://github.com/wcarhart/Konphig/blob/master/functions.md#removef) | [randimal](https://github.com/wcarhart/Konphig/blob/master/functions.md#randimal)
+| [cpcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#cpcd) | [histg](https://github.com/wcarhart/Konphig/blob/master/functions.md#histg) | [ostype](ostype) | [lsf](https://github.com/wcarhart/Konphig/blob/master/functions.md#lsf)
+| [cppcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#cppcd) | [intercept](https://github.com/wcarhart/Konphig/blob/master/functions.md#intercept) | [kp](https://github.com/wcarhart/Konphig/blob/master/functions.md#kp) | [gmail](https://github.com/wcarhart/Konphig/blob/master/functions.md#gmail)
+| [mkcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcd) | [sbs](https://github.com/wcarhart/Konphig/blob/master/functions.md#sbs) | [psgrep](https://github.com/wcarhart/Konphig/blob/master/functions.md#psgrep) | [publicip](https://github.com/wcarhart/Konphig/blob/master/functions.md#publicip)
+| [mkmv](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkmv) | [cdls](https://github.com/wcarhart/Konphig/blob/master/functions.md#cdls) | | [getlocation](https://github.com/wcarhart/Konphig/blob/master/functions.md#getlocation)
+| [mkmvcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkmvcd) | [rev](https://github.com/wcarhart/Konphig/blob/master/functions.md#rev)| | [pause](https://github.com/wcarhart/Konphig/blob/master/functions.md#pause)
+| [mkcp](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcp) | [what](https://github.com/wcarhart/Konphig/blob/master/functions.md#what)
+| [mkcpcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcpcd) | [per](https://github.com/wcarhart/Konphig/blob/master/functions.md#per)
+| [rmd](https://github.com/wcarhart/Konphig/blob/master/functions.md#rmd) | [show](https://github.com/wcarhart/Konphig/blob/master/functions.md#show)
+| [mkdate](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkdate) | [dup](https://github.com/wcarhart/Konphig/blob/master/functions.md#dup)
+| [mkcddate](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcddate) | [duf](https://github.com/wcarhart/Konphig/blob/master/functions.md#duf)
+| [clear](https://github.com/wcarhart/Konphig/blob/master/functions.md#clear) | [get](https://github.com/wcarhart/Konphig/blob/master/functions.md#get)
+| [del](https://github.com/wcarhart/Konphig/blob/master/functions.md#del) | [lbl](https://github.com/wcarhart/Konphig/blob/master/functions.md#lbl)
 
 
 ### File Manipulation
