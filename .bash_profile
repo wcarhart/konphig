@@ -4,6 +4,11 @@
 source ~/.bashrc
 source ~/.git-prompt.sh
 
+# git autocomplete
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
+
 ## GIT
 prompt_function() {
     local         BLUE='\[\033[0;34m\]'
