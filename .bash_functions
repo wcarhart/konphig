@@ -254,7 +254,7 @@ up() {
 		cdstr=".."
 		while [ $count -lt $1 ] ; do
 			cdstr="$cdstr/.."
-			let count=count + 1
+			let count=count+1
 		done
 		cd $cdstr
 	else
