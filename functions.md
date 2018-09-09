@@ -839,6 +839,9 @@ Usage: `rickroll`
 ```
 $ rickroll               # guess you'll have to try this one out to see what it does
 ```
+Dependencies: `printf`, `yes`
+
+---
 #### lscows
 *list cows* - list all of the available cow artwork for `cowsay`
 
