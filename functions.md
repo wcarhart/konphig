@@ -15,7 +15,7 @@ This is the general documentation for the `BASH` functions written in `.bash_fun
 | [mkcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcd) | [sbs](https://github.com/wcarhart/Konphig/blob/master/functions.md#sbs) | [psgrep](https://github.com/wcarhart/Konphig/blob/master/functions.md#psgrep) | [publicip](https://github.com/wcarhart/Konphig/blob/master/functions.md#publicip)
 | [mkmv](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkmv) | [cdls](https://github.com/wcarhart/Konphig/blob/master/functions.md#cdls) | | [getlocation](https://github.com/wcarhart/Konphig/blob/master/functions.md#getlocation)
 | [mkmvcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkmvcd) | [rev](https://github.com/wcarhart/Konphig/blob/master/functions.md#rev)| | [pause](https://github.com/wcarhart/Konphig/blob/master/functions.md#pause)
-| [mkcp](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcp) | [what](https://github.com/wcarhart/Konphig/blob/master/functions.md#what)
+| [mkcp](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcp) | [what](https://github.com/wcarhart/Konphig/blob/master/functions.md#what) | | [resetbar](https://github.com/wcarhart/Konphig/blob/master/functions.md#resetbar)
 | [mkcpcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcpcd) | [per](https://github.com/wcarhart/Konphig/blob/master/functions.md#per)
 | [rmd](https://github.com/wcarhart/Konphig/blob/master/functions.md#rmd) | [show](https://github.com/wcarhart/Konphig/blob/master/functions.md#show)
 | [mkdate](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkdate) | [dup](https://github.com/wcarhart/Konphig/blob/master/functions.md#dup)
@@ -785,6 +785,16 @@ $ pause
 Press any key to continue...
 ```
 Dependencies: `read`
+
+---
+#### resetbar
+*reset Macbook Pro touch bar* - restart the Macbook Pro touch bar if it has crashed or malfunctioned
+
+Usage: `resetbar`
+```
+$ resetbar     # automatically resets touch bar
+```
+Dependencies: `pkill`, `killall`
 
 ---
 
