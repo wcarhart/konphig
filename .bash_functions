@@ -880,3 +880,9 @@ lbl() {
 pause() {
 	read -n 0 -rsp $'Press any key to continue...\n'
 }
+
+# reset Macbook Pro touch bar
+resetbar() {
+	pkill "Touch Bar agent"
+	killall "ControlStrip"
+}
