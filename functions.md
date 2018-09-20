@@ -13,7 +13,7 @@ This is the general documentation for the `BASH` functions written in `.bash_fun
 | [cpcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#cpcd) | [histg](https://github.com/wcarhart/Konphig/blob/master/functions.md#histg) | [ostype](ostype) | [lsf](https://github.com/wcarhart/Konphig/blob/master/functions.md#lsf)
 | [cppcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#cppcd) | [intercept](https://github.com/wcarhart/Konphig/blob/master/functions.md#intercept) | [kp](https://github.com/wcarhart/Konphig/blob/master/functions.md#kp) | [gmail](https://github.com/wcarhart/Konphig/blob/master/functions.md#gmail)
 | [mkcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcd) | [sbs](https://github.com/wcarhart/Konphig/blob/master/functions.md#sbs) | [psgrep](https://github.com/wcarhart/Konphig/blob/master/functions.md#psgrep) | [publicip](https://github.com/wcarhart/Konphig/blob/master/functions.md#publicip)
-| [mkmv](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkmv) | [cdls](https://github.com/wcarhart/Konphig/blob/master/functions.md#cdls) | | [getlocation](https://github.com/wcarhart/Konphig/blob/master/functions.md#getlocation)
+| [mkmv](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkmv) | [cdls](https://github.com/wcarhart/Konphig/blob/master/functions.md#cdls) | [mkgit](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkgit) | [getlocation](https://github.com/wcarhart/Konphig/blob/master/functions.md#getlocation)
 | [mkmvcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkmvcd) | [rev](https://github.com/wcarhart/Konphig/blob/master/functions.md#rev)| | [pause](https://github.com/wcarhart/Konphig/blob/master/functions.md#pause)
 | [mkcp](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcp) | [what](https://github.com/wcarhart/Konphig/blob/master/functions.md#what) | | [resetbar](https://github.com/wcarhart/Konphig/blob/master/functions.md#resetbar)
 | [mkcpcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcpcd) | [per](https://github.com/wcarhart/Konphig/blob/master/functions.md#per)
@@ -584,6 +584,19 @@ $ psgrep bash
 wcarhart         12373   0.0  0.0  4296240   2488 s000  S    Tue02AM   0:02.90 -bash
 ```
 Dependencies: `ps`, `grep`, `echo`
+
+---
+#### mkgit
+*make new git repository* - make a new directory, initialize it as a `git` repository, and change into it
+
+Usage: `mkgit repo_name`
+```
+$ mkgit new_repo
+Initialized empty Git repository in /Users/wcarhart/new_repo/.git/
+$ pwd
+/new_repo/
+```
+Dependencies: `mkdir`, `cd`, `git`
 
 ---
 
