@@ -897,3 +897,17 @@ mkgit() {
 		git init
 	fi
 }
+
+# copy current directory to clipboard
+copypwd() {
+	d="$(pwd)"
+	pbcopy <<< "$d"
+}
+
+# copy previous command
+copylast() {
+	fc -rnl | head -1 > tempfile
+	com="$(tac tempfile)"
+	rm -rf tempfile
+	pbcopy <<< "$com"
+}
