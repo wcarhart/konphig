@@ -14,14 +14,15 @@ This is the general documentation for the `BASH` functions written in `.bash_fun
 | [cppcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#cppcd) | [intercept](https://github.com/wcarhart/Konphig/blob/master/functions.md#intercept) | [kp](https://github.com/wcarhart/Konphig/blob/master/functions.md#kp) | [gmail](https://github.com/wcarhart/Konphig/blob/master/functions.md#gmail)
 | [mkcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcd) | [sbs](https://github.com/wcarhart/Konphig/blob/master/functions.md#sbs) | [psgrep](https://github.com/wcarhart/Konphig/blob/master/functions.md#psgrep) | [publicip](https://github.com/wcarhart/Konphig/blob/master/functions.md#publicip)
 | [mkmv](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkmv) | [cdls](https://github.com/wcarhart/Konphig/blob/master/functions.md#cdls) | [mkgit](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkgit) | [getlocation](https://github.com/wcarhart/Konphig/blob/master/functions.md#getlocation)
-| [mkmvcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkmvcd) | [rev](https://github.com/wcarhart/Konphig/blob/master/functions.md#rev)| | [pause](https://github.com/wcarhart/Konphig/blob/master/functions.md#pause)
-| [mkcp](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcp) | [what](https://github.com/wcarhart/Konphig/blob/master/functions.md#what) | | [resetbar](https://github.com/wcarhart/Konphig/blob/master/functions.md#resetbar)
+| [mkmvcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkmvcd) | [rev](https://github.com/wcarhart/Konphig/blob/master/functions.md#rev)| [cppwd](https://github.com/wcarhart/Konphig/blob/master/functions.md#copypwd) | [pause](https://github.com/wcarhart/Konphig/blob/master/functions.md#pause)
+| [mkcp](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcp) | [what](https://github.com/wcarhart/Konphig/blob/master/functions.md#what) | [cplast](https://github.com/wcarhart/Konphig/blob/master/functions.md#copylast) | [resetbar](https://github.com/wcarhart/Konphig/blob/master/functions.md#resetbar)
 | [mkcpcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcpcd) | [per](https://github.com/wcarhart/Konphig/blob/master/functions.md#per)
 | [rmd](https://github.com/wcarhart/Konphig/blob/master/functions.md#rmd) | [show](https://github.com/wcarhart/Konphig/blob/master/functions.md#show)
 | [mkdate](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkdate) | [dup](https://github.com/wcarhart/Konphig/blob/master/functions.md#dup)
 | [mkcddate](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcddate) | [duf](https://github.com/wcarhart/Konphig/blob/master/functions.md#duf)
 | [clear](https://github.com/wcarhart/Konphig/blob/master/functions.md#clear) | [get](https://github.com/wcarhart/Konphig/blob/master/functions.md#get)
 | [del](https://github.com/wcarhart/Konphig/blob/master/functions.md#del) | [lbl](https://github.com/wcarhart/Konphig/blob/master/functions.md#lbl)
+| [clonecd](https://github.com/wcarhart/Konphig/blob/master/functions.md#clonecd)
 
 
 ## File Manipulation
@@ -217,6 +218,25 @@ $ del         # removes the default of 1 file at random from the current directo
 $ del 10      # removes 10 files at random from the current directory
 ```
 Dependencies: `grep`, `sort`, `tail`, `ls`, `read`
+
+---
+#### clonecd
+*git clone and change directory* - clone a git repository and change into the new repository's directory
+
+Usage: `clonecd repo_name`
+```
+$ clonecd ssh://git@host.domain.com:5555/repo_name
+Cloning into 'repo_name'...
+Enter passphrase for key '/Users/username/.ssh/id_rsa': 
+remote: Counting objects: 7, done.
+remote: Compressing objects: 100% (7/7), done.
+remote: Total 7 (delta 1), reused 0 (delta 0)
+Receiving objects: 100% (7/7), done.
+Resolving deltas: 100% (1/1), done.
+$ pwd
+/repo_name/
+```
+Dependencies: `git`, `cd`, `basename`
 
 ---
 
@@ -599,7 +619,30 @@ $ pwd
 Dependencies: `mkdir`, `cd`, `git`
 
 ---
+#### cppwd
+*copy present working directory* - copy the present working directory to the clipboard
 
+Usage: `cppwd`
+```
+$ cppwd       # result of pwd is copied to the clipboard
+$
+```
+Dependencies: `pwd`, `pbcopy`
+
+---
+#### cplast
+*copy last command* - copy the last executed command to the clipboard
+
+Usage: `cplast`
+```
+$ echo 'Hello, world!'
+Hello, world!
+$ cplast     # "echo 'Hello, world!'" is copied to the clipboard
+$
+```
+Dependencies: `fc`, `head`, `tac`, `rm`, `pbcopy`
+
+---
 ## Miscellaneous
 Miscellaneous functions for general use.
 
