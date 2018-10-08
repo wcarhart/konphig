@@ -899,13 +899,13 @@ mkgit() {
 }
 
 # copy current directory to clipboard
-copypwd() {
+cppwd() {
 	d="$(pwd)"
 	pbcopy <<< "$d"
 }
 
-# copy previous command
-copylast() {
+# copy previous command to clipboard
+cplast() {
 	fc -rnl | head -1 > tempfile
 	com="$(tac tempfile)"
 	rm -rf tempfile
