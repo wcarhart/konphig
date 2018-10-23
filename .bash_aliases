@@ -51,4 +51,4 @@ alias starwars='telnet towel.blinkenlights.nl'
 alias tre='tree'
 alias eit=exit
 alias upls='up && ls'
-alias cores='sysctl -n hw.ncpu'
+alias python3='p3'
