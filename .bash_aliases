@@ -51,4 +51,4 @@ alias starwars='telnet towel.blinkenlights.nl'
 alias tre='tree'
 alias eit=exit
 alias upls='up && ls'
-alias python3='p3'
+alias p3='python3'
