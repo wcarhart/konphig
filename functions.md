@@ -16,7 +16,7 @@ This is the general documentation for the `BASH` functions written in `.bash_fun
 | [mkmv](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkmv) | [cdls](https://github.com/wcarhart/Konphig/blob/master/functions.md#cdls) | [mkgit](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkgit) | [getlocation](https://github.com/wcarhart/Konphig/blob/master/functions.md#getlocation)
 | [mkmvcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkmvcd) | [rev](https://github.com/wcarhart/Konphig/blob/master/functions.md#rev)| [cppwd](https://github.com/wcarhart/Konphig/blob/master/functions.md#cppwd) | [pause](https://github.com/wcarhart/Konphig/blob/master/functions.md#pause)
 | [mkcp](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcp) | [what](https://github.com/wcarhart/Konphig/blob/master/functions.md#what) | [cplast](https://github.com/wcarhart/Konphig/blob/master/functions.md#cplast) | [resetbar](https://github.com/wcarhart/Konphig/blob/master/functions.md#resetbar)
-| [mkcpcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcpcd) | [per](https://github.com/wcarhart/Konphig/blob/master/functions.md#per)
+| [mkcpcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcpcd) | [per](https://github.com/wcarhart/Konphig/blob/master/functions.md#per) | | [rcreate](https://github.com/wcarhart/Konphig/blob/master/functions.md#rcreate)
 | [rmd](https://github.com/wcarhart/Konphig/blob/master/functions.md#rmd) | [show](https://github.com/wcarhart/Konphig/blob/master/functions.md#show)
 | [mkdate](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkdate) | [dup](https://github.com/wcarhart/Konphig/blob/master/functions.md#dup)
 | [mkcddate](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcddate) | [duf](https://github.com/wcarhart/Konphig/blob/master/functions.md#duf)
@@ -841,6 +841,43 @@ $ pause
 Press any key to continue...
 ```
 Dependencies: `read`
+
+---
+#### rcreate
+*remote create* - create new remote repository on GitHub and push the current commit to it
+
+Usage: `rcreate [repo_name]`
+```
+$ basename `pwd`
+cool_repo_dir
+$ rcreate # Uses the basename of the current directory if no arg for repo_name is provided
+Enter passphrase for key '/Users/username/.ssh/id_rsa': 
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 8 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+remote:
+remote: Create a pull request for 'master' on GitHub by visiting:
+remote:      https://github.com/username/cool_repo_dir/pull/new/master
+remote:
+To https://github.com/username/cool_repo_dir.git
+ * [new branch]      master -> master
+Branch master set up to track remote branch master from origin.
+```
+```
+$ rcreate awesome_new_repo
+Enter passphrase for key '/Users/username/.ssh/id_rsa': 
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 8 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+remote:
+remote: Create a pull request for 'master' on GitHub by visiting:
+remote:      https://github.com/username/awesome_new_repo/pull/new/master
+remote:
+To https://github.com/username/awesome_new_repo.git
+ * [new branch]      master -> master
+Branch master set up to track remote branch master from origin.
+```
+Dependencies: `git`, `curl`
 
 ---
 #### resetbar
