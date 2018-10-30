@@ -843,6 +843,16 @@ Press any key to continue...
 Dependencies: `read`
 
 ---
+#### resetbar
+*reset Macbook Pro touch bar* - restart the Macbook Pro touch bar if it has crashed or malfunctioned
+
+Usage: `resetbar`
+```
+$ resetbar     # automatically resets touch bar
+```
+Dependencies: `pkill`, `killall`
+
+---
 #### rcreate
 *remote create* - create new remote repository on GitHub and push the current commit to it
 
@@ -878,16 +888,6 @@ To https://github.com/username/awesome_new_repo.git
 Branch master set up to track remote branch master from origin.
 ```
 Dependencies: `git`, `curl`
-
----
-#### resetbar
-*reset Macbook Pro touch bar* - restart the Macbook Pro touch bar if it has crashed or malfunctioned
-
-Usage: `resetbar`
-```
-$ resetbar     # automatically resets touch bar
-```
-Dependencies: `pkill`, `killall`
 
 ---
 
