@@ -916,3 +916,18 @@ cplast() {
 clonecd() {
 	git clone "$1" && cd "$(basename "$1")"
 }
+
+# create new remote repository on GitHub and push the current commit to it
+rcreate() {
+	if [ $# -eq 1 ] ; then
+		REPO="$1"
+	else
+		REPO=${PWD##*/}
+	fi
+
+	GITHUBUSER=$(git config github.user)
+
+	curl -u ${USER:-${GITHUBUSER}} https://api.github.com/user/repos -d "{\"name\": \"${REPONAME:-${REPO}}\", \"private\": false, \"has_issues\": true, \"has_downloads\": true, \"has_wiki\": false}" > /dev/null
+	git remote add origin git@github.com:${USER:-${GITHUBUSER}}/${REPONAME:-${REPO}}.git
+	git push --set-upstream origin master
+}
