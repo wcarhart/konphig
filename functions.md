@@ -1019,7 +1019,7 @@ Dependencies: `cowsay`, `echo`, `tail`, `tr`
 
 ---
 #### randimal
-*randimal* - draws a randimal one the terminal screen with some helpful advice
+*randimal* - draws a randimal on the terminal screen with some helpful advice
 
 Usage: `randimal [text]`
 ```
