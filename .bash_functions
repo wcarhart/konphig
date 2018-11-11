@@ -956,13 +956,28 @@ rcreate() {
 	git push --set-upstream origin master
 }
 
-# execute a python file and open it in sublime
+# execute a file and open it in Sublime
 eao() {
 	if [ $# -eq 0 ] ; then
 		echo "eao: err: incorrect number of arguments"
 		return
 	fi
-	(subl "$1" &); echo "$@" | xargs python3
+	file="$1"
+	ext="${file##*.}"
+	subl "$1"
+	case "$ext" in
+		"sh")
+			./"$@"
+			;;
+		"py")
+			python3 "$@"
+			;;
+		"rb")
+			ruby "$@"
+			;;
+		*)
+			echo "Can't execute $1"
+	esac
 }
 
 # update Konphig settings for system
@@ -1032,4 +1047,13 @@ update() {
 	else
 		source ~/.bashrc
 	fi
+}
+
+# gives the current user execution privileges for a file
+gimme() {
+	if [ $# -ne 1 ] ; then
+		echo "gimme: err: incorrect number of arguments"
+		return
+	fi
+	chmod +x "$1"
 }
