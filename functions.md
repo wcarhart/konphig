@@ -16,8 +16,8 @@ This is the general documentation for the `BASH` functions written in `.bash_fun
 | [mkmv](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkmv) | [cdls](https://github.com/wcarhart/Konphig/blob/master/functions.md#cdls) | [mkgit](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkgit) | [getlocation](https://github.com/wcarhart/Konphig/blob/master/functions.md#getlocation)
 | [mkmvcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkmvcd) | [rev](https://github.com/wcarhart/Konphig/blob/master/functions.md#rev)| [cppwd](https://github.com/wcarhart/Konphig/blob/master/functions.md#cppwd) | [pause](https://github.com/wcarhart/Konphig/blob/master/functions.md#pause)
 | [mkcp](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcp) | [what](https://github.com/wcarhart/Konphig/blob/master/functions.md#what) | [cplast](https://github.com/wcarhart/Konphig/blob/master/functions.md#cplast) | [resetbar](https://github.com/wcarhart/Konphig/blob/master/functions.md#resetbar)
-| [mkcpcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcpcd) | [per](https://github.com/wcarhart/Konphig/blob/master/functions.md#per) | | [rcreate](https://github.com/wcarhart/Konphig/blob/master/functions.md#rcreate)
-| [rmd](https://github.com/wcarhart/Konphig/blob/master/functions.md#rmd) | [show](https://github.com/wcarhart/Konphig/blob/master/functions.md#show)
+| [mkcpcd](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcpcd) | [per](https://github.com/wcarhart/Konphig/blob/master/functions.md#per) | [update](https://github.com/wcarhart/Konphig/blob/master/functions.md#update) | [rcreate](https://github.com/wcarhart/Konphig/blob/master/functions.md#rcreate)
+| [rmd](https://github.com/wcarhart/Konphig/blob/master/functions.md#rmd) | [show](https://github.com/wcarhart/Konphig/blob/master/functions.md#show) | | [contains](https://github.com/wcarhart/Konphig/blob/master/functions.md#contains)
 | [mkdate](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkdate) | [dup](https://github.com/wcarhart/Konphig/blob/master/functions.md#dup)
 | [mkcddate](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcddate) | [duf](https://github.com/wcarhart/Konphig/blob/master/functions.md#duf)
 | [clear](https://github.com/wcarhart/Konphig/blob/master/functions.md#clear) | [get](https://github.com/wcarhart/Konphig/blob/master/functions.md#get)
@@ -299,9 +299,20 @@ Dependencies: `cd`, `echo`, `pwd`
 
 ---
 #### down
-*down* - move back down a directory if just used up
+*down* - go back down one directory if we go up one too many
 
-This function is a WIP.
+Usage: `down`
+```
+$ pwd
+~/project/app/models/users/
+$ up 3                   # whoops, I only mean to go up 2
+~/project/
+$ down                   # actually, can I go down one more?
+~/project/app/
+$ down
+~/project/app/models/
+```
+Dependencies: `pwd`, `cd`, [`contains`](https://github.com/wcarhart/Konphig/blob/master/functions.md#contains)
 
 ---
 #### common
@@ -658,6 +669,21 @@ $
 Dependencies: `fc`, `head`, `tac`, `rm`, `pbcopy`
 
 ---
+#### update
+*update* - updates system configurations based on Konphig files
+
+Usage: `update`
+```
+$ vim ~/Konphig/.bash_functions         # make an update to a Konphig file
+$ update                                # changes are reflected in system configurations
+Updating .bash_functions
+$ update                                # dynamic updation: won't update files that haven't been changed
+Nothing to update
+```
+Dependencies: [`ostype`](https://github.com/wcarhart/Konphig/blob/master/functions.md#ostype), `MD5` or `md5sum`, `echo`, `yes`, `cp`, `source`
+
+---
+
 ## Miscellaneous
 Miscellaneous functions for general use.
 
@@ -814,7 +840,7 @@ Dependencies: `read`, `echo`, `fold`, `tr`
 
 ---
 #### gmail
-*gmail* - show number of unread emails in your Gmail inbox
+*gmail* - show number of unread emails in your Gmail inbox (**WARNING: deprecated, new Gmail security settings often limit this function's capabilities**)
 
 Usage `gmail email`
 ```
@@ -844,7 +870,7 @@ $ getlocation
 IP: 105.38.27.128
 Location: San Francisco, CA, USA
 ```
-Dependencies: `dig`, `lynx`, `egrep`, `read`, `echo`, `cut`, `column`
+Dependencies: `dig`, `lynx`, `egrep`, `read`, `echo`, `cut`
 
 ---
 #### pause
@@ -903,6 +929,20 @@ To https://github.com/username/awesome_new_repo.git
 Branch master set up to track remote branch master from origin.
 ```
 Dependencies: `git`, `curl`
+
+---
+#### contains
+*contains* - checks to see if array contains a string, returns 0 if true, 1 if false
+
+Usage: `contains "string" "${array[@]}"`
+```
+$ array=("one" "two" "three")
+$ if contains "one" "${array[@]}" ; then echo "true" ; else echo "false" ; fi
+true
+$ if contains "four" "${array[@]}" ; then echo "true" ; else echo "false" ; fi
+false
+```
+Dependencies: `echo`, `shift`
 
 ---
 
@@ -969,4 +1009,4 @@ $ randimal --install          # run the first time to install dependencies
 $ randimal                    # guess you'll have to try this one out to see what it does
 $ randimal "Hello, world!"    # guess you'll have to try this one out to see what it does
 ```
-Dependencies: `cowsay`, `fortune` `uname`, `echo`, `lolcat`, `brew` or `apt-get`, `shift`, `type`, `tail`, `tr`, `shuf` or `gshuf`
+Dependencies: `cowsay`, `fortune` [`ostype`](https://github.com/wcarhart/Konphig/blob/master/functions.md#ostype), `echo`, `lolcat`, `brew` or `apt-get`, `shift`, `type`, `tail`, `tr`, `shuf` or `gshuf`
