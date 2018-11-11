@@ -931,3 +931,12 @@ rcreate() {
 	git remote add origin git@github.com:${USER:-${GITHUBUSER}}/${REPONAME:-${REPO}}.git
 	git push --set-upstream origin master
 }
+
+# execute a python file and open it in sublime
+eao() {
+	if [ $# -eq 0 ] ; then
+		echo "eao: err: incorrect number of arguments"
+		return
+	fi
+	(subl "$1" &); echo "$@" | xargs python3
+}
