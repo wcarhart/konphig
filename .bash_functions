@@ -264,9 +264,35 @@ up() {
 }
 
 # go back down one directory if we go up one too many
-# TODO
 down() {
-	return
+	from="$(pwd)"
+	cd - >/dev/null
+	to="$(pwd)"
+	toarr=(${to//// })
+	fromarr=(${from//// })
+
+	for i in "${toarr[@]}"
+	do
+		if ! contains "$i" "${fromarr[@]}" ; then
+			from="$from/$i"
+			break
+		fi
+	done
+
+	cd "$from"
+	pwd
+}
+
+# checks to see if array ($2) contains a string ($1)
+contains() {
+	if [[ $# -le 2 ]] ; then
+		echo "contains: err: incorrect number of arguments"
+		return 1
+	fi
+	local e match="$1"
+	shift
+	for e; do [[ "$e" == "$match" ]] && return 0; done
+	return 1
 }
 
 # cycle through different prompts (different PS1 variables)
