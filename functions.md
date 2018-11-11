@@ -965,6 +965,7 @@ Dependencies: `cowsay`, `echo`, `tail`, `tr`
 
 Usage: `randimal [text]`
 ```
+$ randimal --install          # run the first time to install dependencies
 $ randimal                    # guess you'll have to try this one out to see what it does
 $ randimal "Hello, world!"    # guess you'll have to try this one out to see what it does
 ```
