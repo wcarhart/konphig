@@ -299,9 +299,20 @@ Dependencies: `cd`, `echo`, `pwd`
 
 ---
 #### down
-*down* - move back down a directory if just used up
+*down* - go back down one directory if we go up one too many
 
-This function is a WIP.
+Usage: `down`
+```
+$ pwd
+~/project/app/models/users/
+$ up 3                   # whoops, I only mean to go up 2
+~/project/
+$ down                   # actually, can I go down one more?
+~/project/app/
+$ down
+~/project/app/models/
+```
+Dependencies: `pwd`, `cd`, [`contains`](https://github.com/wcarhart/Konphig/blob/master/functions.md#contains)
 
 ---
 #### common
