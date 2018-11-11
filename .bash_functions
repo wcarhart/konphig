@@ -558,26 +558,24 @@ publicip() {
 getlocation() {
 	myip="$(dig +short myip.opendns.com @resolver1.opendns.com)"
 	details="$(lynx -dump "$(publicip)".ip-adress.com | egrep 'City|State Code|Country Code')"
-	frmt="IP:\t$myip\n"
+	frmt="IP: $myip\n"
 	index=0
 	while IFS= read -r line ; do
 		if [ $index -eq 0 ] ; then
-			city="$(echo $line | cut -d " " -f2-)\n"
+			city="$(echo $line | cut -d " " -f2-)"
 			let index=index+1
 		elif [ $index -eq 1 ] ; then
-			country="$(echo $line | cut -d " " -f3-)\n"
+			country="$(echo $line | cut -d " " -f3-)"
 			let index=index+1
 		else
-			state="$(echo $line | cut -d " " -f3-)\n"
+			state="$(echo $line | cut -d " " -f3-)"
 			let index=index+1
 		fi
 	done <<< "$details"
 
-	location="$city"
-	location+=", $state"
-	location+=" country"
+	location="Location: $city, $state, $country"
 	frmt+="$location"
-	echo -e $frmt | column -t -s $'\t'
+	echo -e $frmt
 }
 
 # make it look like you're busy
@@ -628,7 +626,7 @@ rickroll() {
 	yes "$string"
 }
 
-# reverse input()
+# reverse input
 rev() {
 	if [ $# -eq 0 ] ; then
 		__=""
@@ -702,7 +700,7 @@ randimal() {
 				brew install lolcat
 			fi
 		}
-		shift
+		return
 	fi
 
 	type cowsay >/dev/null 2>&1 || { echo -e >&2 "randimal: err: \`cowsay\` is required but not installed (use \`apt-get install cowsay\` or \`brew install cowsay\` to install)"; return; }
