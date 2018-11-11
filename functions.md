@@ -23,6 +23,7 @@ This is the general documentation for the `BASH` functions written in `.bash_fun
 | [clear](https://github.com/wcarhart/Konphig/blob/master/functions.md#clear) | [get](https://github.com/wcarhart/Konphig/blob/master/functions.md#get)
 | [del](https://github.com/wcarhart/Konphig/blob/master/functions.md#del) | [lbl](https://github.com/wcarhart/Konphig/blob/master/functions.md#lbl)
 | [clonecd](https://github.com/wcarhart/Konphig/blob/master/functions.md#clonecd)
+| [eao](https://github.com/wcarhart/Konphig/blob/master/functions.md#eao)
 
 
 ## File Manipulation
@@ -237,6 +238,20 @@ $ pwd
 /repo_name/
 ```
 Dependencies: `git`, `cd`, `basename`
+
+---
+#### eao
+*execute and open* - execute a Python file and open it in Sublime Text 3
+
+Usage: `eao file.py [args]`
+```
+# printargs.py is a simple Python script that will print its command line arguments
+$ eao printargs.py                 # opens printargs.py in separate Sublime Text 3 window
+['printargs.py']
+$ eao printargs.py 1 2 3           # opens printargs.py in separate Sublime Text 3 window, command line args don't affect opening
+['printargs.py', '1', '2', '3']    # command line args still work with execution
+```
+Dependencies: `echo`, `subl`, `python3`, `xargs`
 
 ---
 
