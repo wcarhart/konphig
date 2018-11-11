@@ -24,6 +24,7 @@ This is the general documentation for the `BASH` functions written in `.bash_fun
 | [del](https://github.com/wcarhart/Konphig/blob/master/functions.md#del) | [lbl](https://github.com/wcarhart/Konphig/blob/master/functions.md#lbl)
 | [clonecd](https://github.com/wcarhart/Konphig/blob/master/functions.md#clonecd)
 | [eao](https://github.com/wcarhart/Konphig/blob/master/functions.md#eao)
+| [gimme](https://github.com/wcarhart/Konphig/blob/master/functions.md#gimme)
 
 
 ## File Manipulation
@@ -241,20 +242,37 @@ Dependencies: `git`, `cd`, `basename`
 
 ---
 #### eao
-*execute and open* - execute a Python file and open it in Sublime Text 3
+*execute and open* - execute a file and open it in Sublime
 
-Usage: `eao file.py [args]`
+Usage: `eao file_name [args]`
 ```
 # printargs.py is a simple Python script that will print its command line arguments
-$ eao printargs.py                 # opens printargs.py in separate Sublime Text 3 window
+$ eao printargs.py                      # opens printargs.py in separate Sublime window
 ['printargs.py']
-$ eao printargs.py 1 2 3           # opens printargs.py in separate Sublime Text 3 window, command line args don't affect opening
-['printargs.py', '1', '2', '3']    # command line args still work with execution
+$ eao printargs.py 1 2 3                # opens printargs.py in separate Sublime window, command line args don't affect opening
+['printargs.py', '1', '2', '3']         # command line args still work with execution
+$ echo "echo 'Hello, world'" > test.sh  # works with .sh, .py, and .rb files
+$ eao test.sh
+Hello, world
 ```
-Dependencies: `echo`, `subl`, `python3`, `xargs`
+Dependencies: `echo`, `subl`, `python3`, `ruby`
 
 ---
+#### gimme
+*give me* - gives the current user execution privileges for a file
 
+Usage: `gimme file_name`
+```
+$ echo "echo 'test'" > script.sh
+$ ./script.sh
+-bash: ./script.sh: Permission denied
+$ gimme script.sh
+$ ./script.sh
+test
+```
+Dependencies: `echo`, `chmod`
+
+---
 ## Statistics & Tools
 These functions show statistics about the system, environment, and files, or act as general tools.
 
