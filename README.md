@@ -22,7 +22,7 @@ In addition, if you ever make a change to any of your Konphig files, you can sim
  
 ### BASH
 The BASH configurations contain the general `.bashrc` and `.bash_profile` files, but also:
- * `.bash_functions` - **60+ COOL BASH FUNCTIONS!** - file for BASH functions ([see here](https://github.com/wcarhart/Konphig/blob/master/functions.md) for separate BASH function documentation)
+ * `.bash_functions` - **70+ COOL BASH FUNCTIONS!** - file for BASH functions ([see here](https://github.com/wcarhart/Konphig/blob/master/functions.md) for separate BASH function documentation)
  * `.bash_aliases` - file for BASH aliases
  * `.bash_variables` - file for BASH variables
 
