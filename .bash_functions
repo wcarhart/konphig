@@ -64,10 +64,10 @@ addv() {
 	if [ $# -ne 2 ] ; then
 		echo "addv: err: incorrect number of arguments"
 	else
-		if [ ! ~/.bash_exports ] ; then
+		if [ ! ~/.bash_variables ] ; then
 			F=~/.bashrc
 		else
-			F=~/.bash_exports
+			F=~/.bash_variables
 		fi
 
 		echo "export $1=$2" >> $F
@@ -963,4 +963,73 @@ eao() {
 		return
 	fi
 	(subl "$1" &); echo "$@" | xargs python3
+}
+
+# update Konphig settings for system
+update() {
+	os="$(ostype)"
+	if [[ "$os" == "Mac" ]] ; then
+		cmd="MD5 -q"
+	else
+		cmd="md5sum"
+	fi
+
+	val=0
+
+	if ! [[ "$($cmd ~/Konphig/.bash_aliases)" == "$($cmd ~/.bash_aliases)" ]] ; then
+		echo "Updating .bash_aliases"
+		val=1
+		yes | cp -rf ~/Konphig/.bash_aliases ~ >/dev/null 2>&1
+	fi
+	if ! [[ "$($cmd ~/Konphig/.bash_variables)" == "$($cmd ~/.bash_variables)" ]] ; then
+		echo "Updating .bash_variables"
+		val=1
+		yes | cp -rf ~/Konphig/.bash_variables ~ >/dev/null 2>&1
+	fi
+	if ! [[ "$($cmd ~/Konphig/.bash_functions)" == "$($cmd ~/.bash_functions)" ]] ; then
+		echo "Updating .bash_functions"
+		val=1
+		yes | cp -rf ~/Konphig/.bash_functions ~ >/dev/null 2>&1
+	fi
+	if ! [[ "$($cmd ~/Konphig/.bash_profile)" == "$($cmd ~/.bash_profile)" ]] ; then
+		echo "Updating .bash_profile"
+		val=1
+		yes | cp -rf ~/Konphig/.bash_profile ~ >/dev/null 2>&1
+	fi
+	if ! [[ "$($cmd ~/Konphig/.bashrc)" == "$($cmd ~/.bashrc)" ]] ; then
+		echo "Updating .bashrc"
+		val=1
+		yes | cp -rf ~/Konphig/.bashrc ~ >/dev/null 2>&1
+	fi
+	if ! [[ "$($cmd ~/Konphig/.git-prompt.sh)" == "$($cmd ~/.git-prompt.sh)" ]] ; then
+		echo "Updating .git-prompt.sh"
+		val=1
+		yes | cp -rf ~/Konphig/.git-prompt.sh ~ >/dev/null 2>&1
+	fi
+	if ! [[ "$($cmd ~/Konphig/.gitconfig)" == "$($cmd ~/.gitconfig)" ]] ; then
+		echo "Updating .gitconfig"
+		val=1
+		yes | cp -rf ~/Konphig/.gitconfig ~ >/dev/null 2>&1
+	fi
+	if ! [[ "$($cmd ~/Konphig/.profile)" == "$($cmd ~/.profile)" ]] ; then
+		echo "Updating .profile"
+		val=1
+		yes | cp -rf ~/Konphig/.profile ~ >/dev/null 2>&1
+	fi
+	if ! [[ "$($cmd ~/Konphig/.tmux.conf)" == "$($cmd ~/.tmux.conf)" ]] ; then
+		echo "Updating .tmux.conf"
+		val=1
+		yes | cp -rf ~/Konphig/.tmux.conf ~ >/dev/null 2>&1
+	fi
+	if ! [[ "$($cmd ~/Konphig/.vimrc)" == "$($cmd ~/.vimrc)" ]] ; then
+		echo "Updating .vimrc"
+		val=1
+		yes | cp -rf ~/Konphig/.vimrc ~ >/dev/null 2>&1
+	fi
+
+	if [ $val -eq 0 ] ; then
+		echo "Nothing to update"
+	else
+		source ~/.bashrc
+	fi
 }
