@@ -511,7 +511,7 @@ $ duf py md
 py: 30K
 md: 4.7K
 ```
-Dependencies: `echo`, `find`, `read`, `shift`
+Dependencies: `echo`, `find`, `read`, `shift`, `du`, `xargs`, `tail`
 
 ---
 #### get
