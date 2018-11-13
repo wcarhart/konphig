@@ -563,10 +563,10 @@ Dependencies: `echo`, `source`
 
 Usage: `addv variable value`
 ```
-$ addv shortcut /long/path/to/a/remote/directory/thats/annoying/to/type/a/lot
+$ addv shortcut /long/path/to/a/directory/thats/annoying/to/type/a/lot
 $ cd $shortcut
 $ pwd
-/long/path/to/a/remote/directory/thats/annoying/to/type/a/lot/
+/long/path/to/a/directory/thats/annoying/to/type/a/lot/
 ```
 Dependencies: `echo`, `source`
 
@@ -789,7 +789,7 @@ Dependencies: `echo`, `strings`, `urandom`, `fc`, `tac`, `head`, `rm`, `grep`, `
 #### makef
 *make function* - makes a `BASH` function in either `.bashrc` or `.bash_functions` (depending on configuration, which is auto-detected by the function) of the last previous command (default) or previous specified amount of commands; function can be named or defaults to a random string
 
-Usage: `makef [number_of_commands] [name_of_function]
+Usage: `makef [number_of_commands] [name_of_function]`
 ```
 $ ls
 file0.txt
