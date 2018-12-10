@@ -370,9 +370,10 @@ snag() {
 	else
 		num=$1
 	fi
-	files="$(ls -t ~/Downloads | head -$num)"
-	for file in $files; do
-		mv ~/Downloads/$file .
+
+	for i in $(seq 1 $num); do
+		file="$(ls -t ~/Downloads | head -1)"
+		mv ~/Downloads/"$file" .
 	done
 }
 
