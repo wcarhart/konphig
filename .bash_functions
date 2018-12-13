@@ -1058,3 +1058,14 @@ gimme() {
 	fi
 	chmod +x "$1"
 }
+
+# open a file in Google Chrome from the command line
+chrome() {
+	if [ $# -eq 0 ] ; then
+		echo "chrome: err: incorrect number of arguments"
+		return
+	fi
+	for arg in "$@" ; do
+		open -a "Google Chrome" "$arg"
+	done
+}
