@@ -304,8 +304,18 @@ dp() {
 	elif [ $1 -gt $numprompts ] ; then
 		echo "dp: err: prompt index out of bounds, attempted to select prompt $1 of only $numprompts total"
 	else
-		#PS1=...
-		return
+		if [ "$1" == "1" ] ; then
+			#PS1=...
+			return
+		elif [ "$1" == "2" ] ; then
+			#PS1=...
+			return
+		elif [ "$1" == "3" ] ; then
+			#PS1=...
+			return
+		else
+			echo "dp: err: invalid prompt index"
+		fi
 	fi
 }
 
