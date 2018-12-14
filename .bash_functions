@@ -870,7 +870,9 @@ clear() {
 		command clear
 	else
 		for file in "$@"; do
-			> "$file"
+			if [ -f "$file" ]; then
+    			> "$file"
+			fi
 		done
 	fi
 }
