@@ -871,7 +871,7 @@ clear() {
 	else
 		for file in "$@"; do
 			if [ -f "$file" ]; then
-    			> "$file"
+				> "$file"
 			fi
 		done
 	fi
