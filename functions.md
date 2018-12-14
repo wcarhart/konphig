@@ -22,7 +22,7 @@ This is the general documentation for the `BASH` functions written in `.bash_fun
 | [mkcddate](https://github.com/wcarhart/Konphig/blob/master/functions.md#mkcddate) | [duf](https://github.com/wcarhart/Konphig/blob/master/functions.md#duf)
 | [clear](https://github.com/wcarhart/Konphig/blob/master/functions.md#clear) | [get](https://github.com/wcarhart/Konphig/blob/master/functions.md#get)
 | [del](https://github.com/wcarhart/Konphig/blob/master/functions.md#del) | [lbl](https://github.com/wcarhart/Konphig/blob/master/functions.md#lbl)
-| [clonecd](https://github.com/wcarhart/Konphig/blob/master/functions.md#clonecd)
+| [clonecd](https://github.com/wcarhart/Konphig/blob/master/functions.md#clonecd) | [chrome](https://github.com/wcarhart/Konphig/blob/master/functions.md#chrome)
 | [eao](https://github.com/wcarhart/Konphig/blob/master/functions.md#eao)
 | [gimme](https://github.com/wcarhart/Konphig/blob/master/functions.md#gimme)
 
@@ -364,7 +364,7 @@ Usage: `snag [number_of_files]`
 $ snag            # move the most recently downloaded file to current directory
 $ snag 3          # move the 3 most recently downloaded files to the current directory
 ```
-Dependencies: `head`, `ls`, `mv`
+Dependencies: `head`, `ls`, `mv`, `seq`
 
 ---
 #### histg
@@ -530,6 +530,8 @@ file0.txt
 file1.txt
 ```
 Dependencies: `echo`, `ls`, `grep`, `sort`, `tail`, `read`
+
+---
 #### lbl
 *grep line-by-line* - searches through a file line-by-line and pauses at each line (waits for user input)
 
@@ -542,6 +544,17 @@ def world(param):
 
 ```
 Dependencies: `echo`, `read`, `grep`
+
+---
+#### chrome
+*open a file in Google Chrome* - oepns a file in the Google Chrome browser
+
+Usage: `chrome filename0 [filename1]`
+```
+$ chrome README.md                 # opens README.md in Chrome
+# chrome README0.md index.html     # opens README.md and index.html in Chrome
+```
+Dependencies: `echo`, `open`
 
 ---
 ## Environment
