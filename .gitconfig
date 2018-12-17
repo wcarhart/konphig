@@ -26,6 +26,7 @@
 	alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
 	b = branch
 	cb = checkout -b
+	discard = !git clean -df && git checkout --
 
 [push]
 	default = simple
