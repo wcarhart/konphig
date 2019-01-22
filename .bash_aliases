@@ -53,3 +53,4 @@ alias eit=exit
 alias upls='up && ls'
 alias p3='python3'
 alias cdk='cd ~/Konphig'
+alias dirs='dirs -v'
