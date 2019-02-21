@@ -30,4 +30,7 @@
 
 [push]
 	default = simple
+
+[core]
+	editor = subl -n -w
 	
