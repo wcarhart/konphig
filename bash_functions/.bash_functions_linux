@@ -3,7 +3,7 @@
 
 # extracts compressed and zipped files automatically
 extract() {
-	if [ -f $1 ] ; then
+	if [[ -f $1 ]] ; then
 		case $1 in
 			*.tar.bz2)		tar xjf $1		;;
 			*.tar.gz)		tar xzf $1		;;
@@ -19,7 +19,8 @@ extract() {
 			*)				echo "'$1' cannot be extracted via extract()" ;;
 		esac
 	else
-		echo "'$1' is not a valid file"
+		echo "$1 is not a valid file"
+		return 1
 	fi
 }
 
@@ -30,11 +31,12 @@ grab() {
 
 # search for a process by name
 psgrep() {
-	if [ ! -z $1 ] ; then
+	if [[ ! -z $1 ]] ; then
 		echo "Grepping for process matching $1..."
 		ps aux | grep $1 | grep -v grep
 	else
 		echo "psgrep: err: need name to grep for"
+		return 1
 	fi
 }
 
@@ -45,343 +47,332 @@ fixlines() {
 
 # add an alias on the fly
 adda() {
-	if [ $# -ne 2 ] ; then
+	if [[ $# -ne 2 ]] ; then
 		echo "adda: err: incorrect number of arguments"
-	else
-		if [ ! ~/.bash_aliases ] ; then
-			F=~/.bashrc
-		else
-			F=~/.bash_aliases
-		fi
-
-		echo "alias $1='$2'" >> $F
-		source ~/.bashrc
+		return 1
 	fi
+
+	if [[ ! -f ~/.bash_aliases ]] ; then
+		F=~/.bashrc
+	else
+		F=~/.bash_aliases
+	fi
+
+	echo "alias $1='$2'" >> $F
+	source ~/.bashrc
 }
 
 # add a variable on the fly
 addv() {
-	if [ $# -ne 2 ] ; then
+	if [[ $# -ne 2 ]] ; then
 		echo "addv: err: incorrect number of arguments"
-	else
-		if [ ! ~/.bash_variables ] ; then
-			F=~/.bashrc
-		else
-			F=~/.bash_variables
-		fi
-
-		echo "export $1=$2" >> $F
-		source ~/.bashrc
+		return 1
 	fi
+
+	if [[ ! -f ~/.bash_variables ]] ; then
+		F=~/.bashrc
+	else
+		F=~/.bash_variables
+	fi
+
+	echo "export $1=$2" >> $F
+	source ~/.bashrc
 }
 
 # add test files to directory
 ranf() {
-	if [ $# -eq 0 ] ; then
-		val=100
-	else
-		val=$1
-	fi
 	touch test.txt
-	for i in {0..50}; do echo "test test test test" >> test.txt; done
-	for ((i=0; i<=val; i++)); do cat test.txt > test$i.txt; done
+	for i in {0..50} ; do echo "test test test test" >> test.txt ; done
+	for ((i=1; i<=${1:-100}; i++)) ; do cat test.txt > test$i.txt ; done
 	rm -rf "test.txt"
 }
 
 # remove files in directory and its subdirectories
 rmr() {
-	if [ $# -eq 0 ] ; then
+	if [[ $# -eq 0 ]] ; then
 		echo "rmr: err: incorrect number of arguments"
-	else
-		for arg in "$@"; do
-			find . -name $arg -delete
-		done
+		return 1
 	fi
+
+	for ARG in "$@" ; do
+		find . -name $ARG -delete
+	done
 }
 
 # move files and change directory
 mvcd() {
-	if [ $# -ne 2 ] ; then
+	if [[ $# -ne 2 ]] ; then
 		echo "mvcd: err: incorrect number of arguments"
-	else
-		mv "$@"
-		for last; do true; done
-		cd $last
+		return 1
 	fi
+	
+	mv "$@"
+	for LAST ; do true ; done
+	cd $LAST
 }
 
 # move files, change directory, and delete source directory
 # WARNING: will forcefully remove source, even if nonempty (use case is with *)
 mvrm() {
-	if [ $# -ne 2 ] ; then
+	if [[ $# -ne 2 ]] ; then
 		echo "mvrm: err: incorrect number of arguments"
-	else
-		mv "$@"
-		OLD=$PWD
-		for last; do true; done
-		cd $last
-		rm -rf $OLD
+		return 1
 	fi
+
+	mv "$@"
+	OLD=$PWD
+	for LAS ; do true ; done
+	cd $LAST
+	rm -rf $OLD
 }
 
 # copy files and change directory
 cpcd() {
-	if [ $# -ne 2 ] ; then
+	if [[ $# -ne 2 ]] ; then
 		echo "cpcd: err: incorrect number of arguments"
-	else
-		cp "$@"
-		for last; do true; done
-		cd $last
+		return 1
 	fi
+
+	cp "$@"
+	for LAST ; do true ; done
+	cd $LAST
 }
 
 # copy files with progress bar and change directory
 cppcd() {
-	if [ $# -ne 2 ] ; then
+	if [[ $# -ne 2 ]] ; then
 		echo "cppcd: err: incorrect number of arguments"
-	else
-		rsync --progress "$@"
-		for last; do true; done
-		cd $last
+		return 1
 	fi
+
+	rsync --progress "$@"
+	for LAST ; do true ; done
+	cd $LAST
 }
 
 # change directory and list contents
 cdls() {
-	if [ $# -ne 1 ] ; then
+	if [[ $# -ne 1 ]] ; then
 		echo "cdls: err: incorrect number of arguments"
-	else
-		cd $1
-		ls
+		return 1
 	fi
+
+	cd "$1"
+	ls
 }
 
 # make directory and change into it
 mkcd() {
-	if [ $# -ne 1 ] ; then
+	if [[ $# -ne 1 ]] ; then
 		echo "mkcd: err: incorrect number of arguments"
-	else
-		mkdir $1 && cd $1
+		return 1
 	fi
+		
+	mkdir -p "$1" && cd "$1"
 }
 
 # make directory and move files into it
-# uses `destination source` syntax (opposite of mv)
 mkmv() {
-	if [ $# -ne 2 ] ; then
+	if [[ $# -ne 2 ]] ; then
 		echo "mkmv: err: incorrect number of arguments"
-	else
-		dir=$1
-		shift
-		mkdir $dir
-		mv "$@" $dir
+		return 1
 	fi
+
+	for DIR ; do true ; done
+	mkdir -p "$DIR"
+	mv "${*: 1:$#-1}" "$DIR"
 }
 
 # make directory, move files into it, then change directory
-# uses `destination source` syntax (opposite of mv)
 mkmvcd() {
-	if [ $# -ne 2 ] ; then
+	if [[ $# -ne 2 ]] ; then
 		echo "mkmvcd: err: incorrect number of arguments"
-	else
-		dir=$1
-		shift
-		mkdir $dir
-		mv "$@" $dir
-		cd $dir
+		return 1
 	fi
+
+	for DIR ; do true ; done
+	mkdir -p "$DIR"
+	mv "${*: 1:$#-1}" "$DIR"
+	cd "$DIR"
 }
 
 # make directory and copy files into it
-# uses `destination source` syntax (opposite of cp)
 mkcp() {
-	if [ $# -ne 2 ] ; then
+	if [[ $# -ne 2 ]] ; then
 		echo "mkcp: err: incorrect number of arguments"
-	else
-		dir=$1
-		shift
-		mkdir $dir
-		cp "$@" $dir
+		return 1
 	fi
+
+	for DIR ; do true ; done
+	mkdir -p "$DIR"
+	cp "${*: 1:$#-1}" "$DIR"
 }
 
 # make directory, copy files into it, then change directory
-# uses `destination source` syntax (opposite of cp)
 mkcpcd() {
-	if [ $# -ne 2 ] ; then
+	if [[ $# -ne 2 ]] ; then
 		echo "mkcpcd: err: incorrect number of arguments"
-	else
-		dir=$1
-		shift
-		mkdir $dir
-		cp "$@" $dir
-		cd $dir
+		return 1
 	fi
+
+	for DIR ; do true ; done
+	mkdir -p "$DIR"
+	cp "${*: 1:$#-1}" "$DIR"
+	cd "$DIR"
 }
 
 # check if the md5sum's of two files match
 md5c() {
-	if [ $# -ne 2 ] ; then
+	if [[ $# -ne 2 ]] ; then
 		echo "md5c: err: incorrect number of arguments"
+		return 1
+	fi
+
+	MD1="$(md5sum $1 | awk '{print $1}')"
+	MD2="$(md5sum $2 | awk '{print $1}')"
+	if [[ "$MD1" == "$MD2" ]] ; then
+		echo "PASS $MD1"
 	else
-		MD1="$(md5sum $1 | awk '{print $1}')"
-		MD2="$(md5sum $2 | awk '{print $1}')"
-		if [ "$MD1" == "$MD2" ] ; then
-			echo "PASS $MD1"
-		else
-			echo "FAIL $MD1 $MD2"
-		fi
+		echo "FAIL $MD1 $MD2"
 	fi
 }
 
 # count the number of files in a directory and its subdirectories
 cf() {
-	if [ $# -eq 0 ] ; then
-		dir="."
-	else
-		dir=$1
-	fi
-	num="$(find $dir -type f | wc -l)"
-	echo "$num files"
+	NUM="$(find ${1:-"."} -type f | wc -l)"
+	echo "$NUM files"
 }
 
 # change up multiple directories
 up() {
-	if [ -z $1 ] ; then
+	export __UPDIR__=`pwd`
+	if [[ -z $1 ]] ; then
 		cd ..
-	elif [ $1 -gt 0 ] ; then
-		let count=1
-		cdstr=".."
-		while [ $count -lt $1 ] ; do
-			cdstr="$cdstr/.."
-			let count=count+1
+	elif [[ $1 -gt 0 ]] ; then
+		let COUNT=1
+		CDSTR=".."
+		while [[ $COUNT -lt $1 ]] ; do
+			CDSTR="$CDSTR/.."
+			let COUNT=COUNT+1
 		done
-		cd $cdstr
+		cd $CDSTR
 	else
 		echo "up: err: argument must be a positive integer"
+		return 1
 	fi
 	pwd
 }
 
 # go back down one directory if we go up one too many
 down() {
-	from="$(pwd)"
-	cd - >/dev/null
-	to="$(pwd)"
-	toarr=(${to//// })
-	fromarr=(${from//// })
+	TO="$__UPDIR__"
+	if [[ "$TO" == "" ]] ; then
+		pwd
+		return 0
+	fi
 
-	for i in "${toarr[@]}"
-	do
-		if ! contains "$i" "${fromarr[@]}" ; then
-			from="$from/$i"
-			break
+	if [[ $# -gt 0 ]] ; then
+		[ -n "$1" ] && [ "$1" -eq "$1" ] 2>/dev/null
+		if [[ $? -ne 0 ]] ; then
+			echo "down: err: argument must be a number"
+			return 1
 		fi
+	fi
+
+	FROM="`pwd`"
+	for i in $(seq 1 $1) ; do
+		TARGET="${TO##$FROM}"
+		if [[ "$TARGET" == "" ]] ; then
+			pwd
+			return 0
+		fi
+		
+		TARGETARR=(${TARGET//// })
+		FROM="`readlink -m $FROM/${TARGETARR[0]}`"
 	done
 
-	cd "$from"
+	cd "$FROM"
 	pwd
 }
 
-# checks to see if array ($2) contains a string ($1)
-contains() {
-	if [[ $# -le 2 ]] ; then
-		echo "contains: err: incorrect number of arguments"
-		return 1
-	fi
-	local e match="$1"
-	shift
-	for e; do [[ "$e" == "$match" ]] && return 0; done
-	return 1
-}
-
 # cycle through different prompts (different PS1 variables)
-# TODO
 dp() {
-	numprompts=3
-	if [ $# -ne 1 ] ; then
-		echo "dp: err: incorrect number of arguments"
-	elif [ $1 -gt $numprompts ] ; then
-		echo "dp: err: prompt index out of bounds, attempted to select prompt $1 of only $numprompts total"
+	if [[ $# -eq 0 ]] ; then
+		# default
+		export __PS1__=''
+	elif [[ "$1" == "1" ]] ; then
+		# minimalist
+		export __PS1__="\\$ "
+	elif [[ "$1" == "2" ]] ; then
+		# just date
+		export __PS1__="[\A] > "
+	elif [[ "$1" == "3" ]] ; then
+		# full date and pwd
+		export __PS1__="[\u@\h] \d, \T <\W> \\$ "
+	elif [[ "$1" == "4" ]] ; then
+		# mood based on last command
+		export __PS1__="\`if [ \$? = 0 ]; then echo \[\e[33m\]^_^\[\e[0m\]; else echo \[\e[31m\]O_O\[\e[0m\]; fi\` \\$ "
 	else
-		if [ "$1" == "1" ] ; then
-			#PS1=...
-			return
-		elif [ "$1" == "2" ] ; then
-			#PS1=...
-			return
-		elif [ "$1" == "3" ] ; then
-			#PS1=...
-			return
-		else
-			echo "dp: err: invalid prompt index"
-		fi
+		echo "dp: err: invalid prompt index, must be [0,4]"
+		return 1
 	fi
 }
 
 # show most commonly used commands
 common() {
-	if [ $# -eq 0 ] ; then
-		num="10"
-	else
-		num=$1
-	fi
-	CMD="-n$num"
-	history | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl | head $CMD
+	history | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl | head "-n${1:-10}"
 }
 
 # kill process by name
 kp() {
-	if [ $# -ne 1 ] ; then
+	if [[ $# -ne 1 ]] ; then
 		echo "kp: err: incorrect number of arguments"
-	else
-		ps aux | grep $1 > /dev/null
-		mypid=$(pidof $1)
-		if [ "$mypid" != "" ] ; then
-			kill -9 $(pidof $1)
-			if [[ "$?" == "0" ]] ; then
-				echo "PID $mypid ($1) killed"
-			fi
-		else
-			echo "kp: err: no processes killed, could not find PID for process $1"
+		return 1
+	fi
+
+	ps aux | grep $1 > /dev/null
+	PID=$(pidof $1)
+	if [[ "$PID" != "" ]] ; then
+		kill -9 $(pidof $1)
+		if [[ "$?" == "0" ]] ; then
+			echo "PID $PID ($1) killed"
 		fi
+	else
+		echo "kp: err: no processes killed, could not find PID for process $1"
+		return 1
 	fi
 }
 
 # add to PATH variable
 pathadd() {
-	if [ $# -eq 0 ] ; then
+	if [[ $# -eq 0 ]] ; then
 		echo "pathadd: err: incorrect number of arguments"
+		return 1
 	fi
-	newelement=${1%/}
-	if [ -d "$1" ] && ! echo $PATH | grep -E -q "(^|:)$newelement($|:)" ; then
+
+	NEW=${1%/}
+	if [[ -d "$1" ]] && ! echo $PATH | grep -E -q "(^|:)$NEW($|:)" ; then
 		if [ "$2" == "after" ] ; then
-			PATH="$PATH:$newelement"
+			export PATH="$PATH:$NEW"
 		else
-			PATH="$newelement:$PATH"
+			export PATH="$NEW:$PATH"
 		fi
 	fi
 }
 
 # remove from PATH variable
 pathrm() {
-	PATH="$(echo $PATH | sed -e "s;\(^\|:\)${1%/}\(:\|\$\);\1\2;g" -e 's;^:\|:$;;g' -e 's;::;:;g')"
+	export PATH=`echo $PATH | sed -e "s;\(^\|:\)${1%/}\(:\|\$\);\1\2;g" -e 's;^:\|:$;;g' -e 's;::;:;g'`
 }
 
 # remove duplicates from PATH variable (deduplicate)
 pathdedup() {
-	PATH="$(perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))')"
+	export PATH=`perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))'`
 }
 
 # move most recently downloaded item(s) to the current directory (only works on MacOS)
 snag() {
-	if [ $# -eq 0 ] ; then
-		num=1
-	else
-		num=$1
-	fi
-
-	for i in $(seq 1 $num); do
+	for i in `seq 1 ${1:-1}`; do
 		file="$(ls -t ~/Downloads | head -1)"
 		mv ~/Downloads/"$file" .
 	done
@@ -389,12 +380,7 @@ snag() {
 
 # get the default branch for a git repo
 gitdefault() {
-	if [ $# -eq 1 ] ; then
-		rem=1
-	else
-		rem="origin"
-	fi
-	git remote show $rem | grep "HEAD branch" | cut -d ":" -f 2
+	git remote show ${1:-"origin"} | grep "HEAD branch" | cut -d ":" -f 2
 }
 
 # remove all subdirectories from a directory
@@ -405,21 +391,23 @@ rmd() {
 		rm -rf -- $1/*/
 	else
 		echo "rmd: err: incorrect number of arguments"
+		return 1
 	fi
 }
 
 # generate a random string of specified length, great for passwords
 random() {
-	if [ $# -eq 0 ] ; then
-		num=30
-	else
-		num=$1
-	fi
-	strings /dev/urandom | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo
+	strings /dev/urandom | grep -o '[[:alnum:]]' | head -n ${1:-30} | tr -d '\n'; echo
 }
 
 # make a shell script out of the last x commands
 makes() {
+	fc -rnl > /dev/null 2>&1
+	if [[ $? -ne 0 ]] ; then 
+		echo "makes: err: history is empty"
+		return 1
+	fi
+
 	if [ $# -eq 0 ] ; then
 		num=1
 		name="script.sh"
@@ -431,9 +419,10 @@ makes() {
 		name=$2
 	else
 		echo "makes: err: incorrect number of arguments"
+		return 1
 	fi
 
-	rando="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
+	rando="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 30 | tr -d '\n'; echo)"
 	fc -rnl | head -$num > $rando
 	tac $rando > $name
 	rm -rf $rando
@@ -441,6 +430,12 @@ makes() {
 
 # make a BASH function out of the last x commands
 makef() {
+	fc -rnl > /dev/null 2>&1
+	if [[ $? -ne 0 ]] ; then 
+		echo "makef: err: history is empty"
+		return 1
+	fi
+
 	if [ ! ~/.bash_functions ] ; then
 		source=~/.bashrc
 	else
@@ -449,18 +444,19 @@ makef() {
 
 	if [ $# -eq 0 ] ; then
 		num=1
-		rando="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
+		rando="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 30 | tr -d '\n'; echo)"
 		name="function_$rando"
 	elif [ $# -eq 1 ] ; then
 		num=$1
-		rando="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
+		rando="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 30 | tr -d '\n'; echo)"
 		name="function_$rando"
 	elif [ $# -eq 2 ] ; then
 		num=$1
 		name=$2
-		rando="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n $num | tr -d '\n'; echo)"
+		rando="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 30 | tr -d '\n'; echo)"
 	else
 		echo "makef: err: incorrect number of arguments"
+		return 1
 	fi
 
 	num="$(($num + 1))"
@@ -555,40 +551,32 @@ lsf() {
 
 # function that does nothing (great for testing purposes)
 dummy() {
-	return
+	return 0
 }
 
 # search through command history
 histg() {
 	if [ $# -ne 1 ] ; then
 		echo "histg: err: incorrect number of arguments"
-	else
-		history | grep $1
+		return 1
 	fi
+
+	history | grep "$1"
 }
 
 # intercept the `stderr` and `stdout` of a process
 intercept() {
 	if [ $# -ne 1 ] ; then
 		echo "intercept: err: incorrect number of arguments"
-	else
-		strace -ff -e trace=write -e write=1,2 -p $1
+		return 1
 	fi
-}
 
-# show number of unread emails in your Gmail inbox
-gmail() {
-	if [ $# -ne 1 ] ; then
-		echo "gmail: err: incorrect number of arguments"
-	else
-		curl -u "$1" --silent "https://mail.google.com/mail/feed/atom" | sed -e 's/<\/fullcount.*/\n/' | sed -e 's/.*fullcount>//'
-	fi
+	strace -ff -e trace=write -e write=1,2 -p $1
 }
 
 # show my current public IP address
 publicip() {
-	myip="$(dig +short myip.opendns.com @resolver1.opendns.com)"
-	echo $myip
+	echo `dig +short myip.opendns.com @resolver1.opendns.com`
 }
 
 # get location for your public IP address
@@ -628,6 +616,7 @@ sbs() {
 				cd $1
 			else
 				echo "sbs: err: $1 is not a valid directory"
+				return 1
 			fi
 		fi
 	fi
@@ -641,15 +630,15 @@ sbs() {
 
 # make directory prefixed with the date
 mkdate() {
-	local dir="$(date +%F)-$1"
-	mkdir $dir
+	local DIR="$(date +%F)-$1"
+	mkdir $DIR
 }
 
 # make directory prefixed with the date and change into it
 mkcddate() {
-	local dir="$(date +%F)-$1"
-	mkdir $dir
-	cd $dir
+	local DIR="$(date +%F)-$1"
+	mkdir $DIR
+	cd $DIR
 }
 
 # sound the alarm
@@ -679,12 +668,12 @@ rev() {
 		val=$_stdin
 		if [[ "$val" == "" ]] ; then
 			echo "rev: err: no input found on stdin"
-			return
+			return 1
 		fi
 	else
 		if [ $# -ne 1 ] ; then
 			echo "rev: err: incorrect number of arguments"
-			return
+			return 1
 		fi
 		val=$1
 	fi
@@ -706,7 +695,6 @@ ostype() {
 
 # list all cows
 lscows() {
-	type cowsay >/dev/null 2>&1 || { echo -e >&2 "lscows: err: \`cowsay\` is required but not installed (use \`apt-get install cowsay\` or \`brew install cowsay\` to install)"; return; }
 	cows="$(cowsay -l | tail -n +2 | tr ' ' '\n')"
 	for cow in $cows; do cowsay -f $cow $cow; done
 }
@@ -714,35 +702,6 @@ lscows() {
 # random animal speech
 randimal() {
 	os="$(ostype)"
-
-	if [[ "$1" == "--install" ]] ; then
-		type cowsay >/dev/null 2>&1 || {
-			if [[ "$os" == "Linux" ]] ; then
-				apt-get install cowsay
-			else
-				brew install cowsay
-			fi
-		}
-		type fortune >/dev/null 2>&1 || {
-			if [[ "$os" == "Linux" ]] ; then
-				apt-get install fortune
-			else
-				brew install fortune
-			fi
-		}
-		type lolcat >/dev/null 2>&1 || {
-			if [[ "$os" == "Linux" ]] ; then
-				apt-get install lolcat
-			else
-				brew install lolcat
-			fi
-		}
-		return
-	fi
-
-	type cowsay >/dev/null 2>&1 || { echo -e >&2 "randimal: err: \`cowsay\` is required but not installed (use \`apt-get install cowsay\` or \`brew install cowsay\` to install)"; return; }
-	type fortune >/dev/null 2>&1 || { echo -e >&2 "randimal: err: \`fortune\` is required but not installed (use \`apt-get install fortune\` or \`brew install fortune\` to install)"; return; }
-	type lolcat >/dev/null 2>&1 || { echo -e >&2 "randimal: err: \`lolcat\` is required but not installed (use \`apt-get install lolcat\` or \`brew install lolcat\` to install)"; return; }
 
 	if [[ "$os" == "Linux" ]] ; then
 		type shuf >/dev/null 2>&1 || { echo -e >&2 "randimal: err: \`shuf\` is required but not installed (use \`apt-get install shuf\` install)"; return; }
@@ -763,22 +722,12 @@ randimal() {
 
 # list what kinds of files are in a directory
 what() {
-	if [ $# -eq 0 ] ; then
-		dir="."
-	else
-		dir="$1"
-	fi
-	find $dir -type f | perl -ne 'print "." . $1 if m/\.([^.\/]+)$/'
+	find ${1:-"."} -type f | perl -ne 'print "." . $1 if m/\.([^.\/]+)$/'
 }
 
 # show percentage of each filetype in directory and its subdirectories
 per() {
-	if [ $# -eq 0 ] ; then
-		dir="."
-	else
-		dir="$1"
-	fi
-	stats="$(find $dir -type f | sed 's/.*\.//' | sort | uniq -c)"
+	stats="$(find ${1:-"."} -type f | sed 's/.*\.//' | sort | uniq -c)"
 
 	total=0
 	index=0
@@ -818,6 +767,7 @@ per() {
 show() {
 	if [ $# -eq 0 ] ; then
 		echo "show: err: incorrect number of arguments"
+		return 1
 	elif [ $# -eq 1 ] ; then
 		find . -type f -name "*.$1"
 	else
@@ -836,7 +786,7 @@ dup() {
 			cd "$1"
 		else
 			echo "dup: err: $1 is not a valid directory"
-			return
+			return 1
 		fi
 	fi
 
@@ -854,14 +804,15 @@ dup() {
 duf() {
 	if [ $# -eq 0 ] ; then
 		echo "duf: err: incorrect number of arguments"
-	else
-		for arg in "$@"; do
-			size="$(find . -name "*.$1" -print0 | xargs -0 du --apparent-size -ch | tail -n1)"
-			read -ra ARR <<<"$SIZE"
-			echo "$1: ${ARR[0] - $1}"
-			shift
-		done
+		return 1
 	fi
+
+	for arg in "$@"; do
+		size="$(find . -name "*.$1" -print0 | xargs -0 du --apparent-size -ch | tail -n1)"
+		read -ra ARR <<<"$SIZE"
+		echo "$1: ${ARR[0] - $1}"
+		shift
+	done
 }
 
 # clear a file
@@ -879,24 +830,14 @@ clear() {
 
 # select files at random from a directory
 get() {
-	if [ $# -eq 0 ] ; then
-		num=1
-	else
-		num=$1
-	fi
-	ls -p | grep -v / | sort -R | tail -$num | while read file; do
+	ls -p | grep -v / | sort -R | tail -${1:-1} | while read file; do
 		echo $file
 	done
 }
 
 # remove files at random
 del() {
-	if [ $# -eq 0 ] ; then
-		num=1
-	else
-		num=$1
-	fi
-	ls -p | grep -v / | sort -R | tail -$num | while read file; do
+	ls -p | grep -v / | sort -R | tail -${1:-1} | while read file; do
 		rm -rf $file
 	done
 }
@@ -905,12 +846,12 @@ del() {
 lbl() {
 	if [ $# -ne 2 ] ; then
 		echo "lbl: err: incorrect number of arguments"
-	else
-		while IFS= read -r result; do
-			echo $result
-			read </dev/tty
-		done < <(grep "$1" $2)
+		return
 	fi
+	while IFS= read -r result; do
+		echo $result
+		read </dev/tty
+	done < <(grep "$1" $2)
 }
 
 # pause execution
@@ -928,11 +869,12 @@ resetbar() {
 mkgit() {
 	if [ $# -ne 1 ] ; then
 		echo "mkgit: err: incorrect number of arguments"
-	else
-		mkdir "$1"
-		cd "$1"
-		git init
+		return 1
 	fi
+
+	mkdir "$1"
+	cd "$1"
+	git init
 }
 
 # copy current directory to clipboard
@@ -973,8 +915,9 @@ rcreate() {
 eao() {
 	if [ $# -eq 0 ] ; then
 		echo "eao: err: incorrect number of arguments"
-		return
+		return 1
 	fi
+
 	file="$1"
 	ext="${file##*.}"
 	subl "$1"
@@ -1066,7 +1009,7 @@ update() {
 gimme() {
 	if [ $# -ne 1 ] ; then
 		echo "gimme: err: incorrect number of arguments"
-		return
+		return 1
 	fi
 	chmod +x "$1"
 }
@@ -1075,10 +1018,21 @@ gimme() {
 chrome() {
 	if [ $# -eq 0 ] ; then
 		echo "chrome: err: incorrect number of arguments"
-		return
+		return 1
 	fi
-	for arg in "$@" ; do
-		open -a "Google Chrome" "$arg"
+	for ARG in "$@" ; do
+		open -a "Google Chrome" "$ARG"
+	done
+}
+
+# open a file in Brave browser from the command line
+brave() {
+	if [ $# -eq 0 ] ; then
+		echo "brave: err: incorrect number of arguments"
+		return 1
+	fi
+	for ARG in "$@" ; do
+		open -a "Brave Browser" "$ARG"
 	done
 }
 
@@ -1092,7 +1046,7 @@ dive() {
         echo "dive: err: no such directory $1"
         return 1
     fi  
-    TARGET="`greadlink -m $1`"
+    TARGET="`readlink -m $1`"
     END=0
     while [[ $END -eq 0 ]] ; do
         DIRS=()
@@ -1101,4 +1055,24 @@ dive() {
     done
     cd "$TARGET"
     pwd 
+}
+
+# get help for BASH commands
+aid() {
+    if [[ $# -ne 1 ]] ; then
+        echo "aid: err: incorrect number of arguments"
+        return 1
+    fi
+    curl cheat.sh/$1
+}
+
+# pretty print JSON files
+json() {
+    if [[ $# -eq 0 ]] ; then
+        echo "json: err: incorrect number of arguments"
+        return 1
+    fi
+    for ARG in $@ ; do
+        cat $ARG | jq .
+    done
 }
