@@ -245,7 +245,9 @@ cf() {
 
 # change up multiple directories
 up() {
-	export __UPDIR__=`pwd`
+	if [[ "$__UPDIR__" == "" ]] || [[ "$__UPDIR__" != *`pwd`* ]] ; then
+		export __UPDIR__=`pwd`
+	fi
 	if [[ -z $1 ]] ; then
 		cd ..
 	elif [[ $1 -gt 0 ]] ; then
@@ -370,14 +372,6 @@ pathdedup() {
 	export PATH=`perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))'`
 }
 
-# move most recently downloaded item(s) to the current directory (only works on MacOS)
-snag() {
-	for i in `seq 1 ${1:-1}`; do
-		file="$(ls -t ~/Downloads | head -1)"
-		mv ~/Downloads/"$file" .
-	done
-}
-
 # get the default branch for a git repo
 gitdefault() {
 	git remote show ${1:-"origin"} | grep "HEAD branch" | cut -d ":" -f 2
@@ -483,7 +477,6 @@ makef() {
 }
 
 # remove a BASH Function by name
-# TODO: need to account for other cases (i.e. `name () {`, `name (){`, `name(){`), only does `name() {` right now
 removef() {
 	if [ $# -ne 1 ] ; then
 		echo "removef: err: incorrect number of arguments"
@@ -566,7 +559,7 @@ histg() {
 
 # intercept the `stderr` and `stdout` of a process
 intercept() {
-	if [ $# -ne 1 ] ; then
+	if [[ $# -ne 1 ]] ; then
 		echo "intercept: err: incorrect number of arguments"
 		return 1
 	fi
@@ -610,9 +603,9 @@ busy() {
 
 # sort by size of current directory
 sbs() {
-	if [ $# -ne 0 ] ; then
-		if [ $# -eq 1 ] ; then
-			if [ -d $1 ] ; then
+	if [[ $# -ne 0 ]] ; then
+		if [[ $# -eq 1 ]] ; then
+			if [[ -d $1 ]] ; then
 				cd $1
 			else
 				echo "sbs: err: $1 is not a valid directory"
@@ -623,7 +616,7 @@ sbs() {
 
 	du -hs * | sort -h
 	
-	if [ $# -ne 0 ] ; then
+	if [[ $# -ne 0 ]] ; then
 		cd -
 	fi
 }
@@ -648,13 +641,13 @@ siren() {
 
 # do you really need a description
 rickroll() {
-	string="$(printf '%b' '\'{116,145,166,145,162,040,147,157,156,156,141,040,147,151,166,145,040,171,157,165,040,165,160,056,056,056})"
-	yes "$string"
+	STRING="$(printf '%b' '\'{116,145,166,145,162,040,147,157,156,156,141,040,147,151,166,145,040,171,157,165,040,165,160,056,056,056})"
+	yes "$STRING"
 }
 
 # reverse input
 rev() {
-	if [ $# -eq 0 ] ; then
+	if [[ $# -eq 0 ]] ; then
 		__=""
 		_stdin=""
 
@@ -665,58 +658,33 @@ rev() {
 			}
 		}
 
-		val=$_stdin
-		if [[ "$val" == "" ]] ; then
+		VAL=$_stdin
+		if [[ "$VAL" == "" ]] ; then
 			echo "rev: err: no input found on stdin"
 			return 1
 		fi
 	else
-		if [ $# -ne 1 ] ; then
+		if [[ $# -ne 1 ]] ; then
 			echo "rev: err: incorrect number of arguments"
 			return 1
 		fi
-		val=$1
+		VAL=$1
 	fi
-	echo $val | sed $'s/./&\\\n/g' | sed -ne $'x;H;${x;s/\\n//g;p;}'
-}
-
-# detect os type
-ostype() {
-	os="$(uname -s)"
-	case "${os}" in
-		Linux*)		machine=Linux	;;
-		Darwin*)	machine=Mac 	;;
-		CYGWIN*)	machine=Cygwin  ;;
-		MINGW*)		machine=MinGw 	;;
-		*)			machine="UNKNOWN: ${unameOut}"
-	esac
-	echo "$machine"
+	echo $VAL | sed $'s/./&\\\n/g' | sed -ne $'x;H;${x;s/\\n//g;p;}'
 }
 
 # list all cows
 lscows() {
-	cows="$(cowsay -l | tail -n +2 | tr ' ' '\n')"
-	for cow in $cows; do cowsay -f $cow $cow; done
+	COWS=`cowsay -l | tail -n +2 | tr ' ' '\n'`
+	for COW in $COWS; do cowsay -f $COW $COW; done
 }
 
 # random animal speech
 randimal() {
-	os="$(ostype)"
-
-	if [[ "$os" == "Linux" ]] ; then
-		type shuf >/dev/null 2>&1 || { echo -e >&2 "randimal: err: \`shuf\` is required but not installed (use \`apt-get install shuf\` install)"; return; }
-		if [ $# -eq 0 ] ; then
-			fortune | cowsay -f `cowsay -l | tail -n +2 | tr ' ' '\n' | shuf -n 1` | lolcat
-		else
-			echo $1 | cowsay -f `cowsay -l | tail -n +2 | tr ' ' '\n' | shuf -n 1` | lolcat
-		fi
+	if [[ $# -eq 0 ]] ; then
+		fortune | cowsay -f `cowsay -l | tail -n +2 | tr ' ' '\n' | shuf -n 1` | lolcat
 	else
-		type gshuf >/dev/null 2>&1 || { echo -e >&2 "randimal: err: \`shuf\` is required but not installed (use \`brew install shuf\` install)"; return; }
-		if [ $# -eq 0 ] ; then
-			fortune | cowsay -f `cowsay -l | tail -n +2 | tr ' ' '\n' | gshuf -n 1` | lolcat
-		else
-			echo $1 | cowsay -f `cowsay -l | tail -n +2 | tr ' ' '\n' | gshuf -n 1` | lolcat
-		fi
+		echo "$1" | cowsay -f `cowsay -l | tail -n +2 | tr ' ' '\n' | shuf -n 1` | lolcat
 	fi
 }
 
@@ -743,7 +711,7 @@ per() {
 	word=0
 	out=""
 	for stat in $stats; do
-		if [ $index -eq 0 ] ; then
+		if [[ $index -eq 0 ]] ; then
 			num="$stat"
 			word=$stat
 		else
@@ -765,13 +733,13 @@ per() {
 
 # list all files of specific type
 show() {
-	if [ $# -eq 0 ] ; then
+	if [[ $# -eq 0 ]] ; then
 		echo "show: err: incorrect number of arguments"
 		return 1
-	elif [ $# -eq 1 ] ; then
+	elif [[ $# -eq 1 ]] ; then
 		find . -type f -name "*.$1"
 	else
-		while [ $# -ne 0 ] ; do
+		while [[ $# -ne 0 ]] ; do
 			printf "\033[94m.$1 files:\033[0m\n"
 			find . -type f -name "*.$1"
 			shift
@@ -781,8 +749,8 @@ show() {
 
 # get disk usage in a nicer format
 dup() {
-	if [ $# -ne 0 ] ; then
-		if [[ -d $1 ]] ; then
+	if [[ $# -ne 0 ]] ; then
+		if [[ -d "$1" ]] ; then
 			cd "$1"
 		else
 			echo "dup: err: $1 is not a valid directory"
@@ -817,11 +785,11 @@ duf() {
 
 # clear a file
 clear() {
-	if [ $# -eq 0 ] ; then
+	if [[ $# -eq 0 ]] ; then
 		command clear
 	else
 		for file in "$@"; do
-			if [ -f "$file" ]; then
+			if [[ -f "$file" ]] ; then
 				> "$file"
 			fi
 		done
@@ -830,26 +798,27 @@ clear() {
 
 # select files at random from a directory
 get() {
-	ls -p | grep -v / | sort -R | tail -${1:-1} | while read file; do
-		echo $file
+	ls -p | grep -v / | sort -R | tail -${1:-1} | while read FILE ; do
+		echo "$FILE"
 	done
 }
 
 # remove files at random
 del() {
-	ls -p | grep -v / | sort -R | tail -${1:-1} | while read file; do
-		rm -rf $file
+	ls -p | grep -v / | sort -R | tail -${1:-1} | while read FILE ; do
+		rm -rf "$FILE"
 	done
 }
 
 # grep line by line
 lbl() {
-	if [ $# -ne 2 ] ; then
+	if [[ $# -ne 2 ]] ; then
 		echo "lbl: err: incorrect number of arguments"
-		return
+		return 1
 	fi
-	while IFS= read -r result; do
-		echo $result
+
+	while IFS= read -r RESULT ; do
+		echo $RESULT
 		read </dev/tty
 	done < <(grep "$1" $2)
 }
@@ -867,7 +836,7 @@ resetbar() {
 
 # make a new git repo
 mkgit() {
-	if [ $# -ne 1 ] ; then
+	if [[ $# -ne 1 ]] ; then
 		echo "mkgit: err: incorrect number of arguments"
 		return 1
 	fi
@@ -879,16 +848,18 @@ mkgit() {
 
 # copy current directory to clipboard
 cppwd() {
-	d="$(pwd)"
-	pbcopy <<< "$d"
+	DIR=`pwd`
+	pbcopy <<< "$DIR"
 }
 
-# copy previous command to clipboard
-cplast() {
-	fc -rnl | head -1 > tempfile
-	com="$(tac tempfile)"
-	rm -rf tempfile
-	pbcopy <<< "$com"
+# copy previous command to Mac clipboard (CoPy Last Command)
+cplc() {
+	pbcopy <<< "!!"
+}
+
+# copy output from previous command to Mac clipboard (CoPy Last command Output)
+cplo() {
+	pbcopy <<< "`!!`"
 }
 
 # git clone and cd into new directory
@@ -898,13 +869,13 @@ clonecd() {
 
 # create new remote repository on GitHub and push the current commit to it
 rcreate() {
-	if [ $# -eq 1 ] ; then
+	if [[ $# -eq 1 ]] ; then
 		REPO="$1"
 	else
-		REPO=${PWD##*/}
+		REPO="${PWD##*/}"
 	fi
 
-	GITHUBUSER=$(git config github.user)
+	GITHUBUSER=`git config github.user`
 
 	curl -u ${USER:-${GITHUBUSER}} https://api.github.com/user/repos -d "{\"name\": \"${REPONAME:-${REPO}}\", \"private\": false, \"has_issues\": true, \"has_downloads\": true, \"has_wiki\": false}" > /dev/null
 	git remote add origin git@github.com:${USER:-${GITHUBUSER}}/${REPONAME:-${REPO}}.git
@@ -913,92 +884,86 @@ rcreate() {
 
 # execute a file and open it in Sublime
 eao() {
-	if [ $# -eq 0 ] ; then
+	if [[ $# -eq 0 ]] ; then
 		echo "eao: err: incorrect number of arguments"
 		return 1
 	fi
 
-	file="$1"
-	ext="${file##*.}"
+	FILE="$1"
+	EXT="${FILE##*.}"
 	subl "$1"
-	case "$ext" in
-		"sh")
-			./"$@"
-			;;
-		"py")
-			python3 "$@"
-			;;
-		"rb")
-			ruby "$@"
-			;;
-		*)
-			echo "Can't execute $1"
+	case "$EXT" in
+		"sh")	./"$@"			;;
+		"py")	python3 "$@"	;;
+		"rb")	ruby "$@"		;;
+		"java")	java "$@"		;;
+		*)		echo "Can't execute $1"
 	esac
 }
 
 # update Konphig settings for system
 update() {
-	os="$(ostype)"
-	if [[ "$os" == "Mac" ]] ; then
-		cmd="MD5 -q"
+	OS=`ostype`
+	if [[ "$OS" == "Mac" ]] ; then
+		CMD="MD5 -q"
 	else
-		cmd="md5sum"
+		CMD="md5sum"
 	fi
 
-	val=0
+	VAL=0
 
-	if ! [[ "$($cmd ~/Konphig/.bash_aliases)" == "$($cmd ~/.bash_aliases)" ]] ; then
+	if ! [[ "$($CMD ~/Konphig/.bash_aliases)" == "$($CMD ~/.bash_aliases)" ]] ; then
 		echo "Updating .bash_aliases"
-		val=1
+		VAL=1
 		yes | cp -rf ~/Konphig/.bash_aliases ~ >/dev/null 2>&1
 	fi
-	if ! [[ "$($cmd ~/Konphig/.bash_variables)" == "$($cmd ~/.bash_variables)" ]] ; then
+	if ! [[ "$($CMD ~/Konphig/.bash_variables)" == "$($CMD ~/.bash_variables)" ]] ; then
 		echo "Updating .bash_variables"
-		val=1
+		VAL=1
 		yes | cp -rf ~/Konphig/.bash_variables ~ >/dev/null 2>&1
 	fi
-	if ! [[ "$($cmd ~/Konphig/.bash_functions)" == "$($cmd ~/.bash_functions)" ]] ; then
+	if ! [[ "$($CMD ~/Konphig/.bash_functions)" == "$($CMD ~/.bash_functions)" ]] ; then
 		echo "Updating .bash_functions"
-		val=1
+		VAL=1
 		yes | cp -rf ~/Konphig/.bash_functions ~ >/dev/null 2>&1
 	fi
-	if ! [[ "$($cmd ~/Konphig/.bash_profile)" == "$($cmd ~/.bash_profile)" ]] ; then
+	if ! [[ "$($CMD ~/Konphig/.bash_profile)" == "$($CMD ~/.bash_profile)" ]] ; then
 		echo "Updating .bash_profile"
-		val=1
+		VAL=1
 		yes | cp -rf ~/Konphig/.bash_profile ~ >/dev/null 2>&1
 	fi
-	if ! [[ "$($cmd ~/Konphig/.bashrc)" == "$($cmd ~/.bashrc)" ]] ; then
+	if ! [[ "$($CMD ~/Konphig/.bashrc)" == "$($CMD ~/.bashrc)" ]] ; then
 		echo "Updating .bashrc"
-		val=1
+		VAL=1
 		yes | cp -rf ~/Konphig/.bashrc ~ >/dev/null 2>&1
 	fi
-	if ! [[ "$($cmd ~/Konphig/.git-prompt.sh)" == "$($cmd ~/.git-prompt.sh)" ]] ; then
+	if ! [[ "$($CMD ~/Konphig/.git-prompt.sh)" == "$($CMD ~/.git-prompt.sh)" ]] ; then
 		echo "Updating .git-prompt.sh"
-		val=1
+		VAL=1
 		yes | cp -rf ~/Konphig/.git-prompt.sh ~ >/dev/null 2>&1
 	fi
-	if ! [[ "$($cmd ~/Konphig/.gitconfig)" == "$($cmd ~/.gitconfig)" ]] ; then
+	if ! [[ "$($CMD ~/Konphig/.gitconfig)" == "$($CMD ~/.gitconfig)" ]] ; then
 		echo "Updating .gitconfig"
-		val=1
+		VAL=1
 		yes | cp -rf ~/Konphig/.gitconfig ~ >/dev/null 2>&1
 	fi
-	if ! [[ "$($cmd ~/Konphig/.profile)" == "$($cmd ~/.profile)" ]] ; then
+	if ! [[ "$($CMD ~/Konphig/.profile)" == "$($CMD ~/.profile)" ]] ; then
 		echo "Updating .profile"
-		val=1
+		VAL=1
 		yes | cp -rf ~/Konphig/.profile ~ >/dev/null 2>&1
 	fi
-	if ! [[ "$($cmd ~/Konphig/.tmux.conf)" == "$($cmd ~/.tmux.conf)" ]] ; then
+	if ! [[ "$($CMD ~/Konphig/.tmux.conf)" == "$($CMD ~/.tmux.conf)" ]] ; then
 		echo "Updating .tmux.conf"
-		val=1
+		VAL=1
 		yes | cp -rf ~/Konphig/.tmux.conf ~ >/dev/null 2>&1
 	fi
-	if ! [[ "$($cmd ~/Konphig/.vimrc)" == "$($cmd ~/.vimrc)" ]] ; then
+	if ! [[ "$($CMD ~/Konphig/.vimrc)" == "$($CMD ~/.vimrc)" ]] ; then
 		echo "Updating .vimrc"
-		val=1
+		VAL=1
 		yes | cp -rf ~/Konphig/.vimrc ~ >/dev/null 2>&1
 	fi
 
-	if [ $val -eq 0 ] ; then
+	if [[ $VAL -eq 0 ]] ; then
 		echo "Nothing to update"
 	else
 		source ~/.bashrc
@@ -1007,7 +972,7 @@ update() {
 
 # gives the current user execution privileges for a file
 gimme() {
-	if [ $# -ne 1 ] ; then
+	if [[ $# -ne 1 ]] ; then
 		echo "gimme: err: incorrect number of arguments"
 		return 1
 	fi
@@ -1016,7 +981,7 @@ gimme() {
 
 # open a file in Google Chrome from the command line
 chrome() {
-	if [ $# -eq 0 ] ; then
+	if [[ $# -eq 0 ]] ; then
 		echo "chrome: err: incorrect number of arguments"
 		return 1
 	fi
@@ -1027,7 +992,7 @@ chrome() {
 
 # open a file in Brave browser from the command line
 brave() {
-	if [ $# -eq 0 ] ; then
+	if [[ $# -eq 0 ]] ; then
 		echo "brave: err: incorrect number of arguments"
 		return 1
 	fi

@@ -40,6 +40,19 @@ prompt_function() {
 
 export PROMPT_COMMAND='prompt_function'
 
+# detect os type
+ostype() {
+    OS=`uname -s`
+    case "${OS}" in
+        Linux*)     MACHINE=Linux   ;;
+        Darwin*)    MACHINE=Mac     ;;
+        CYGWIN*)    MACHINE=Cygwin  ;;
+        MINGW*)     MACHINE=MinGw   ;;
+        *)          MACHINE="UNKNOWN"
+    esac
+    echo "$MACHINE"
+}
+
 ## history
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
