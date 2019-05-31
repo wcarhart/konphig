@@ -470,11 +470,6 @@ lbl() {
 	done < <(grep "$1" $2)
 }
 
-# pause execution
-pause() {
-	read -n 0 -rsp $'Press any key to continue...\n'
-}
-
 # reset Macbook Pro touch bar
 resetbar() {
 	pkill "Touch Bar agent"
@@ -491,22 +486,6 @@ mkgit() {
 	mkdir "$1"
 	cd "$1"
 	git init
-}
-
-# copy current directory to clipboard
-cppwd() {
-	DIR=`pwd`
-	pbcopy <<< "$DIR"
-}
-
-# copy previous command to Mac clipboard (CoPy Last Command)
-cplc() {
-	pbcopy <<< "!!"
-}
-
-# copy output from previous command to Mac clipboard (CoPy Last command Output)
-cplo() {
-	pbcopy <<< "`!!`"
 }
 
 # git clone and cd into new directory
@@ -626,65 +605,4 @@ gimme() {
 	chmod +x "$1"
 }
 
-# open a file in Google Chrome from the command line
-chrome() {
-	if [[ $# -eq 0 ]] ; then
-		echo "chrome: err: incorrect number of arguments"
-		return 1
-	fi
-	for ARG in "$@" ; do
-		open -a "Google Chrome" "$ARG"
-	done
-}
 
-# open a file in Brave browser from the command line
-brave() {
-	if [[ $# -eq 0 ]] ; then
-		echo "brave: err: incorrect number of arguments"
-		return 1
-	fi
-	for ARG in "$@" ; do
-		open -a "Brave Browser" "$ARG"
-	done
-}
-
-# follow a directory tree down to its childmost directory
-dive() {
-    if [[ $# -ne 1 ]] ; then
-        echo "dive: err: incorrect number of arguments"
-        return 1
-    fi  
-    if [[ ! -d "$1" ]] ; then
-        echo "dive: err: no such directory $1"
-        return 1
-    fi  
-    TARGET="`readlink -m $1`"
-    END=0
-    while [[ $END -eq 0 ]] ; do
-        DIRS=()
-        for THING in $TARGET/* ; do if [[ -d $THING ]] ; then DIRS+=( "`basename $THING`" ) ; fi ; done
-        if [[ ${#DIRS[@]} -eq 1 ]] ; then TARGET="$TARGET/${DIRS[0]}" ; END=0 ; else END=1 ; fi
-    done
-    cd "$TARGET"
-    pwd 
-}
-
-# get help for BASH commands
-aid() {
-    if [[ $# -ne 1 ]] ; then
-        echo "aid: err: incorrect number of arguments"
-        return 1
-    fi
-    curl cheat.sh/$1
-}
-
-# pretty print JSON files
-json() {
-    if [[ $# -eq 0 ]] ; then
-        echo "json: err: incorrect number of arguments"
-        return 1
-    fi
-    for ARG in $@ ; do
-        cat $ARG | jq .
-    done
-}
