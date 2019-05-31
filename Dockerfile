@@ -1,5 +1,10 @@
 FROM centos:latest
 
+RUN yum install -y git
+RUN yum install -y tree
+RUN yum install -y vim
+RUN yum install -y bind-utils
+
 ADD .bash_profile /root/.bash_profile
 ADD .git-prompt.sh /root/.git-prompt.sh
 ADD .gitconfig /root/.gitconfig

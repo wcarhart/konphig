@@ -1,56 +1,6 @@
 # .bash_functions
 # list of bash functions
 
-
-# add to PATH variable
-pathadd() {
-	if [[ $# -eq 0 ]] ; then
-		echo "pathadd: err: incorrect number of arguments"
-		return 1
-	fi
-
-	NEW=${1%/}
-	if [[ -d "$1" ]] && ! echo $PATH | grep -E -q "(^|:)$NEW($|:)" ; then
-		if [ "$2" == "after" ] ; then
-			export PATH="$PATH:$NEW"
-		else
-			export PATH="$NEW:$PATH"
-		fi
-	fi
-}
-
-# remove from PATH variable
-pathrm() {
-	export PATH=`echo $PATH | sed -e "s;\(^\|:\)${1%/}\(:\|\$\);\1\2;g" -e 's;^:\|:$;;g' -e 's;::;:;g'`
-}
-
-# remove duplicates from PATH variable (deduplicate)
-pathdedup() {
-	export PATH=`perl -e 'print join(":", grep { not $seen{$_}++ } split(/:/, $ENV{PATH}))'`
-}
-
-# get the default branch for a git repo
-gitdefault() {
-	git remote show ${1:-"origin"} | grep "HEAD branch" | cut -d ":" -f 2
-}
-
-# remove all subdirectories from a directory
-rmd() {
-	if [ $# -eq 0 ] ; then
-		rm -rf -- */
-	elif [ $# -eq 1 ] ; then
-		rm -rf -- $1/*/
-	else
-		echo "rmd: err: incorrect number of arguments"
-		return 1
-	fi
-}
-
-# generate a random string of specified length, great for passwords
-random() {
-	strings /dev/urandom | grep -o '[[:alnum:]]' | head -n ${1:-30} | tr -d '\n'; echo
-}
-
 # make a shell script out of the last x commands
 makes() {
 	fc -rnl > /dev/null 2>&1
@@ -199,11 +149,6 @@ lsf() {
 	done < "$source"
 }
 
-# function that does nothing (great for testing purposes)
-dummy() {
-	return 0
-}
-
 # intercept the `stderr` and `stdout` of a process
 intercept() {
 	if [[ $# -ne 1 ]] ; then
@@ -212,40 +157,6 @@ intercept() {
 	fi
 
 	strace -ff -e trace=write -e write=1,2 -p $1
-}
-
-# show my current public IP address
-publicip() {
-	echo `dig +short myip.opendns.com @resolver1.opendns.com`
-}
-
-# get location for your public IP address
-getlocation() {
-	myip="$(dig +short myip.opendns.com @resolver1.opendns.com)"
-	details="$(lynx -dump "$(publicip)".ip-adress.com | egrep 'City|State Code|Country Code')"
-	frmt="IP: $myip\n"
-	index=0
-	while IFS= read -r line ; do
-		if [ $index -eq 0 ] ; then
-			city="$(echo $line | cut -d " " -f2-)"
-			let index=index+1
-		elif [ $index -eq 1 ] ; then
-			country="$(echo $line | cut -d " " -f3-)"
-			let index=index+1
-		else
-			state="$(echo $line | cut -d " " -f3-)"
-			let index=index+1
-		fi
-	done <<< "$details"
-
-	location="Location: $city, $state, $country"
-	frmt+="$location"
-	echo -e $frmt
-}
-
-# make it look like you're busy
-busy() {
-	cat /dev/urandom | hexdump -C | grep "ca fe"
 }
 
 # sort by size of current directory
@@ -279,11 +190,6 @@ mkcddate() {
 	local DIR="$(date +%F)-$1"
 	mkdir $DIR
 	cd $DIR
-}
-
-# sound the alarm
-siren() {
-	printf '\033[5m\033[91m%b\033[0m' '\'{127,105,105,40,127,117,117} && echo
 }
 
 # do you really need a description

@@ -10,6 +10,7 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias la='ls -al --color=auto'
 alias l='ls --color=auto'
+alias mkdir='mkdir -p'
 #alias ls='ls --color=auto'
 
 # typos and shortcuts
