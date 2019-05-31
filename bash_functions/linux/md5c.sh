@@ -1,4 +1,4 @@
-# check if the md5 hashes of two files match
+# check if the md5 hashes of files match
 md5c() {
 	if [[ $# -eq 0 ]] ; then
 		echo "md5c: err: incorrect number of arguments"
