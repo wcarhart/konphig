@@ -61,6 +61,9 @@ set completion-ignore-case on
 set SSH_ASKPASS
 
 # user specific aliases and functions
+for FILE in /root/functions/* ; do
+    source $FILE
+done
 if [ -f ~/.bash_functions ] ; then
   source ~/.bash_functions
 fi
