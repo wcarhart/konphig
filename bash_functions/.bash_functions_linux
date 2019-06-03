@@ -149,34 +149,6 @@ lsf() {
 	done < "$source"
 }
 
-# reverse input
-rev() {
-	if [[ $# -eq 0 ]] ; then
-		__=""
-		_stdin=""
-
-		read -N1 -t1 __ && {
-			(( $? <= 128 )) && {
-				IFS= read -rd '' _stdin
-				_stdin="$__$_stdin"
-			}
-		}
-
-		VAL=$_stdin
-		if [[ "$VAL" == "" ]] ; then
-			echo "rev: err: no input found on stdin"
-			return 1
-		fi
-	else
-		if [[ $# -ne 1 ]] ; then
-			echo "rev: err: incorrect number of arguments"
-			return 1
-		fi
-		VAL=$1
-	fi
-	echo $VAL | sed $'s/./&\\\n/g' | sed -ne $'x;H;${x;s/\\n//g;p;}'
-}
-
 # list all cows
 lscows() {
 	COWS=`cowsay -l | tail -n +2 | tr ' ' '\n'`
@@ -190,92 +162,6 @@ randimal() {
 	else
 		echo "$1" | cowsay -f `cowsay -l | tail -n +2 | tr ' ' '\n' | shuf -n 1` | lolcat
 	fi
-}
-
-
-
-# select files at random from a directory
-get() {
-	ls -p | grep -v / | sort -R | tail -${1:-1} | while read FILE ; do
-		echo "$FILE"
-	done
-}
-
-# remove files at random
-del() {
-	ls -p | grep -v / | sort -R | tail -${1:-1} | while read FILE ; do
-		rm -rf "$FILE"
-	done
-}
-
-# grep line by line
-lbl() {
-	if [[ $# -ne 2 ]] ; then
-		echo "lbl: err: incorrect number of arguments"
-		return 1
-	fi
-
-	while IFS= read -r RESULT ; do
-		echo $RESULT
-		read </dev/tty
-	done < <(grep "$1" $2)
-}
-
-# reset Macbook Pro touch bar
-resetbar() {
-	pkill "Touch Bar agent"
-	killall "ControlStrip"
-}
-
-# make a new git repo
-mkgit() {
-	if [[ $# -ne 1 ]] ; then
-		echo "mkgit: err: incorrect number of arguments"
-		return 1
-	fi
-
-	mkdir "$1"
-	cd "$1"
-	git init
-}
-
-# git clone and cd into new directory
-clonecd() {
-	git clone "$1" && cd "$(basename "$1")"
-}
-
-# create new remote repository on GitHub and push the current commit to it
-rcreate() {
-	if [[ $# -eq 1 ]] ; then
-		REPO="$1"
-	else
-		REPO="${PWD##*/}"
-	fi
-
-	GITHUBUSER=`git config github.user`
-
-	curl -u ${USER:-${GITHUBUSER}} https://api.github.com/user/repos -d "{\"name\": \"${REPONAME:-${REPO}}\", \"private\": false, \"has_issues\": true, \"has_downloads\": true, \"has_wiki\": false}" > /dev/null
-	git remote add origin git@github.com:${USER:-${GITHUBUSER}}/${REPONAME:-${REPO}}.git
-	git push --set-upstream origin master
-}
-
-# execute a file and open it in Sublime
-eao() {
-	if [[ $# -eq 0 ]] ; then
-		echo "eao: err: incorrect number of arguments"
-		return 1
-	fi
-
-	FILE="$1"
-	EXT="${FILE##*.}"
-	subl "$1"
-	case "$EXT" in
-		"sh")	./"$@"			;;
-		"py")	python3 "$@"	;;
-		"rb")	ruby "$@"		;;
-		"java")	java "$@"		;;
-		*)		echo "Can't execute $1"
-	esac
 }
 
 # update Konphig settings for system
