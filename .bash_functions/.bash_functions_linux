@@ -1,88 +1,6 @@
 # .bash_functions
 # list of bash functions
 
-# make a shell script out of the last x commands
-makes() {
-	fc -rnl > /dev/null 2>&1
-	if [[ $? -ne 0 ]] ; then 
-		echo "makes: err: history is empty"
-		return 1
-	fi
-
-	if [ $# -eq 0 ] ; then
-		num=1
-		name="script.sh"
-	elif [ $# -eq 1 ] ; then
-		num=$1
-		name="script.sh"
-	elif [ $# -eq 2 ] ; then
-		num=$1
-		name=$2
-	else
-		echo "makes: err: incorrect number of arguments"
-		return 1
-	fi
-
-	rando="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 30 | tr -d '\n'; echo)"
-	fc -rnl | head -$num > $rando
-	tac $rando > $name
-	rm -rf $rando
-}
-
-# make a BASH function out of the last x commands
-makef() {
-	fc -rnl > /dev/null 2>&1
-	if [[ $? -ne 0 ]] ; then 
-		echo "makef: err: history is empty"
-		return 1
-	fi
-
-	if [ ! ~/.bash_functions ] ; then
-		source=~/.bashrc
-	else
-		source=~/.bash_functions
-	fi
-
-	if [ $# -eq 0 ] ; then
-		num=1
-		rando="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 30 | tr -d '\n'; echo)"
-		name="function_$rando"
-	elif [ $# -eq 1 ] ; then
-		num=$1
-		rando="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 30 | tr -d '\n'; echo)"
-		name="function_$rando"
-	elif [ $# -eq 2 ] ; then
-		num=$1
-		name=$2
-		rando="$(strings /dev/urandom | grep -o '[[:alnum:]]' | head -n 30 | tr -d '\n'; echo)"
-	else
-		echo "makef: err: incorrect number of arguments"
-		return 1
-	fi
-
-	num="$(($num + 1))"
-
-	printf "\n" >> $source
-	printf "$name() {\n" >> $source
-	fc -rnl | head -$num > $rando
-	tac $rando > .tempfile
-
-	index=0
-	while IFS='' read -r CMD || [[ -n "$CMD" ]] ; do
-		if [ $index -eq 0 ] ; then
-			index+=1
-			continue
-		fi
-		printf "$CMD\n" >> $source
-	done < ".tempfile"
-
-	printf "}\n" >> $source
-
-	rm -rf .tempfile
-	rm -rf $rando
-	source ~/.bashrc
-}
-
 # remove a BASH Function by name
 removef() {
 	if [ $# -ne 1 ] ; then
@@ -233,13 +151,5 @@ update() {
 	fi
 }
 
-# gives the current user execution privileges for a file
-gimme() {
-	if [[ $# -ne 1 ]] ; then
-		echo "gimme: err: incorrect number of arguments"
-		return 1
-	fi
-	chmod +x "$1"
-}
 
 

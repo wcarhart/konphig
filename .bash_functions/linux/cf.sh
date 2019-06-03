@@ -5,6 +5,6 @@ cf() {
 		return 1
 	fi
 
-	NUM="$(find ${1:-"."}/ -type f | wc -l)"
+	NUM=`find ${1:-"."}/ -type f | wc -l`
 	echo "$NUM files"
 }
