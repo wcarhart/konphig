@@ -3,6 +3,7 @@ lsf() {
 	if [[ ! -d ~/.bash_functions ]] ; then
 		if [[ ! -f ~/.bashrc ]] ; then
 			echo "lsf: err: no such directory ~/.bash_functions, no such file ~/.bashrc"
+			return 1
 		fi
 
 		while IFS='' read -r LINE || [[ -n $LINE ]] ; do
