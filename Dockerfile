@@ -6,6 +6,10 @@ RUN yum install -y vim
 RUN yum install -y bind-utils
 RUN yum install -y bc
 
+RUN git clone https://github.com/wcarhart/Konphig.git
+RUN mv Konphig /root/Konphig
+RUN cd /root/Konphig && git checkout -b refactor_functions origin/refactor_functions && git pull
+
 ADD .bash_profile /root/.bash_profile
 ADD .git-prompt.sh /root/.git-prompt.sh
 ADD .gitconfig /root/.gitconfig
