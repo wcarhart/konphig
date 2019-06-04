@@ -33,4 +33,4 @@
 
 [core]
 	editor = subl -n -w
-	
+	ignorecase = false
