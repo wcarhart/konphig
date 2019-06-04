@@ -75,16 +75,25 @@ update() {
 	if [[ ! -d ~/.bash_functions ]] ; then
 		mkdir -p ~/.bash_functions
 	fi
-	for FILE in ~/Konphig/.bash_functions/$OS/* ; do
+	for FILE in ~/Konphig/.bash_functions/$OS/*.sh ; do
 		if [[ ! -f ~/.bash_functions/`basename $FILE` ]] ; then
-			rm -rf ~/.bash_functions/`basename $FILE`
-			continue
-		fi
-		if [[ `md5sum $FILE | awk '{print $1}'` != "$(md5sum ~/.bash_functions/`basename $FILE` | awk '{print $1}')" ]] ; then
 			SOURCE=`basename $FILE`
 			echo "Updating function ${SOURCE:0:-3}"
 			VAL=1
 			yes | cp -rf $FILE ~/.bash_functions/ >/dev/null 2>&1
+		elif [[ `md5sum $FILE | awk '{print $1}'` != "$(md5sum ~/.bash_functions/`basename $FILE` | awk '{print $1}')" ]] ; then
+			SOURCE=`basename $FILE`
+			echo "Updating function ${SOURCE:0:-3}"
+			VAL=1
+			yes | cp -rf $FILE ~/.bash_functions/ >/dev/null 2>&1
+		fi
+	done
+	for FILE in ~/.bash_functions/*.sh ; do
+		if [[ ! -f ~/Konphig/.bash_functions/$OS/`basename $FILE` ]] ; then
+			SOURCE=`basename $FILE`
+			echo "Removing function ${SOURCE:0:-3} (function will still exist in this shell instance)"
+			VAL=1
+			rm -rf $FILE
 		fi
 	done
 
