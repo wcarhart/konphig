@@ -13,7 +13,7 @@ ostype() {
 
 # trap
 function cleanup {
-	if [[ -d ~/.originals ]] ;
+	if [[ -d ~/.originals ]] ; then
 		for FILE in ~/.originals/* ; do
 			yes | cp -rf $FILE ~ >/dev/null 2>&1
 		done
