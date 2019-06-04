@@ -3,10 +3,10 @@ ostype() {
     OS=`uname -s`
     case "${OS}" in
         Linux*)     MACHINE=Linux   ;;
-        Darwin*)    MACHINE=Mac     ;;
+        Darwin*)    MACHINE=MacOS   ;;
         CYGWIN*)    MACHINE=Cygwin  ;;
         MINGW*)     MACHINE=MinGw   ;;
-        *)          MACHINE="UNKNOWN"
+        *)          MACHINE=UNKNOWN ;;
     esac
     echo "$MACHINE"
 }

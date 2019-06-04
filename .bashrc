@@ -40,19 +40,6 @@ prompt_function() {
 
 export PROMPT_COMMAND='prompt_function'
 
-# detect os type
-ostype() {
-    OS=`uname -s`
-    case "${OS}" in
-        Linux*)     MACHINE=Linux   ;;
-        Darwin*)    MACHINE=Mac     ;;
-        CYGWIN*)    MACHINE=Cygwin  ;;
-        MINGW*)     MACHINE=MinGw   ;;
-        *)          MACHINE="UNKNOWN"
-    esac
-    echo "$MACHINE"
-}
-
 ## history
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
@@ -61,11 +48,10 @@ set completion-ignore-case on
 set SSH_ASKPASS
 
 # user specific aliases and functions
-for FILE in /root/functions/* ; do
-    source $FILE
-done
-if [ -f ~/.bash_functions ] ; then
-  source ~/.bash_functions
+if [[ -d ~/.bash_functions ]] ; then
+    for FILE in ~/.bash_functions/* ; do
+        source $FILE
+    done
 fi
 if [ -f ~/.bash_aliases ] ; then
   source ~/.bash_aliases

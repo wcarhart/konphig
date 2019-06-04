@@ -17,6 +17,6 @@ ADD .profile /root/.profile
 ADD .bash_aliases /root/.bash_aliases
 ADD .bash_variables /root/.bash_variables
 ADD .bashrc /root/.bashrc
-ADD .bash_functions/linux/* /root/functions/
+ADD .bash_functions/Linux/* /root/.bash_functions/
 
 CMD /bin/bash
