@@ -77,36 +77,29 @@ update() {
 	fi
 	for FILE in ~/Konphig/.bash_functions/$OS/*.sh ; do
 		if [[ ! -f ~/.bash_functions/`basename $FILE` ]] ; then
-			echo "enter add"
 			SOURCE=`basename $FILE`
 			echo "Adding function ${SOURCE:0:-3}"
 			VAL=1
 			yes | cp -rf $FILE ~/.bash_functions/ >/dev/null 2>&1
-			echo "leave add"
 		elif [[ `md5sum $FILE | awk '{print $1}'` != "$(md5sum ~/.bash_functions/`basename $FILE` | awk '{print $1}')" ]] ; then
-			echo "enter update"
 			SOURCE=`basename $FILE`
 			echo "Updating function ${SOURCE:0:-3}"
 			VAL=1
 			yes | cp -rf $FILE ~/.bash_functions/ >/dev/null 2>&1
-			echo "leave update"
 		fi
 	done
 	for FILE in ~/.bash_functions/*.sh ; do
 		if [[ ! -f ~/Konphig/.bash_functions/$OS/`basename $FILE` ]] ; then
-			echo "enter remove"
 			SOURCE=`basename $FILE`
 			echo "Removing function ${SOURCE:0:-3} (function will still exist in this shell instance)"
 			VAL=1
 			rm -rf $FILE
-			echo "leave remove"
 		fi
 	done
 
 	if [[ $VAL -eq 0 ]] ; then
 		echo "Nothing to update"
 	else
-		echo "enter source"
 		source ~/.bashrc
 	fi
 }

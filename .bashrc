@@ -50,7 +50,6 @@ set SSH_ASKPASS
 # user specific aliases and functions
 if [[ -d ~/.bash_functions ]] ; then
     for FILE in ~/.bash_functions/* ; do
-        echo "Sourcing: $FILE"
         source $FILE
     done
 fi
