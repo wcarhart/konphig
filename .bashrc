@@ -53,9 +53,9 @@ if [[ -d ~/.bash_functions ]] ; then
         source $FILE
     done
 fi
-if [ -f ~/.bash_aliases ] ; then
+if [[ -f ~/.bash_aliases ]] ; then
   source ~/.bash_aliases
 fi
-if [ -f ~/.bash_variables ] ; then
+if [[ -f ~/.bash_variables ]] ; then
   source ~/.bash_variables
 fi
