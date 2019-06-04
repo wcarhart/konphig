@@ -76,10 +76,9 @@ update() {
 		mkdir -p ~/.bash_functions
 	fi
 	for FILE in ~/Konphig/.bash_functions/$OS/* ; do
-		echo $FILE
 		if [[ `md5sum $FILE | awk '{print $1}'` != "$(md5sum ~/.bash_functions/`basename $FILE`) | awk '{print $1}'" ]] ; then
 			SOURCE=`basename $FILE`
-			echo "Updating function ${SOURCE: -2:2}"
+			echo "Updating function ${SOURCE:0:-3}"
 			VAL=1
 			yes | cp -rf $FILE ~/.bash_functions/ >/dev/null 2>&1
 		fi
