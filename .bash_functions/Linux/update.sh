@@ -78,7 +78,7 @@ update() {
 	for FILE in ~/Konphig/.bash_functions/$OS/*.sh ; do
 		if [[ ! -f ~/.bash_functions/`basename $FILE` ]] ; then
 			SOURCE=`basename $FILE`
-			echo "Updating function ${SOURCE:0:-3}"
+			echo "Adding function ${SOURCE:0:-3}"
 			VAL=1
 			yes | cp -rf $FILE ~/.bash_functions/ >/dev/null 2>&1
 		elif [[ `md5sum $FILE | awk '{print $1}'` != "$(md5sum ~/.bash_functions/`basename $FILE` | awk '{print $1}')" ]] ; then
