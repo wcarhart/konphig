@@ -17,10 +17,12 @@ function cleanup {
 		for FILE in ~/.originals/* ; do
 			yes | cp -rf $FILE ~ >/dev/null 2>&1
 		done
-		echo "Error: installation failed"
+		echo "Error: installation failed! Please review the ~/Konphig source repo and reclone it, if necessary"
 		exit 1
 	else
-		echo "Installation successful"
+		echo "Installation successful!"
+		echo "To complete installation, please run:"
+		echo "  source ~/.bashrc"
 		exit 0
 	fi
 }
