@@ -22,8 +22,6 @@ export PATH="$HOME/bin:/$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:$PATH"
 export DISPLAY=:0.0
 export PROMPT_COMMAND='prompt_function'
 export PROMPT_INDEX=0
-#export PS1="[\@] \u@\h: \w \\$ \[$(tput sgr0)\]"
-#export PS1="[\@] \u@\h [\W] \\$ \[$(tput sgr0)\]"
-export PS1='\[\h:\W \u \$ '
 
 # custom (from addv)
+export LAST=`ls -t | head -1`

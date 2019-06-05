@@ -1,2 +1,6 @@
-source ~/.bashrc
-export PATH="$HOME/.cargo/bin:$PATH"
+# .profile
+
+## load .bashrc
+if [ -f ~/.bashrc ]; then
+  . ~/.bashrc
+fi
