@@ -120,13 +120,15 @@ if [[ $DEPS -eq 1 ]] ; then
 	if [[ "`command -v $INSTALL`" == "" ]] ; then
 		echo "Warning: could not find installation tool $INSTALL"
 		echo "The following dependencies were not installed:"
-		while IFS= read -r LINE || [[ -n "$LINE" ]]; do
+		while IFS= read -r LINE || [[ -n "$LINE" ]] ; do
     		echo "  $LINE"
 		done < ~/Konphig/.bash_functions/$OS/dependencies.txt
 	else
-		# while IFS= read -r LINE || [[ -n "$LINE" ]]; do
-	 #    	command $INSTALL -y $LINE
-		# done < ~/Konphig/.bash_functions/$OS/dependencies.txt
+		while IFS= read -r LINE || [[ -n "$LINE" ]] ; do
+			if [[ "`command -v $LINE`" == "" ]] ; then
+				command $INSTALL -y $LINE
+			fi
+		done < ~/Konphig/.bash_functions/$OS/dependencies.txt
 	fi
 fi
 
