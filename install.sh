@@ -111,8 +111,8 @@ yes | cp -rf ~/Konphig/gpg-agent.conf ~ >/dev/null 2>&1
 if [[ $DEPS -eq 1 ]] ; then
 	INSTALL=""
 	if [[ "$OS" == "Linux" ]] ; then
-		which yum && INSTALL="yum"
-		which apt-get && INSTALL="apt-get"
+		which yum 2>&1 && INSTALL="yum"
+		which apt-get 2>&1 && INSTALL="apt-get"
 	else
 		INSTALL="brew"
 	fi
