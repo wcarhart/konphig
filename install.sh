@@ -27,19 +27,37 @@ function cleanup {
 	fi
 }
 
-# validate inputes
+# parse command line arguments
+DEPS=0
+if [[ "$1" == "-d" || "$1" == "--install-dependencies" ]] ; then
+	DEPS=1
+fi
+
+# validate inputs and settings
 OS=`ostype`
+if [[ "`basename $SHELL`" != "bash" ]] ; then
+	echo "Error: Konphig is not supported for this shell"
+	exit 1
+fi
+if [[ $OS != "Linux" && $OS != "MacOS" ]] ; then
+	echo "Error: Konphig is not supported for this OS"
+	exit 1
+fi
 if [[ ! -d ~/Konphig ]] ; then
 	echo "Error: missing directory ~/Konphig"
-	return 1
+	exit 1
 fi
 if [[ ! -d ~/Konphig/.bash_functions ]] ; then
 	echo "Error: missing directory ~/Konphig/.bash_functions"
-	return 1
+	exit 1
 fi
 if [[ ! -d ~/Konphig/.bash_functions/$OS ]] ; then
 	echo "Error: missing directory ~/Konphig/.bash_functions/$OS"
-	return 1
+	exit 1
+fi
+if [[ ! -f ~/Konphig/.bash_functions/$OS/dependencies.txt ]] ; then
+	echo "Error: missing dependency file ~/Konphig/.bash_functions/$OS/dependencies.txt"
+	exit 1
 fi
 
 # create backup
@@ -88,6 +106,29 @@ yes | cp -rf ~/Konphig/.tmux.conf ~ >/dev/null 2>&1
 yes | cp -rf ~/Konphig/.vimrc ~ >/dev/null 2>&1
 yes | cp -rf ~/Konphig/.pypirc ~ >/dev/null 2>&1
 yes | cp -rf ~/Konphig/gpg-agent.conf ~ >/dev/null 2>&1
+
+# install dependencies
+if [[ $DEPS -eq 1 ]] ; then
+	INSTALL=""
+	if [[ "$OS" == "Linux" ]] ; then
+		which yum && INSTALL="yum"
+		which apt-get && INSTALL="apt-get"
+	else
+		INSTALL="brew"
+	fi
+
+	if [[ "`command -v $INSTALL`" == "" ]] ; then
+		echo "Warning: could not find installation tool $INSTALL"
+		echo "The following dependencies were not installed:"
+		while IFS= read -r LINE || [[ -n "$LINE" ]]; do
+    		echo "  $LINE"
+		done < ~/Konphig/.bash_functions/$OS/dependencies.txt
+	else
+		# while IFS= read -r LINE || [[ -n "$LINE" ]]; do
+	 #    	command $INSTALL -y $LINE
+		# done < ~/Konphig/.bash_functions/$OS/dependencies.txt
+	fi
+fi
 
 rm -rf ~/.originals
 
