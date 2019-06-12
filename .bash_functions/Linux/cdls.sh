@@ -6,7 +6,6 @@ cdls() {
 		echo "cdls: err: $1 is not a directory"
 		return 1
 	else
-		cd "$1"
-		ls
+		cd "$@" && ls
 	fi
 }
