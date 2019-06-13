@@ -111,16 +111,16 @@ yes | cp -rf ~/Konphig/gpg-agent.conf ~ >/dev/null 2>&1
 if [[ $DEPS -eq 1 ]] ; then
 	INSTALL=""
 	if [[ "$OS" == "Linux" ]] ; then
-		if [[ "`command -v yum`" != "" ]] ; then
+		if [[ "`command -v yum 2>&1 /dev/null`" != "" ]] ; then
 			INSTALL="yum"
-		elif [[ "`command -v apt-get`" != "" ]] ; then
+		elif [[ "`command -v apt-get 2>&1 /dev/null`" != "" ]] ; then
 			INSTALL="apt-get"
 		fi
 	else
 		INSTALL="brew"
 	fi
 
-	if [[ "$INSTALL" == "" || "`command -v $INSTALL`" == "" ]] ; then
+	if [[ "$INSTALL" == "" || "`command -v $INSTALL 2>&1 /dev/null`" == "" ]] ; then
 		echo "Warning: could not find installation tool $INSTALL"
 		echo "The following dependencies were not installed:"
 		while IFS= read -r LINE || [[ -n "$LINE" ]] ; do
@@ -128,7 +128,7 @@ if [[ $DEPS -eq 1 ]] ; then
 		done < ~/Konphig/.bash_functions/$OS/dependencies.txt
 	else
 		while IFS= read -r LINE || [[ -n "$LINE" ]] ; do
-			if [[ "`command -v $LINE`" == "" ]] ; then
+			if [[ "`command -v $LINE 2>&1 /dev/null`" == "" ]] ; then
 				command $INSTALL -y $LINE 2>&1 /dev/null
 				if [[ $? -ne 0 ]] ; then
 					echo "Warning: could not install dependency $LINE, you may have to do this one manually"
