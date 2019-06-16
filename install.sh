@@ -27,7 +27,6 @@ function cleanup {
 		exit 0
 	fi
 }
-trap cleanup EXIT
 
 # parse command line arguments
 DEPS=0
@@ -108,6 +107,8 @@ yes | cp -rf ~/Konphig/.tmux.conf ~ >/dev/null 2>&1
 yes | cp -rf ~/Konphig/.vimrc ~ >/dev/null 2>&1
 yes | cp -rf ~/Konphig/.pypirc ~ >/dev/null 2>&1
 yes | cp -rf ~/Konphig/gpg-agent.conf ~ >/dev/null 2>&1
+
+trap cleanup EXIT
 
 # install dependencies
 if [[ $DEPS -eq 1 ]] ; then
