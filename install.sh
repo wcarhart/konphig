@@ -122,6 +122,8 @@ if [[ $DEPS -eq 1 ]] ; then
 		INSTALL="brew"
 	fi
 
+	echo "Processing dependencies with $INSTALL..."
+
 	if [[ "$INSTALL" == "" || "`command -v $INSTALL 2>&1 /dev/null`" == "" ]] ; then
 		echo "Warning: could not find installation tool $INSTALL"
 		echo "The following dependencies were not installed:"
@@ -131,10 +133,12 @@ if [[ $DEPS -eq 1 ]] ; then
 	else
 		while IFS= read -r LINE || [[ -n "$LINE" ]] ; do
 			if [[ `command -v $LINE` == "" ]] ; then
-				echo "Couldn't find $LINE. Attempting to install..."
+				echo "  Couldn't find $LINE. Attempting to install..."
 				SILENCEOUT=`command $INSTALL install -y -q $LINE 2>&1 /dev/null`
 				if [[ $? -ne 0 ]] ; then
-					echo "Warning: could not install dependency $LINE, you may have to install it manually."
+					echo "  Warning: could not install dependency $LINE, you may have to install it manually."
+				else
+					echo "  Successfully installed $LINE"
 				fi
 			fi  
 		done < ~/Konphig/.bash_functions/$OS/dependencies.txt
