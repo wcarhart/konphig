@@ -17,6 +17,7 @@ function cleanup {
 		for FILE in ~/.originals/* ; do
 			yes | cp -rf $FILE ~ >/dev/null 2>&1
 		done
+		rm -rf ~/.originals
 		echo "Error: installation failed! Please review the ~/Konphig source repo and reclone it, if necessary"
 		exit 1
 	else
@@ -26,20 +27,39 @@ function cleanup {
 		exit 0
 	fi
 }
+trap cleanup EXIT
 
-# validate inputes
+# parse command line arguments
+DEPS=0
+if [[ "$1" == "-d" || "$1" == "--install-dependencies" ]] ; then
+	DEPS=1
+fi
+
+# validate inputs and settings
 OS=`ostype`
+if [[ "`basename $SHELL`" != "bash" ]] ; then
+	echo "Error: Konphig is not supported for this shell"
+	exit 1
+fi
+if [[ $OS != "Linux" && $OS != "MacOS" ]] ; then
+	echo "Error: Konphig is not supported for this OS"
+	exit 1
+fi
 if [[ ! -d ~/Konphig ]] ; then
 	echo "Error: missing directory ~/Konphig"
-	return 1
+	exit 1
 fi
 if [[ ! -d ~/Konphig/.bash_functions ]] ; then
 	echo "Error: missing directory ~/Konphig/.bash_functions"
-	return 1
+	exit 1
 fi
 if [[ ! -d ~/Konphig/.bash_functions/$OS ]] ; then
 	echo "Error: missing directory ~/Konphig/.bash_functions/$OS"
-	return 1
+	exit 1
+fi
+if [[ ! -f ~/Konphig/.bash_functions/$OS/dependencies.txt ]] ; then
+	echo "Error: missing dependency file ~/Konphig/.bash_functions/$OS/dependencies.txt"
+	exit 1
 fi
 
 # create backup
@@ -89,6 +109,40 @@ yes | cp -rf ~/Konphig/.vimrc ~ >/dev/null 2>&1
 yes | cp -rf ~/Konphig/.pypirc ~ >/dev/null 2>&1
 yes | cp -rf ~/Konphig/gpg-agent.conf ~ >/dev/null 2>&1
 
-rm -rf ~/.originals
+# install dependencies
+if [[ $DEPS -eq 1 ]] ; then
+	INSTALL=""
+	if [[ "$OS" == "Linux" ]] ; then
+		if [[ "`command -v yum 2>&1 /dev/null`" != "" ]] ; then
+			INSTALL="yum"
+		elif [[ "`command -v apt-get 2>&1 /dev/null`" != "" ]] ; then
+			INSTALL="apt-get"
+		fi
+	else
+		INSTALL="brew"
+	fi
 
-trap cleanup EXIT
+	echo "Processing dependencies with $INSTALL..."
+
+	if [[ "$INSTALL" == "" || "`command -v $INSTALL 2>&1 /dev/null`" == "" ]] ; then
+		echo "Warning: could not find installation tool $INSTALL"
+		echo "The following dependencies were not installed:"
+		while IFS= read -r LINE || [[ -n "$LINE" ]] ; do
+    		echo "  $LINE"
+		done < ~/Konphig/.bash_functions/$OS/dependencies.txt
+	else
+		while IFS= read -r LINE || [[ -n "$LINE" ]] ; do
+			if [[ `command -v $LINE` == "" ]] ; then
+				echo "  Couldn't find $LINE. Attempting to install..."
+				SILENCEOUT=`command $INSTALL install -y -q $LINE 2>&1 /dev/null`
+				if [[ $? -ne 0 ]] ; then
+					echo "  Warning: could not install dependency $LINE, you may have to install it manually."
+				else
+					echo "  Successfully installed $LINE"
+				fi
+			fi  
+		done < ~/Konphig/.bash_functions/$OS/dependencies.txt
+	fi
+fi
+
+rm -rf ~/.originals
