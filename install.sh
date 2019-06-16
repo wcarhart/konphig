@@ -17,6 +17,7 @@ function cleanup {
 		for FILE in ~/.originals/* ; do
 			yes | cp -rf $FILE ~ >/dev/null 2>&1
 		done
+		rm -rf ~/.originals
 		echo "Error: installation failed! Please review the ~/Konphig source repo and reclone it, if necessary"
 		exit 1
 	else
@@ -26,6 +27,7 @@ function cleanup {
 		exit 0
 	fi
 }
+trap cleanup EXIT
 
 # parse command line arguments
 DEPS=0
@@ -128,16 +130,15 @@ if [[ $DEPS -eq 1 ]] ; then
 		done < ~/Konphig/.bash_functions/$OS/dependencies.txt
 	else
 		while IFS= read -r LINE || [[ -n "$LINE" ]] ; do
-			if [[ "`command -v $LINE 2>&1 /dev/null`" == "" ]] ; then
-				command $INSTALL -y $LINE 2>&1 /dev/null
+			if [[ `command -v $LINE` == "" ]] ; then
+				echo "Couldn't find $LINE. Attempting to install..."
+				SILENCEOUT=`command $INSTALL install -y -q $LINE 2>&1 /dev/null`
 				if [[ $? -ne 0 ]] ; then
-					echo "Warning: could not install dependency $LINE, you may have to do this one manually"
+					echo "Warning: could not install dependency $LINE, you may have to install it manually."
 				fi
-			fi
+			fi  
 		done < ~/Konphig/.bash_functions/$OS/dependencies.txt
 	fi
 fi
 
 rm -rf ~/.originals
-
-trap cleanup EXIT
