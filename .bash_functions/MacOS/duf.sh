@@ -12,7 +12,7 @@ duf() {
 	fi
 
 	for ARG in "$@"; do
-		SIZE=`find . -name "*.$1" -print0 | xargs -0 du --apparent-size -ch | tail -n1`
+		SIZE=`find . -name "*.$1" -print0 | xargs -0 gdu --apparent-size -ch | tail -n1`
 		read -ra ARR <<<"$SIZE"
 		echo "$1: ${ARR[0] - $1}"
 		shift

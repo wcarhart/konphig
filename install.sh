@@ -1,3 +1,5 @@
+trap cleanup EXIT
+
 # detect os type
 ostype() {
     OS=`uname -s`
@@ -21,13 +23,20 @@ function cleanup {
 		echo "Error: installation failed! Please review the ~/Konphig source repo and reclone it, if necessary"
 		exit 1
 	else
-		echo "Installation successful!"
+		if [[ "$OS" == "MacOS" ]] ; then
+			echo -n "source ~/.bashrc" | pbcopy
+		fi
+		echo "Setup successful!"
 		echo "To complete installation, please run:"
-		echo "  source ~/.bashrc"
+		printf "  \033[93msource ~/.bashrc\033[0m"
+		if [[ "$OS" == "MacOS" ]] ; then
+			printf " (\033[35mpress ⌘ + V\033[0m)\n"
+		else
+			echo
+		fi
 		exit 0
 	fi
 }
-trap cleanup EXIT
 
 # parse command line arguments
 DEPS=0
@@ -114,18 +123,18 @@ if [[ $DEPS -eq 1 ]] ; then
 	INSTALL=""
 	if [[ "$OS" == "Linux" ]] ; then
 		if [[ "`command -v yum 2>&1 /dev/null`" != "" ]] ; then
-			INSTALL="yum"
+			INSTALL="yum install -y -q"
 		elif [[ "`command -v apt-get 2>&1 /dev/null`" != "" ]] ; then
-			INSTALL="apt-get"
+			INSTALL="apt-get install -y -q"
 		fi
 	else
-		INSTALL="brew"
+		INSTALL="brew install"
 	fi
 
-	echo "Processing dependencies with $INSTALL..."
+	echo "Processing dependencies with `echo $INSTALL | awk '{print $1}'`..."
 
 	if [[ "$INSTALL" == "" || "`command -v $INSTALL 2>&1 /dev/null`" == "" ]] ; then
-		echo "Warning: could not find installation tool $INSTALL"
+		echo "Warning: could not find installation tool `echo $INSTALL | awk '{print $1}'`"
 		echo "The following dependencies were not installed:"
 		while IFS= read -r LINE || [[ -n "$LINE" ]] ; do
     		echo "  $LINE"
@@ -134,7 +143,7 @@ if [[ $DEPS -eq 1 ]] ; then
 		while IFS= read -r LINE || [[ -n "$LINE" ]] ; do
 			if [[ `command -v $LINE` == "" ]] ; then
 				echo "  Couldn't find $LINE. Attempting to install..."
-				SILENCEOUT=`command $INSTALL install -y -q $LINE 2>&1 /dev/null`
+				SILENCEOUT=`command $INSTALL $LINE 2>&1 /dev/null`
 				if [[ $? -ne 0 ]] ; then
 					echo "  Warning: could not install dependency $LINE, you may have to install it manually."
 				else
