@@ -6,7 +6,7 @@ dup() {
 		echo "dup: err: $1 is not a valid directory"
 	fi
 
-	du -sh --apparent-size "$DIR"*
+	gdu -sh --apparent-size "$DIR"*
 	DU=`gdu -sh --apparent-size "$DIR"`
 	read -ra ARR <<<"$DU"
 	echo " TOTAL: ${ARR[0]}"
