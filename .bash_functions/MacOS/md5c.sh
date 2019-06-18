@@ -13,7 +13,7 @@ md5c() {
 	done
 
 	if [[ $# -eq 1 ]] ; then
-		echo "$1 `md5sum "$1" | awk '{print $1}'`"
+		echo "$1 `md5 -q "$1" | awk '{print $1}'`"
 		return 0
 	fi
 
@@ -21,19 +21,24 @@ md5c() {
 	HASHES=()
 	for FILE in $@ ; do
 		FILES+=( "$FILE" )
-		HASHES+=( `md5sum "$FILE" | awk '{print $1}'` )
+		HASHES+=( `md5 -q "$FILE" | awk '{print $1}'` )
 	done
 
-	mapfile -t uniq < <(printf "%s\n" "${HASHES[@]}" | sort -u)
-	if (( ${#uniq[@]} > 1 )); then
+	EQUAL=1
+	for H1 in "${HASHES[@]}" ; do
+		for H2 in "${HASHES[@]}" ; do
+			if [[ "$H1" != "$H2" ]] ; then EQUAL=0 ; break ; fi
+		done
+		if [[ $EQUAL -eq 0 ]] ; then break ; fi
+	done
+	
+	if [[ $EQUAL -eq 0 ]] ; then
 		echo "FAIL"
 	else
 		echo "PASS"
 	fi
 
-	OUTPUT=""
 	for INDEX in `seq 0 $(( ${#FILES[@]} - 1 ))` ; do
-		OUTPUT="$OUTPUT\n${FILES[$INDEX]} ${HASHES[$INDEX]}"
+		echo "${FILES[$INDEX]} ${HASHES[$INDEX]}"
 	done
-	printf "$OUTPUT" | column -t
 }
