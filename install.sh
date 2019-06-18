@@ -125,6 +125,9 @@ yes | cp -rf ~/Konphig/.vimrc ~ >/dev/null 2>&1
 yes | cp -rf ~/Konphig/.pypirc ~ >/dev/null 2>&1
 yes | cp -rf ~/Konphig/gpg-agent.conf ~ >/dev/null 2>&1
 
+# set environment variables
+export __UPDIR__=""
+
 # install dependencies
 if [[ $DEPS -eq 1 ]] ; then
 	INSTALL=""
