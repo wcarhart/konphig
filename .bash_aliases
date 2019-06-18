@@ -8,10 +8,9 @@ alias slq='mysql'
 alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
-alias la='ls -al --color=auto'
-alias l='ls --color=auto'
+alias la='ls -alG'
+alias l='ls -G'
 alias mkdir='mkdir -p'
-#alias ls='ls --color=auto'
 
 # typos and shortcuts
 alias pytho='python'

@@ -10,8 +10,10 @@ export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 
 # shell stuff
-export HISTCONTROL=ignoredups
+export HISTCONTROL=ignoreboth
 export HISTIGNORE="&:ls:ll:la:l.:pwd:exit:clear"
+export HISTFILESIZE=1000000
+export HISTSIZE=1000000
 
 # colors
 export CLICOLOR=1

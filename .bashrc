@@ -40,11 +40,14 @@ prompt_function() {
 
 export PROMPT_COMMAND='prompt_function'
 
-## history
+## history (also check .bash_variables)
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
+bind "set completion-ignore-case on"
+bind "set show-all-if-ambiguous on"
 set show-all-if-ambiguous on
 set completion-ignore-case on
+shopt -s histappend
 set SSH_ASKPASS
 
 # user specific aliases and functions
