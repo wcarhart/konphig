@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # make a BASH function out of the last x commands
 makef() {
 	fc -rnl > /dev/null 2>&1

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # sort by size of current directory
 sbs() {
 	DIR=${1:-"./"}

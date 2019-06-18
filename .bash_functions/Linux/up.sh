@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # change up multiple directories
 up() {
 	if [[ "$__UPDIR__" == "" ]] || [[ "$__UPDIR__" != *`pwd`* ]] ; then

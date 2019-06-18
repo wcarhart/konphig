@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # select files at random from a directory
 get() {
 	FILES=( * )

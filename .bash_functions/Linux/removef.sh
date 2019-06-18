@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # remove a BASH Function by name
 removef() {
 	if [[ $# -ne 1 ]] ; then

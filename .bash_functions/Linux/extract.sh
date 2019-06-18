@@ -1,5 +1,6 @@
-# extracts compressed and zipped files automatically
+#!/bin/bash
 
+# extracts compressed and zipped files automatically
 extract() {
 	if [[ -f "$1" ]] ; then
 		case "$1" in

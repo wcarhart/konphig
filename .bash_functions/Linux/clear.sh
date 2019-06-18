@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # clear a file
 clear() {
 	if [[ $# -eq 0 ]] ; then

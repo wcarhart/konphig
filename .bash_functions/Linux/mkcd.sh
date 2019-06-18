@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # make directory and change into it
 mkcd() {
 	if [[ $# -ne 1 ]] ; then

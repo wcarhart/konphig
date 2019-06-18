@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # add a variable on the fly
 addv() {
 	if [[ $# -ne 2 ]] ; then

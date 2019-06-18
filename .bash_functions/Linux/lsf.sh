@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # list all custom BASH functions
 lsf() {
 	if [[ ! -d ~/.bash_functions ]] ; then

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # reverse input
 rev() {
 	if [[ $# -eq 0 ]] ; then

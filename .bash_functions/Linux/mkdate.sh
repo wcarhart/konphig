@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # make directory prefixed with the date
 mkdate() {
 	if [[ $# -eq 0 ]] ; then

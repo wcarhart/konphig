@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # move files and change directory
 mvcd() {
 	if [[ $# -lt 2 ]] ; then

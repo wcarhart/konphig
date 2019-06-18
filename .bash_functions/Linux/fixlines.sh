@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # fix lines
 fixlines() {
 	if [[ $# -eq 0 ]] ; then

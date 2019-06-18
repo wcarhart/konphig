@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # add test files to directory
 ranf() {
 	touch test.txt

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # grep and pause
 grepp() {
 	if [[ $# -ne 2 ]] ; then

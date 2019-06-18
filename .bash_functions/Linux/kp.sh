@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # kill process by name
 kp() {
 	if [[ $# -ne 1 ]] ; then
