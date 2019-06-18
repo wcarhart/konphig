@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # remove all subdirectories from a directory
 rmd() {
 	if [[ $# -eq 0 ]] ; then

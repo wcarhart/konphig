@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # execute a file and open it in Sublime
 esubl() {
 	if [[ $# -eq 0 ]] ; then

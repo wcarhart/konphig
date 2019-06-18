@@ -1,4 +1,6 @@
+# set cleanup trap
 trap cleanup EXIT
+mkdir ~/.originals
 
 # detect os type
 ostype() {
@@ -50,6 +52,12 @@ if [[ "`basename $SHELL`" != "bash" ]] ; then
 	echo "Error: Konphig is not supported for this shell"
 	exit 1
 fi
+if [[ ! -f /bin/bash ]] && [[ ! -L /bin/bash ]] ; then
+	echo "Error: could not find Bash at /bin/bash"
+	echo "Use the following to link Bash to /bin/bash, and then try installing again:"
+	echo "  ln -sf bash /bin/bash"
+	exit 1
+fi
 if [[ $OS != "Linux" && $OS != "MacOS" ]] ; then
 	echo "Error: Konphig is not supported for this OS"
 	exit 1
@@ -72,7 +80,6 @@ if [[ ! -f ~/Konphig/.bash_functions/$OS/dependencies.txt ]] ; then
 fi
 
 # create backup
-mkdir ~/.originals
 if [[ -f ~/.bashrc ]] ; then
 	mv ~/.bashrc ~/.originals/
 fi

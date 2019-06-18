@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # copy previous command to Mac clipboard (CoPy Last Command)
 cplc() {
 	RAW=`history | tail -2 | head -1`

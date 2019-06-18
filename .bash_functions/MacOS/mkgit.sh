@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # make a new git repo
 mkgit() {
 	if [[ $# -ne 1 ]] ; then

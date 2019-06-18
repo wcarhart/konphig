@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # gives the current user execution privileges for a file
 gimme() {
 	if [[ $# -eq 0 ]] ; then

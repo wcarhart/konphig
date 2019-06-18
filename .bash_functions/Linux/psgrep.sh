@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # search for a process by name
 psgrep() {
 	if [[ $# -eq 0 ]] ; then

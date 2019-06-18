@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # open a file in Brave browser from the command line
 brave() {
 	if [[ $# -eq 0 ]] ; then

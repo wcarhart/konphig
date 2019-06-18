@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # remove files in directory and its subdirectories
 rmr() {
 	if [[ $# -eq 0 ]] ; then

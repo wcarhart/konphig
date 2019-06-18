@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # copy files and change directory
 cpcd() {
 	if [[ $# -lt 2 ]] ; then

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # check if the md5 hashes of files match
 md5c() {
 	if [[ $# -eq 0 ]] ; then

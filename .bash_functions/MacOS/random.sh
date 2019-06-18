@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # generate a random string of specified length, great for passwords
 random() {
 	if [[ $# -ne 0 ]] ; then

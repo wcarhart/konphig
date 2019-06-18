@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # detect os type
 ostype() {
     OS=`uname -s`

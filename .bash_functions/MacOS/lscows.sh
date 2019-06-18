@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # list all cows
 lscows() {
 	COWS=`cowsay -l | tail -n +2 | tr ' ' '\n'`

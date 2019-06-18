@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # get disk usage in a nicer format
 dup() {
 	DIR=${1:-"./"}

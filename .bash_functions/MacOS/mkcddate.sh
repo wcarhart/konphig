@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # make directory prefixed with the date and change into it
 mkcddate() {
 	if [[ $# -ne 1 ]] ; then

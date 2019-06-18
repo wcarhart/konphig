@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # move all files in current directory to different directory and delete current directory
 mvrm() {
 	if [[ $# -ne 1 ]] ; then

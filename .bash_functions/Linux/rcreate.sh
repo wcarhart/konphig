@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # create new remote repository on GitHub and push the current commit to it
 rcreate() {
 	if [[ ! -d .git ]] ; then

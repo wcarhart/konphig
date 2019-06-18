@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # get location for your public IP address
 getlocation() {
 	MYIP=`dig +short myip.opendns.com @resolver1.opendns.com`

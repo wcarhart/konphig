@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # copy a file from a different git branch to the current one
 gitcfb() {
 	if [[ $# -ne 2 ]] ; then

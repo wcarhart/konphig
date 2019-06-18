@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # go back down one directory if we go up one too many
 down() {
 	TO="$__UPDIR__"

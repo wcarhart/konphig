@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # show percentage of each filetype in the current directory
 per() {
 	declare -A FILES

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # remove files at random
 del() {
 	FILES=()

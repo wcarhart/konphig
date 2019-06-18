@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # add to PATH variable
 pathadd() {
 	if [[ $# -eq 0 ]] ; then

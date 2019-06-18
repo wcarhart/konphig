@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # get help for BASH commands
 aid() {
     if [[ $# -ne 1 ]] ; then

@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # copy files into new directory
 cpmk() {
 	if [[ $# -lt 2 ]] ; then

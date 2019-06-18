@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # show most commonly used commands
 common() {
 	if [[ $# -ne 0 ]] ; then
