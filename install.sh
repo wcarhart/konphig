@@ -123,18 +123,18 @@ if [[ $DEPS -eq 1 ]] ; then
 	INSTALL=""
 	if [[ "$OS" == "Linux" ]] ; then
 		if [[ "`command -v yum 2>&1 /dev/null`" != "" ]] ; then
-			INSTALL="yum"
+			INSTALL="yum install -y -q"
 		elif [[ "`command -v apt-get 2>&1 /dev/null`" != "" ]] ; then
-			INSTALL="apt-get"
+			INSTALL="apt-get install -y -q"
 		fi
 	else
-		INSTALL="brew"
+		INSTALL="brew install"
 	fi
 
-	echo "Processing dependencies with $INSTALL..."
+	echo "Processing dependencies with `echo $INSTALL | awk '{print $1}'`..."
 
 	if [[ "$INSTALL" == "" || "`command -v $INSTALL 2>&1 /dev/null`" == "" ]] ; then
-		echo "Warning: could not find installation tool $INSTALL"
+		echo "Warning: could not find installation tool `echo $INSTALL | awk '{print $1}'`"
 		echo "The following dependencies were not installed:"
 		while IFS= read -r LINE || [[ -n "$LINE" ]] ; do
     		echo "  $LINE"
@@ -143,7 +143,7 @@ if [[ $DEPS -eq 1 ]] ; then
 		while IFS= read -r LINE || [[ -n "$LINE" ]] ; do
 			if [[ `command -v $LINE` == "" ]] ; then
 				echo "  Couldn't find $LINE. Attempting to install..."
-				SILENCEOUT=`command $INSTALL install -y -q $LINE 2>&1 /dev/null`
+				SILENCEOUT=`command $INSTALL $LINE 2>&1 /dev/null`
 				if [[ $? -ne 0 ]] ; then
 					echo "  Warning: could not install dependency $LINE, you may have to install it manually."
 				else
