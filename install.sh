@@ -26,7 +26,7 @@ function cleanup {
 		if [[ "$OS" == "MacOS" ]] ; then
 			echo -n "source ~/.bashrc" | pbcopy
 		fi
-		echo "Installation successful!"
+		echo "Setup successful!"
 		echo "To complete installation, please run:"
 		printf "  \033[93msource ~/.bashrc\033[0m"
 		if [[ "$OS" == "MacOS" ]] ; then
