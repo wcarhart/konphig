@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # change directory and list contents
 cdls() {
 	if [[ $# -eq 0 ]] ; then

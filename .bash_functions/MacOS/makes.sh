@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # make a shell script out of the last x commands
 makes() {
 	fc -rnl > /dev/null 2>&1

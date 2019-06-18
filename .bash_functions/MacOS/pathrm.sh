@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # remove from PATH variable
 pathrm() {
 	if [[ $# -eq 0 ]] ; then

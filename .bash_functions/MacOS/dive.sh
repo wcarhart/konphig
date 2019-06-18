@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # follow a directory tree down to its childmost directory
 dive() {
     if [[ $# -ne 1 ]] ; then

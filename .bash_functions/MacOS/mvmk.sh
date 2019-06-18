@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # make directory and move files into it
 mvmk() {
 	if [[ $# -lt 2 ]] ; then

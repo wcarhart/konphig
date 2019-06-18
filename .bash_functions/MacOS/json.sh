@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # pretty print JSON files
 json() {
     if [[ $# -eq 0 ]] ; then

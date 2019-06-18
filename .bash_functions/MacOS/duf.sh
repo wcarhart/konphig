@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # get disk usage for specific filetype
 duf() {
 	if [[ $# -eq 0 ]] ; then

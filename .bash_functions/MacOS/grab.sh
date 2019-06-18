@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # changes permissions for a specific file
 grab() {
 	if [[ $# -eq 0 ]] ; then

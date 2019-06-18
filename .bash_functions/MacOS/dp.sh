@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # cycle through different prompts (different PS1 variables)
 dp() {
 	if [[ $# -eq 0 ]] ; then

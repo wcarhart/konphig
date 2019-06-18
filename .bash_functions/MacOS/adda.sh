@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # add an alias on the fly
 adda() {
 	if [[ $# -ne 2 ]] ; then

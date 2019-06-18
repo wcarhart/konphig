@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # copy files into new directory and change into it
 cpmkcd() {
 	if [[ $# -lt 2 ]] ; then

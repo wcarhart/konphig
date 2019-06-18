@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # random animal speech
 randimal() {
 	if [[ $# -eq 0 ]] ; then

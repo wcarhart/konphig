@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # list all files of specific type
 show() {
 	if [[ $# -eq 0 ]] ; then

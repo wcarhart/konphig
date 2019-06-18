@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # update system settings to match changes in Konphig repo
 update() {
 	# acquire OS type
