@@ -16,7 +16,7 @@ dp() {
 		# mood based on last command
 		export __PS1__="\`if [ \$? = 0 ]; then echo \[\e[33m\]^_^\[\e[0m\]; else echo \[\e[31m\]O_O\[\e[0m\]; fi\` \\$ "
 	else
-		echo "dp: err: invalid prompt index, must be [0,4]"
+		echo "dp: err: invalid prompt index, must be [1,4]"
 		return 1
 	fi
 }
