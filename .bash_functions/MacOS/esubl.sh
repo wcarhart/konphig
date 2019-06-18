@@ -5,6 +5,11 @@ esubl() {
 		return 1
 	fi
 
+	if [[ ! -f "$1" ]] ; then
+		echo "esubl: err: no such file $1"
+		return 1
+	fi
+
 	FILE="$1"
 	EXT="${FILE##*.}"
 	subl "$1"

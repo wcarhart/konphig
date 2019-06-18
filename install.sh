@@ -1,3 +1,5 @@
+trap cleanup EXIT
+
 # detect os type
 ostype() {
     OS=`uname -s`
@@ -21,9 +23,17 @@ function cleanup {
 		echo "Error: installation failed! Please review the ~/Konphig source repo and reclone it, if necessary"
 		exit 1
 	else
+		if [[ "$OS" == "MacOS" ]] ; then
+			echo -n "source ~/.bashrc" | pbcopy
+		fi
 		echo "Installation successful!"
 		echo "To complete installation, please run:"
-		echo "  source ~/.bashrc"
+		printf "  \033[93msource ~/.bashrc\033[0m"
+		if [[ "$OS" == "MacOS" ]] ; then
+			printf " (\033[35mpress ⌘ + V\033[0m)\n"
+		else
+			echo
+		fi
 		exit 0
 	fi
 }
@@ -107,8 +117,6 @@ yes | cp -rf ~/Konphig/.tmux.conf ~ >/dev/null 2>&1
 yes | cp -rf ~/Konphig/.vimrc ~ >/dev/null 2>&1
 yes | cp -rf ~/Konphig/.pypirc ~ >/dev/null 2>&1
 yes | cp -rf ~/Konphig/gpg-agent.conf ~ >/dev/null 2>&1
-
-trap cleanup EXIT
 
 # install dependencies
 if [[ $DEPS -eq 1 ]] ; then
