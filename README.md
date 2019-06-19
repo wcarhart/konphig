@@ -1,46 +1,98 @@
 # Konphig
 Config files for safe keeping 😏
 
-This repo contains various configuration files so they don't have to be recreated. They are designed for Linux environments but most will work in MacOS as well.
+## Summary
+Konphig contains custom settings for the following tools:
+* Bash
+* git
+* tmux
+* vim
+* gpg
+* PyPI
+
+## Key Features
+Read the full Bash functions documentation by [clicking here](https://github.com/wcarhart/Konphig/blob/master/functions.md).
+
+**`up` and `down`** - move up and down the file tree
+```bash
+$ pwd
+/dir0/dir1/dir2/dir3/dir4
+$ up 4
+/dir0
+$ down 2
+/dir0/dir1/dir2
+```
+**`adda`** - add a permanent alias on the fly
+```bash
+$ adda e echo
+$ e "Hello, Konphig!"
+Hello, Konphig!
+```
+**`makef`** - create a permanent bash function from commands in the history on the fly
+```bash
+$ clear
+$ ls
+file0.txt file1.txt
+$ makef 2 cls
+$ cat ~/.bashrc
+cls() {
+  clear
+  ls
+}
+```
+**`rcreate`** - create a remote in GitHub
+```bash
+$ git add -A
+$ git commit -m "Initial commit"
+$ basename `pwd`
+cool_new_project
+$ rcreate
+Enter passphrase for key '/Users/username/.ssh/id_rsa': 
+Counting objects: 1, done.
+Writing objects: 100% (1/1), 8 bytes | 0 bytes/s, done.
+Total 1 (delta 0), reused 0 (delta 0)
+remote:
+remote: Create a pull request for 'master' on GitHub by visiting:
+remote:      https://github.com/username/cool_new_project/pull/new/master
+remote:
+To https://github.com/username/cool_new_project.git
+ * [new branch]      master -> master
+Branch master set up to track remote branch master from origin.
+```
+**`getlocation`** - get your current location (based on your public IP address)
+```
+$ getlocation
+IP: 105.38.27.128
+Location: San Francisco, CA, USA
+```
+**`duf`** - show disk usage by filetype
+```bash
+$ duf py md
+py: 30K
+md: 4.7K
+```
+**`gitcfb`** - copy a file from a different git branch to the current one
+```bash
+$ cat test.txt
+I am a text file on the develop branch.
+$ gitcfb master test.txt
+$ cat test.txt
+I am a text file on the master branch.
+```
+
+And many, many more! Read the full Bash functions documentation by [clicking here](https://github.com/wcarhart/Konphig/blob/master/functions.md).
 
 ## Install
-This will install all of the configuration files from Konphig to your system (**and overwrite any you already have!**). Use the following steps:
-1. `git clone git@github.com:wcarhart/Konphig.git`
-2. `cd Konphig/`
-3. `./install.sh`
-4. `source ~/.bashrc`
+This will install all of the configuration files from Konphig to your system. Konphig is currently supported for MacOS and most Linux-based environments. Use the following:
+```bash
+$ git clone https://github.com/wcarhart/Konphig.git
+$ cd ~/Konphig
+$ chmod +x install.sh
+$ ./install.sh
+$ source ~/.bashrc
+```
+You can also use `./install.sh -d` to install Konphig files and all necessary dependencies.
 
 From now on, you can use `sb` instead of `source ~/.bashrc` to manually push updates to your system configurations.
 
-In addition, if you ever make a change to any of your Konphig files, you can simply run [`update`](https://github.com/wcarhart/Konphig/blob/master/functions.md#update) to update your system files (make sure the changed file is in `~/Konphig/`). `update` dynamically matches your system files to your Konphig files and sources them for you automatically.
-
-## Overview
- * [BASH](https://github.com/wcarhart/Konphig#bash)
- * [git](https://github.com/wcarhart/Konphig#git)
- * [vim](https://github.com/wcarhart/Konphig#vim)
- * [tmux](https://github.com/wcarhart/Konphig#tmux)
- 
-### BASH
-The BASH configurations contain the general `.bashrc` and `.bash_profile` files, but also:
- * `.bash_functions` - **70+ COOL BASH FUNCTIONS!** - file for BASH functions ([see here](https://github.com/wcarhart/Konphig/blob/master/functions.md) for separate BASH function documentation)
- * `.bash_aliases` - file for BASH aliases
- * `.bash_variables` - file for BASH variables
-
-`BASH` configurations adhere to the following architecture:
-```
-.bashrc
-| | | |
-| | | .bash_profile
-| | .bash_functions  (where functions are saved)
-| .bash_aliases      (where aliases are saved)
-.bash_variables      (where variables are saved)
-```
-
-### git
-Basic `git` configurations, also including some helpful `git` aliases.
-
-### vim
-Basic setup for `vim`.
-
-### tmux
-Single setting for `tmux`.
+In addition, if you ever make a change to any of your Konphig files, you can run [`update`](https://github.com/wcarhart/Konphig/blob/master/functions.md#update) to update your system files. `update` dynamically matches your system files to your Konphig files and sources them for you automatically.
