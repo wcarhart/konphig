@@ -79,6 +79,17 @@ $ gitcfb master test.txt
 $ cat test.txt
 I am a text file on the master branch.
 ```
+**`dp`** - change to a different prompt
+```bash
+$ dp 1
+[11:57] ~ ༼ つ ◕_◕ ༽つ dp 2
+[11:57] > dp 3
+[wcarhart@willcarhart] Wed Jun 19, 11:57:23 <~> $ dp 4
+^_^ $ command_that_fails
+-bash: command_that_fails: command not found
+O_O $ cd ~
+^_^ $ dp 1
+```
 
 And many, many more! Read the full Bash functions documentation by [clicking here](https://github.com/wcarhart/Konphig/blob/master/functions.md).
 
