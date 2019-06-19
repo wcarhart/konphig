@@ -1,9 +1,9 @@
 # BASH Functions
-This is the general documentation for the `BASH` functions written in `.bash_functions`.
+This is the full Bash functions documentation.
 
 ### Contents
-| [File Manipulation](https://github.com/wcarhart/Konphig/blob/master/functions.md#file-manipulation) | [Statistics & Tools](https://github.com/wcarhart/Konphig/blob/master/functions.md#statistics--tools) | [Environment](https://github.com/wcarhart/Konphig/blob/master/functions.md#environment) | [Miscellaneous](https://github.com/wcarhart/Konphig/blob/master/functions.md#miscellaneous) | [Useless](https://github.com/wcarhart/Konphig/blob/master/functions.md#useless) |
-|:-----------------:|:------------------:|:-------------:|:---------------:|:------------:|
+| File Manipulation | Statistics & Tools | Environment | Miscellaneous | Useless |
+|:-----------------:|:------------------:|:-----------:|:-------------:|:-------:|
 | [extract](https://github.com/wcarhart/Konphig/blob/master/functions.md#extract) | [md5c](https://github.com/wcarhart/Konphig/blob/master/functions.md#md5c) | [adda](https://github.com/wcarhart/Konphig/blob/master/functions.md#adda) | [fixlines](https://github.com/wcarhart/Konphig/blob/master/functions.md#fixlines) | [dummy](https://github.com/wcarhart/Konphig/blob/master/functions.md#dummy)
 | [grab](https://github.com/wcarhart/Konphig/blob/master/functions.md#grab) | [cf](https://github.com/wcarhart/Konphig/blob/master/functions.md#cf) | [addv](https://github.com/wcarhart/Konphig/blob/master/functions.md#addv) | [gitdefault](https://github.com/wcarhart/Konphig/blob/master/functions.md#gitdefault) | [busy](https://github.com/wcarhart/Konphig/blob/master/functions.md#busy)
 | [ranf](https://github.com/wcarhart/Konphig/blob/master/functions.md#ranf) | [up](https://github.com/wcarhart/Konphig/blob/master/functions.md#up) | [dp](https://github.com/wcarhart/Konphig/blob/master/functions.md#dp) | [random](https://github.com/wcarhart/Konphig/blob/master/functions.md#random) | [siren](https://github.com/wcarhart/Konphig/blob/master/functions.md#siren)
@@ -26,18 +26,151 @@ This is the general documentation for the `BASH` functions written in `.bash_fun
 | [eao](https://github.com/wcarhart/Konphig/blob/master/functions.md#eao)
 | [gimme](https://github.com/wcarhart/Konphig/blob/master/functions.md#gimme)
 
+### Functions
 
-## File Manipulation
-These functions deal with file manipulation, meaning the creation, modification, and deletion of files and directories.
+**<a name="adda">`adda`</a>** - *add alias* - adds an alias on the fly
 
-#### extract
-*extract* - extracts compressed and zipped files automatically
+Usage: `adda alias full_command`
+```
+$ adda e echo
+$ e "Hello, world!"
+Hello, world!
+```
+**Dependencies**: `echo`, `source`
+
+**Compatibility**: *MacOS* and *Linux*
+
+---
+**<a name="addv">`addv`</a>** - *add variable* - adds a variable on the fly
+
+Usage: `addv variable value`
+```
+$ addv shortcut /long/path/to/a/directory/thats/annoying/to/type/a/lot
+$ cd $shortcut
+$ pwd
+/long/path/to/a/directory/thats/annoying/to/type/a/lot/
+```
+**Dependencies**: `echo`, `source`
+
+**Compatibility**: *MacOS* and *Linux*
+
+---
+**<a name="aid">`aid`</a>** - *aid* - get some helpful hints about a command
+
+Usage: `aid command`
+```
+$ aid scp
+# 
+# scp
+# 
+# Secure copy.
+# Copy files between hosts using Secure Copy Protocol over SSH.
+# 
+# Copy a local file to a remote host:
+  scp path/to/local_file remote_host:path/to/remote_file
+# 
+# Copy a file from a remote host to a local directory:
+  scp remote_host:path/to/remote_file path/to/local_directory
+# 
+# Recursively copy the contents of a directory from a remote host to a local directory:
+  scp -r remote_host:path/to/remote_directory path/to/local_directory
+# 
+# Copy a file between two remote hosts transferring through the local host:
+  scp -3 host1:path/to/remote_file host2:path/to/remote_directory
+# 
+# Use a specific username when connecting to the remote host:
+  scp path/to/local_file remote_username@remote_host:path/to/remote_directory
+# 
+# Use a specific ssh private key for authentication with the remote host:
+  scp -i ~/.ssh/private_key local_file remote_host:/path/remote_file
+# 
+#
+```
+**Dependencies**: `echo`, `curl`
+
+**Compatibility**: *MacOS* and *Linux*
+
+---
+**<a name="busy">`busy`</a>** - *busy* - output on the terminal to make it look like you're busy
+
+Usage: `busy`
+```
+$ busy                   # draws a bunch of meaningless graphs on the terminal to monitor real but meaningless processes
+```
+**Dependencies**: `cat`, `hexdump`, `grep`
+
+**Compatibility**: *MacOS* and *Linux*
+
+---
+**<a name="cdls">`cdls`</a>** - *change directory, list* - change into another directory and list its contents
+
+Usage: `cdls directory`
+```
+$ cdls directory
+file0.txt
+file1.txt
+$ pwd
+/directory/
+```
+**Dependencies**: `cd`, `ls`, `echo`
+
+**Compatibility**: *MacOS* and *Linux*
+
+---
+**<a name="cf">`cf`</a>** - *count files* - counts the number of files in a directory and its subdirectories
+
+Usage: `cf [directory]`
+```
+$ cf                          # count files in the current directory (.)
+15 files
+$ cf dir                      # count files in directory dir
+745 files
+```
+**Dependencies**: `find`, `wc`, `echo`
+
+**Compatibility**: *MacOS* and *Linux*
+
+---
+**<a name="chrome">`chrome`</a>** - *chrome* - open a file in Google Chrome from the command line
+
+Usage `chrome file [files]`
+```
+$ chrome README.md               # opens README.md in Chrome
+$ chrome index.html detail.html  # opens index.html and detail.html in Chrome
+```
+**Dependencies**: `echo`, `open`
+
+**Compatibility**: *MacOS* only
+
+---
+**<a name="clear">`clear`</a>** - *clear* - clears a file or the screen depending on user input
+
+Usage: `clear [file]`
+```
+$ clear             # clears the terminal screen, normal Linux functionality
+$ clear file.txt    # clears file.txt (i.e. makes file.txt an empty file without deleting and recreating it)
+```
+**Dependencies**: `clear`
+
+**Compatibility**: *MacOS* and *Linux*
+
+---
+
+
+
+
+
+
+
+**<a name="extract">`extract`</a>** - *extract* - extracts compressed and zipped files automatically
 
 Usage: `extract file`
 ```
 $ extract contents.bz2
 ```
-Dependencies: `tar`, `bunzip`, `unrar`, `gunzip`, `unzip`, `uncompress`, `echo`
+**Dependencies**: `tar`, `bunzip`, `unrar`, `gunzip`, `unzip`, `uncompress`, `echo`
+
+**Compatibility**: *MacOS* and *Linux*
 
 ---
 #### grab
@@ -200,17 +333,7 @@ $ mkcddate analysis       # will make a new directory named `YYYY-MM-DD-analysis
 Dependencies: `date`, `mkdir`, `cd`
 
 ---
-#### clear
-*clear file or screen* - clears a file or the screen depending on user input
 
-Usage: `clear [file]`
-```
-$ clear             # clears the terminal screen, normal Linux functionality
-$ clear file.txt    # clears file.txt (i.e. makes file.txt an empty file without deleting and recreating it)
-```
-Dependencies: `clear`
-
----
 #### del
 *deletes random files* - deletes a file (default) or files at random from the current directory
 
@@ -288,19 +411,6 @@ FAIL d41d8cd98f00b204e9800998ecf8427e 4db87b0207fc90a2033f4031fa6348e9
 ```
 Dependencies: `md5sum`, `awk`, `echo`
 
-#### cf
-*count files* - counts the number of files in a directory and its subdirectories
-
-Usage: `cf [directory]`
-```
-$ cf                          # count files in the current directory (.)
-15 files
-$ cf dir                      # count files in directory dir
-745 files
-```
-Dependencies: `find`, `wc`, `echo`
-
----
 #### up
 *up* - move up a directory (default) or multiple directories (replaces `cd ..`, `cd ../..`, etc.)
 
@@ -406,21 +516,7 @@ $ sbs dir0
 ```
 Dependencies: `du`, `sort`, `echo`, `cd`
 
----
-#### cdls
-*change directory and list files* - change into another directory and list its contents
 
-Usage: `cdls directory`
-```
-$ cdls directory
-file0.txt
-file1.txt
-$ pwd
-/directory/
-```
-Dependencies: `cd`, `ls`, `echo`
-
----
 #### rev
 *reverse* - reverse input
 
@@ -557,31 +653,6 @@ $ chrome README.md                 # opens README.md in Chrome
 Dependencies: `echo`, `open`
 
 ---
-## Environment
-These functions all have to do with monitoring or modifying the environment (shell, operating system, etc.).
-#### adda
-*add alias* - adds an alias on the fly
-
-Usage: `adda alias full_command`
-```
-$ adda e echo
-$ e "Hello, world!"
-Hello, world!
-```
-Dependencies: `echo`, `source`
-
----
-#### addv
-*add variable* - adds a variable on the fly
-
-Usage: `addv variable value`
-```
-$ addv shortcut /long/path/to/a/directory/thats/annoying/to/type/a/lot
-$ cd $shortcut
-$ pwd
-/long/path/to/a/directory/thats/annoying/to/type/a/lot/
-```
-Dependencies: `echo`, `source`
 
 ---
 #### dp
@@ -991,16 +1062,7 @@ $
 Dependencies: none
 
 ---
-#### busy
-*busy* - output on the terminal to make it look like you're busy
 
-Usage: `busy`
-```
-$ busy                   # draws a bunch of meaningless graphs on the terminal to monitor real but meaningless processes
-```
-Dependencies: `cat`, `hexdump`, `grep`
-
----
 #### siren
 *siren* - sound the alarm
 
