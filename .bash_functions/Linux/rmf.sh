@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # remove a BASH Function by name
-removef() {
+rmf() {
 	if [[ $# -ne 1 ]] ; then
-		echo "removef: err: incorrect number of arguments"
+		echo "rmf: err: incorrect number of arguments"
 		return 1
 	fi
 
@@ -16,13 +16,13 @@ removef() {
 	if [[ -d ~/.bash_functions ]] ; then
 		FILENAME="$FUNCTION.sh"
 		if [[ ! -f ~/.bash_functions/$FILENAME ]] ; then
-			echo "removef: err: $FUNCTION.sh not found in ~/.bash_functions"
+			echo "rmf: err: $FUNCTION.sh not found in ~/.bash_functions"
 			return 1
 		fi
 		rm -rf ~/.bash_functions/$FILENAME
 	else
 		if [[ ! -f ~/.bashrc ]] ; then
-			echo "removef: err: no such directory ~/.bash_functions, no such file ~/.bashrc"
+			echo "rmf: err: no such directory ~/.bash_functions, no such file ~/.bashrc"
 			return 1
 		fi
 
@@ -48,7 +48,7 @@ removef() {
 		cat $RANDO > ~/.bashrc
 		rm -rf $RANDO
 		if [[ $FOUND -eq 0 ]] ; then
-			echo "removef: err: $FUNCTION not found in ~/.bashrc"
+			echo "rmf: err: $FUNCTION not found in ~/.bashrc"
 			return 1
 		else
 			if [ $COUNT -eq 1 ] ; then
