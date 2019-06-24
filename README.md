@@ -14,7 +14,7 @@ Konphig contains custom settings for the following tools:
 Read the full Bash functions documentation by [clicking here](https://github.com/wcarhart/Konphig/blob/master/functions.md).
 
 **`up` and `down`** - move up and down the file tree
-```bash
+```
 $ pwd
 /dir0/dir1/dir2/dir3/dir4
 $ up 4
@@ -23,13 +23,13 @@ $ down 2
 /dir0/dir1/dir2
 ```
 **`adda`** - add a permanent alias on the fly
-```bash
+```
 $ adda e echo
 $ e "Hello, Konphig!"
 Hello, Konphig!
 ```
 **`makef`** - create a permanent bash function from commands in the history on the fly
-```bash
+```
 $ clear
 $ ls
 file0.txt file1.txt
@@ -41,7 +41,7 @@ cls() {
 }
 ```
 **`rcreate`** - create a remote in GitHub
-```bash
+```
 $ git add -A
 $ git commit -m "Initial commit"
 $ basename `pwd`
@@ -66,13 +66,13 @@ IP: 105.38.27.128
 Location: San Francisco, CA, USA
 ```
 **`duf`** - show disk usage by filetype
-```bash
+```
 $ duf py md
 py: 30K
 md: 4.7K
 ```
 **`gitcfb`** - copy a file from a different git branch to the current one
-```bash
+```
 $ cat test.txt
 I am a text file on the develop branch.
 $ gitcfb master test.txt
@@ -80,7 +80,7 @@ $ cat test.txt
 I am a text file on the master branch.
 ```
 **`dp`** - change to a different prompt
-```bash
+```
 $ dp 1
 [11:57] ~ ༼ つ ◕_◕ ༽つ dp 2
 [11:57] > dp 3
