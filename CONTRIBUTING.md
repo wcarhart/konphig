@@ -7,6 +7,7 @@ When adding a new function, remember to adhere to the following:
    * For Linux, please find a CentOS docker container by running `/tests/run.sh`. Within the container, use the following to test your function:
 ```
 $ cd ~/Konphig
+$ git checkout -b your_branch origin/your_branch
 $ chmod +x install.sh
 $ ./install.sh
 $ source ~/.bashrc
