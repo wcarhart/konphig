@@ -5,123 +5,108 @@ This is the full Bash functions documentation.
 <table>
      <tr>
           <td><a href="#adda">adda</a></td>
-          <td><a href="#dp">dp</a></td>
-          <td><a href="#md5c">md5c</a></td>
+          <td><a href="#cpmkcd">cpmkcd</a></td>
+          <td><a href="#gitcfb">gitcfb</a></td>
+          <td><a href="#mvcd">mvcd</a></td>
           <td><a href="#ranf">ranf</a></td>
      </tr>
      <tr>
           <td><a href="#addv">addv</a></td>
-          <td><a href="#duf">duf</a></td>
-          <td><a href="#mkcd">mkcd</a></td>
+          <td><a href="#cppwd">cppwd</a></td>
+          <td><a href="#gitdefault">gitdefault</a></td>
+          <td><a href="#mvmk">mvmk</a></td>
           <td><a href="#rcreate">rcreate</a></td>
      </tr>
      <tr>
           <td><a href="#aid">aid</a></td>
-          <td><a href="#dummy">dummy</a></td>
-          <td><a href="#mkcddate">mkcddate</a></td>
+          <td><a href="#del">del</a></td>
+          <td><a href="#grab">grab</a></td>
+          <td><a href="#mvmkcd">mvmkcd</a></td>
           <td><a href="#removef">removef</a></td>
      </tr>
      <tr>
           <td><a href="#brave">brave</a></td>
-          <td><a href="#dup">dup</a></td>
-          <td><a href="#mkdate">mkdate</a></td>
+          <td><a href="#dive">dive</a></td>
+          <td><a href="#grepp">grepp</a></td>
+          <td><a href="#mvrm">mvrm</a></td>
           <td><a href="#resetbar">resetbar</a></td>
      </tr>
      <tr>
           <td><a href="#busy">busy</a></td>
-          <td><a href="#esubl">esubl</a></td>
-          <td><a href="#mkgit">mkgit</a></td>
+          <td><a href="#down">down</a></td>
+          <td><a href="#json">json</a></td>
+          <td><a href="#ostype">ostype</a></td>
           <td><a href="#rev">rev</a></td>
      </tr>
      <tr>
           <td><a href="#cdls">cdls</a></td>
-          <td><a href="#extract">extract</a></td>
-          <td><a href="#mvcd">mvcd</a></td>
+          <td><a href="#dp">dp</a></td>
+          <td><a href="#kp">kp</a></td>
+          <td><a href="#over">over</a></td>
           <td><a href="#rickroll">rickroll</a></td>
      </tr>
      <tr>
           <td><a href="#cf">cf</a></td>
-          <td><a href="#fixlines">fixlines</a></td>
-          <td><a href="#mvmk">mvmk</a></td>
+          <td><a href="#duf">duf</a></td>
+          <td><a href="#lscows">lscows</a></td>
+          <td><a href="#pathadd">pathadd</a></td>
           <td><a href="#rmd">rmd</a></td>
      </tr>
      <tr>
           <td><a href="#chrome">chrome</a></td>
-          <td><a href="#get">get</a></td>
-          <td><a href="#mvmkcd">mvmkcd</a></td>
+          <td><a href="#dummy">dummy</a></td>
+          <td><a href="#lsf">lsf</a></td>
+          <td><a href="#pathdedup">pathdedup</a></td>
           <td><a href="#rmr">rmr</a></td>
      </tr>
      <tr>
           <td><a href="#clear">clear</a></td>
-          <td><a href="#getlocation">getlocation</a></td>
-          <td><a href="#mvrm">mvrm</a></td>
+          <td><a href="#dup">dup</a></td>
+          <td><a href="#makef">makef</a></td>
+          <td><a href="#pathrm">pathrm</a></td>
           <td><a href="#sbs">sbs</a></td>
      </tr>
      <tr>
           <td><a href="#clonecd">clonecd</a></td>
-          <td><a href="#gimme">gimme</a></td>
-          <td><a href="#ostype">ostype</a></td>
+          <td><a href="#esubl">esubl</a></td>
+          <td><a href="#makes">makes</a></td>
+          <td><a href="#pause">pause</a></td>
           <td><a href="#show">show</a></td>
      </tr>
      <tr>
           <td><a href="#common">common</a></td>
-          <td><a href="#gitcfb">gitcfb</a></td>
-          <td><a href="#over">over</a></td>
+          <td><a href="#extract">extract</a></td>
+          <td><a href="#md5c">md5c</a></td>
+          <td><a href="#per">per</a></td>
           <td><a href="#siren">siren</a></td>
      </tr>
      <tr>
           <td><a href="#cpcd">cpcd</a></td>
-          <td><a href="#gitdefault">gitdefault</a></td>
-          <td><a href="#pathadd">pathadd</a></td>
+          <td><a href="#fixlines">fixlines</a></td>
+          <td><a href="#mkcd">mkcd</a></td>
+          <td><a href="#psgrep">psgrep</a></td>
           <td><a href="#snag">snag</a></td>
      </tr>
      <tr>
           <td><a href="#cplc">cplc</a></td>
-          <td><a href="#grab">grab</a></td>
-          <td><a href="#pathdedup">pathdedup</a></td>
+          <td><a href="#get">get</a></td>
+          <td><a href="#mkcddate">mkcddate</a></td>
+          <td><a href="#publicip">publicip</a></td>
           <td><a href="#up">up</a></td>
      </tr>
      <tr>
           <td><a href="#cplo">cplo</a></td>
-          <td><a href="#grepp">grepp</a></td>
-          <td><a href="#pathrm">pathrm</a></td>
+          <td><a href="#getlocation">getlocation</a></td>
+          <td><a href="#mkdate">mkdate</a></td>
+          <td><a href="#randimal">randimal</a></td>
           <td><a href="#update">update</a></td>
      </tr>
      <tr>
           <td><a href="#cpmk">cpmk</a></td>
-          <td><a href="#json">json</a></td>
-          <td><a href="#pause">pause</a></td>
-          <td><a href="#what">what</a></td>
-     </tr>
-     <tr>
-          <td><a href="#cpmkcd">cpmkcd</a></td>
-          <td><a href="#kp">kp</a></td>
-          <td><a href="#per">per</a></td>
-          <td><a href="#"></a></td>
-     </tr>
-     <tr>
-          <td><a href="#cppwd">cppwd</a></td>
-          <td><a href="#lscows">lscows</a></td>
-          <td><a href="#psgrep">psgrep</a></td>
-          <td><a href="#"></a></td>
-     </tr>
-     <tr>
-          <td><a href="#del">del</a></td>
-          <td><a href="#lsf">lsf</a></td>
-          <td><a href="#publicip">publicip</a></td>
-          <td><a href="#"></a></td>
-     </tr>
-     <tr>
-          <td><a href="#dive">dive</a></td>
-          <td><a href="#makef">makef</a></td>
-          <td><a href="#randimal">randimal</a></td>
-          <td><a href="#"></a></td>
-     </tr>
-     <tr>
-          <td><a href="#down">down</a></td>
-          <td><a href="#makes">makes</a></td>
+          <td><a href="#gimme">gimme</a></td>
+          <td><a href="#mkgit">mkgit</a></td>
           <td><a href="#random">random</a></td>
-          <td><a href="#"></a></td>
+          <td><a href="#what">what</a></td>
      </tr>
 </table>
 
