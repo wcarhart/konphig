@@ -38,6 +38,7 @@ over() {
 	fi
 
 	cd $PRE$DIR
+	pwd
 
 	export __UPDIR__=`pwd`
 }
