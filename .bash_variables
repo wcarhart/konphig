@@ -26,5 +26,4 @@ export PROMPT_COMMAND='prompt_function'
 export PROMPT_INDEX=0
 
 # custom (from addv)
-export LAST=`ls -t | head -1`
 export GBRANCH=`git branch | grep \* | cut -d ' ' -f2`
