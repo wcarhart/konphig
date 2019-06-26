@@ -28,6 +28,7 @@ fixlines
 get
 getlocation
 gimme
+gitb
 gitcfb
 gitdefault
 grab
