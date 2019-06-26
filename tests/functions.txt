@@ -60,7 +60,7 @@ randimal
 random
 ranf
 rcreate
-removef
+rmf
 resetbar
 rev
 rickroll
