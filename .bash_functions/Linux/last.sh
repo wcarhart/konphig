@@ -13,5 +13,5 @@ last() {
 		return 1
 	fi
 
-	ls -at $DIR | head -1
+	ls -t $DIR | head -1
 }
