@@ -7,8 +7,20 @@ mvrm() {
 		return 1
 	fi
 
-	mv * "$1"
+  DIR=`readlink -m "$1"`
+
+  if [[ ! -d "$DIR" ]] ; then
+    echo "mvrm: err: no such directory $DIR"
+    return 1
+  fi
+
+  if [[ `pwd` == "$DIR" ]] ; then
+    echo "mvrm: err: cannot remove the current directory"
+    return 1
+  fi
+
+	mv * "$DIR"
 	OLD=`pwd`
-	cd "$1"
+	cd "$DIR"
 	rm -rf "$OLD"
 }

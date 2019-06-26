@@ -929,7 +929,7 @@ Usage: `mvrm destination`
 ```
 $ mvrm ..      # move all file from the current directory to the parent directory and delete the current directory
 ```
-**Dependencies**: `echo`, `mv`, `cd`, `rm`
+**Dependencies**: `echo`, `mv`, `cd`, `rm`, `pwd`, `greadlink` (MacOS), `readlink` (Linux)
 
 **Compatibility**: *MacOS* and *Linux*
 
