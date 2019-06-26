@@ -52,9 +52,12 @@ set SSH_ASKPASS
 
 # user specific aliases and functions
 if [[ -d ~/.bash_functions ]] ; then
-    for FILE in ~/.bash_functions/*.sh ; do
-        source $FILE
-    done
+	FILES=( ~/.bash_functions/*.sh )
+	if [[ "${#FILES[@]}" -gt 0 ]] ; then
+	    for FILE in ~/.bash_functions/*.sh ; do
+	        source $FILE
+	    done
+	fi
 fi
 if [[ -f ~/.bash_aliases ]] ; then
   source ~/.bash_aliases

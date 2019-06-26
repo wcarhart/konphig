@@ -28,12 +28,14 @@ fixlines
 get
 getlocation
 gimme
+gitb
 gitcfb
 gitdefault
 grab
 grepp
 json
 kp
+last
 lscows
 lsf
 makef

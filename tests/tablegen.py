@@ -17,7 +17,7 @@ def generate_table(inputfile, outputfile, rows, cols):
 	with open(inputfile, 'r') as f:
 		content = f.read().split()
 
-	assert not rows*cols < len(content)
+	assert not rows*cols < len(content), "Not enough space in the table for all functions with supplied row + column combination"
 	content.sort()
 	functions = [[] for row in range(0, rows)]
 	for index, item in enumerate(content):
@@ -49,10 +49,10 @@ def main():
 	parser = build_parser()
 	args = parser.parse_args()
 	
-	assert not args.rows == 0
-	assert not args.cols == 0
-	assert not args.file == ""
-	assert os.path.isfile(args.file)
+	assert not args.rows == 0, "Number of rows can't be zero"
+	assert not args.cols == 0, "Number of columns can't be zero"
+	assert not args.file == "", "Input file cannot be the empty string"
+	assert os.path.isfile(args.file), f"No such file {args.file}"
 
 	generate_table(args.file, args.output, args.rows, args.cols)
 
