@@ -29,12 +29,12 @@
   discard = !git clean -df && git checkout --
 
 [color]
-    diff = auto
-    status = auto
-    branch = auto
-    interactive = auto
-    ui = true
-    pager = true
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  ui = true
+  pager = true
 
 [push]
 	default = simple
