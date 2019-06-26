@@ -22,7 +22,7 @@ This is the full Bash functions documentation.
           <td><a href="#del">del</a></td>
           <td><a href="#grab">grab</a></td>
           <td><a href="#mvmkcd">mvmkcd</a></td>
-          <td><a href="#removef">removef</a></td>
+          <td><a href="#rmf">rmf</a></td>
      </tr>
      <tr>
           <td><a href="#brave">brave</a></td>
@@ -925,7 +925,7 @@ $ over 2 dirA/dirB
 **Compatibility**: *MacOS* and *Linux*
 
 ---
-**<a id="pathaddd">pathadd</a>** - *path add* - add to the `PATH` system variable
+**<a id="pathadd">pathadd</a>** - *path add* - add to the `PATH` system variable
 
 Usage: `pathadd path [after]`
 ```
@@ -937,7 +937,7 @@ $ pathadd /new/path/ after    # appends to PATH
 **Compatibility**: *MacOS* and *Linux*
 
 ---
-**<a id="pathdedeup">pathdedup</a>** - *path deduplicate* - deduplicate (remove duplicates) from the `PATH` system variable
+**<a id="pathdedup">pathdedup</a>** - *path deduplicate* - deduplicate (remove duplicates) from the `PATH` system variable
 
 Usage: `pathdedup`
 ```
@@ -1028,7 +1028,7 @@ Usage: `randimal [text]`
 ```
 $ randimal --install          # run the first time to install dependencies
 $ randimal                    # guess you'll have to try this one out to see what it does
-$ randimal "Hello, world!"    # guess you'll have to try this one out to see what it does
+$ randimal "Hello, Konphig!"  # guess you'll have to try this one out to see what it does
 ```
 **Dependencies**: `cowsay`, `fortune`, `echo`, `lolcat`, `tail`, `tr`, `gshuf`
 
@@ -1099,14 +1099,14 @@ Branch master set up to track remote branch master from origin.
 **Compatibility**: *MacOS* and *Linux*
 
 ---
-**<a id="removef">removef</a>** - *remove function* - removes a function from either the `.bashrc` or `.bash_functions` file
+**<a id="rmf">rmf</a>** - *remove function* - removes a function from either the `.bashrc` or `.bash_functions` file
 
-Usage: `removef function_name`
+Usage: `rmf function_name`
 ```
-$ removef cls
+$ rmf cls
 Removed cls from .bashrc
-$ removef cls
-removef: err: cls not found in .bashrc
+$ rmf cls
+rmf: err: cls not found in .bashrc
 ```
 **Dependencies**: `echo`, [`random`](https://github.com/wcarhart/Konphig/blob/master/functions.md#random), `read`, `printf`, `source`, `cat`, `rm`
 
@@ -1128,8 +1128,8 @@ $ resetbar     # automatically resets touch bar
 
 Usage: `rev input`
 ```
-$ rev "Hello, World!"
-!dlroW, olleH
+$ rev "Hello, Konphig!"
+!gihpnoK, olleH
 $ echo "Hello!" | rev
 !olleH
 ```
