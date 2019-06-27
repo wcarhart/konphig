@@ -139,6 +139,8 @@ Hello, Konphig!
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/adda.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="addv">`addv`</a>** - *add variable* - adds a variable on the fly
 
@@ -152,6 +154,8 @@ $ pwd
 **Dependencies**: `echo`, `source`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/addv.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="aid">`aid`</a>** - *aid* - get some helpful hints about a command
@@ -189,6 +193,8 @@ $ $ aid scp
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/aid.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="brave">`brave`</a>** - *brave* - open a file in [Brave Browser](https://brave.com/) from the command line
 
@@ -201,6 +207,8 @@ $ brave index.html detail.html   # opens index.html and detail.html in Brave Bro
 
 **Compatibility**: *MacOS* only
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/MacOS/brave.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="busy">`busy`</a>** - *busy* - output on the terminal to make it look like you're busy
 
@@ -211,6 +219,8 @@ $ busy                   # draws a bunch of meaningless graphs on the terminal t
 **Dependencies**: `cat`, `hexdump`, `grep`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/busy.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="cdls">`cdls`</a>** - *change directory, list* - change into another directory and list its contents
@@ -227,6 +237,8 @@ $ pwd
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/cdls.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="cf">`cf`</a>** - *count files* - counts the number of files in a directory and its subdirectories
 
@@ -241,6 +253,8 @@ $ cf dir                      # count files in directory dir
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/cf.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="chrome">`chrome`</a>** - *chrome* - open a file in Google Chrome from the command line
 
@@ -253,6 +267,8 @@ $ chrome index.html detail.html  # opens index.html and detail.html in Chrome
 
 **Compatibility**: *MacOS* only
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/MacOS/chrome.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="clear">`clear`</a>** - *clear* - clears a file or the screen depending on user input
 
@@ -264,6 +280,8 @@ $ clear file.txt    # clears file.txt (i.e. makes file.txt an empty file without
 **Dependencies**: `clear`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/clear.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="clonecd">clonecd</a>** - *clone, cd* - clone a git repository and change into the new repository's directory
@@ -284,6 +302,8 @@ $ pwd
 **Dependencies**: `git`, `cd`, `basename`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/clonecd.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="common">common</a>** - *common* - show the most commonly used commands (default is 10)
@@ -309,6 +329,8 @@ $ common 2
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/common.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="cpcd">cpcd</a>** - *copy, change directory* - copies files into a destination directory and then changes into the destination directory
 
@@ -320,6 +342,8 @@ $ cpcd *.txt d                  # move all .txt files into d and change into d
 **Dependencies**: `echo`, `cp`, `cd`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/cpcd.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="cplc">cplc</a>** - *copy last command* - copy the last command to the clipboard
@@ -333,18 +357,22 @@ $ cplc            # `cd /long/path/to/a/directory` is saved in the clipboard
 
 **Compatibility**: *MacOS* only
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/MacOS/cplc.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="cplo">cplo</a>** - *copy last output* - copy the output of the last command to the clipboard
 
-Usage: `cplc`
+Usage: `cplo`
 ```
 $ echo "Hello, Konphig!"
 Hello, Konphig!
-$ cplc            # `Hello, Konphig!` is saved in the clipboard
+$ cplo            # `Hello, Konphig!` is saved in the clipboard
 ```
 **Dependencies**: `history`, `tail`, `head`, `echo`, `pbcopy`
 
 **Compatibility**: *MacOS* only
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/MacOS/cplo.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="cpmk">cpmk</a>** - *copy, make directory* - copy files to a new directory
@@ -358,6 +386,8 @@ $ cpmk *.swift newdir              # make a new directory newdir and copy all .s
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/cpmk.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="cpmkcd">cpmkcd</a>** - *copy, make directory, change directory* - copy files to a new directory, and then change into it
 
@@ -369,6 +399,8 @@ $ cpmkcd *.swift newdir             # make a new directory newdir, copy all .swi
 **Dependencies**: `echo`, `mkdir`, `cp`, `cd`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/cpmkcd.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="cppwd">cppwd</a>** - *copy present working directory* - copy the present working directory to the clipboard
@@ -383,6 +415,8 @@ $ cppwd           # `/dir0/dir1/dir2` is saved in the clipboard
 
 **Compatibility**: *MacOS* only
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/MacOS/cppwd.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="del">del</a>** - *delete* - deletes a file (default) or files at random from the current directory
 
@@ -394,6 +428,8 @@ $ del 10      # removes 10 files at random from the current directory
 **Dependencies**: `seq`, `rm`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/del.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="dive">dive</a>** - *dive* - follow (dive into) a directory tree down to its childmost node
@@ -420,6 +456,8 @@ test.py   test2.py
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/dive.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="down">down</a>** - *down* -  go back down one directory if we go up one too many
 
@@ -437,6 +475,8 @@ $ down 3
 **Dependencies**: `pwd`, `cd`, `echo`, `seq`, `readlink` (Linux), `greadlink` (MacOS)
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/down.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="dp">dp</a>** - *different prompt* - switch between different prompts (`PS1` variables)
@@ -457,6 +497,8 @@ O_O $ cd ~
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/dp.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="duf">duf</a>** - *disk usage, filetype* - get the disk usage by filetype
 
@@ -472,6 +514,8 @@ md: 4.7K
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/duf.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="dummy">dummy</a>** - *dummy* - function that does nothing (great for testing purposes)
 
@@ -483,6 +527,8 @@ $
 **Dependencies**: none
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/dummy.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="dup">dup</a>** - *disk usage, pretty* - present the disk usage (`du`) output in a nicer format
@@ -497,6 +543,8 @@ $ dup
 **Dependencies**: `echo`, `sed`, `read`, `gdu` (MacOS), `du` (Linux)
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/dup.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="esubl">esubl</a>** - *execute, Sublime* - execute a file and open it in Sublime
@@ -516,6 +564,8 @@ Hello, Konphig!
 
 **Compatibility**: *MacOS* only
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/MacOS/esubl.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="extract">`extract`</a>** - *extract* - extracts compressed and zipped files automatically
 
@@ -527,6 +577,8 @@ $ extract contents.bz2
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/extract.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="fixlines">fixlines</a>** - *fix lines* - repair line endings
 
@@ -537,6 +589,8 @@ $ fixlines file0.txt          # changes \r\n in file0.txt to just \n
 **Dependencies**: `echo`, `sed`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/fixlines.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="get">get</a>** - *get* - get a file (default) or multiple files at random from the current directory
@@ -557,6 +611,8 @@ file1.txt
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/get.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="getlocation">getlocation</a>** - *get location* - get the location associated with your public IP address
 
@@ -569,6 +625,8 @@ Location: San Francisco, CA, USA
 **Dependencies**: `dig`, `lynx`, `egrep`, `read`, `echo`, `cut`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/getlocation.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="gimme">gimme</a>** - *give me* - gives the current user execution privileges for a file
@@ -586,6 +644,8 @@ test
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/gimme.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="gitb">gitb</a>** - *git branch* - get the current git branch
 
@@ -602,6 +662,8 @@ master
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/gitb.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="gitcfb">gitcfb</a>** - *git copy from branch* - copy a file from a different git branch to the current one, overwriting the current copy, if it exists
 
@@ -617,6 +679,8 @@ I am a text file on the master branch.
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/gitcfb.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="gitdefault">gitdefault</a>** - *git default* - get the default branch for a `git` repository
 
@@ -631,6 +695,8 @@ develop
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/gitdefault.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="grab">grab</a>** - *grab* - "grabs" a file and changes its owner to the current user
 
@@ -641,6 +707,8 @@ $ grab file_not_owned_by_me.txt
 **Dependencies**: `echo`, `chown`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/grab.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="grepp">grepp</a>** - *grep, pause* - searches through a file and pauses at each query match
@@ -656,6 +724,8 @@ def world(param):
 **Dependencies**: `echo`, `read`, `grep`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/grepp.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="json">json</a>** - *json* - pretty print a JSON file
@@ -676,6 +746,8 @@ $ json test.json
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/json.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="kp">kp</a>** - *kill process* - kills a process by name
 
@@ -689,6 +761,8 @@ kp: err: no processes killed, could not find PID for process sdfasd
 **Dependencies**: `echo`, `ps`, `grep`, `pgrep`, `kill`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/kp.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="last">last</a>** - *last* - print the most recently modified file in a directory
@@ -704,6 +778,8 @@ otherfile.txt
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/last.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="lscows">lscows</a>** - *list cows* - list all of the available cow artwork for `cowsay`
 
@@ -714,6 +790,8 @@ $ lscows                 # guess you'll have to try this one out to see what it 
 **Dependencies**: `cowsay`, `echo`, `tail`, `tr`
 
 **Compatibility**: *MacOS* only
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/MacOS/lscows.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="lsf">lsf</a>** - *list functions* - lists all functions from either the `.bashrc` or `.bash_functions` directory
@@ -732,6 +810,8 @@ siren()
 **Dependencies**: `read`, `echo`, `fold`, `tr`, `basename`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/lsf.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="makef">makef</a>** - *make function* - makes a Bash function in either `.bashrc` or `.bash_functions` (depending on configuration, which is auto-detected by the function) of the last previous command (default) or previous specified amount of commands; function can be named or defaults to a random string
@@ -774,6 +854,8 @@ cls() {
 **Dependencies**: `strings`, [`random`](https://github.com/wcarhart/Konphig/blob/master/functions.md#random), `echo`, `printf`, `fc`, `head`, `tac`, `read`, `rm`, `source`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/makef.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="makes">makes</a>** - *make script* - makes a script (default named `script.sh`) in the current directory of the last previous command (default) or previous specified amount of commands
@@ -821,6 +903,8 @@ ls
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/makes.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="md5c">md5c</a>** - *MD5 checksum check* - checks the MD5 hash for files; if there are multiple files, prints `PASS` if the hashes are the same and `FAIL` if they are different
 
@@ -839,6 +923,8 @@ different1.txt 4db87b0207fc90a2033f4031fa6348e9
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/md5c.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="mkcd">mkcd</a>** - *make directory, change directory* - make a new directory and change into it
 
@@ -849,6 +935,8 @@ $ mkcd newdir     # make a new directory newdir and changes into it
 **Dependencies**: `echo`, `mkdir`, `cd`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/mkcd.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="mkcddate">mkcddate</a>** - *make directory prefixed with the date, change directory* - make a new directory whose name is prefixed with the current date in YYYY-MM-DD format and change into it
@@ -861,6 +949,8 @@ $ mkcddate analysis       # will make a new directory named `YYYY-MM-DD-analysis
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/mkcddate.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="mkdate">mkdate</a>** - *make directory prefixed with the date* - make a new directory whose name is prefixed with the current date in YYYY-MM-DD format
 
@@ -871,6 +961,8 @@ $ mkdate analysis       # will make a new directory named `YYYY-MM-DD-analysis`
 **Dependencies**: `date`, `mkdir`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/mkdate.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="mkgit">mkgit</a>** - *make new git repository* - make a new directory, initialize it as a `git` repository, and change into it
@@ -886,6 +978,8 @@ $ pwd
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/mkgit.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="mvcd">mvcd</a>** - *move files and change directory* - move files into a destination directory and then changes into the destination directory
 
@@ -897,6 +991,8 @@ $ mvcd *.txt d                  # move all .txt files into d and change into d
 **Dependencies**: `echo`, `mv`, `cd`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/mvcd.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="mvmk">mvmk</a>** - *move, make directory* - make a new directory and move files into it
@@ -910,6 +1006,8 @@ $ mvmk *.swift newdir              # make a new directory newdir and move all .s
 
 **Compability**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/mvmk.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="mvmkcd">mvmkcd</a>** - *move, make directory, change directory* - make a new directory, move files into it, and then change into it
 
@@ -922,6 +1020,8 @@ $ mvmkcd *.swift newdir              # make a new directory newdir, move all .sw
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/mvmkcd.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="mvrm">mvrm</a>** - *move, remove* - move contents from the current directory and delete the current directory
 
@@ -932,6 +1032,8 @@ $ mvrm ..      # move all file from the current directory to the parent director
 **Dependencies**: `echo`, `mv`, `cd`, `rm`, `pwd`, `greadlink` (MacOS), `readlink` (Linux)
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/mvrm.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="ostype">ostype</a>** - *operating system type* - get the operating system type
@@ -944,6 +1046,8 @@ Linux
 **Dependencies**: `uname`, `echo`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/ostype.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="over">over</a>** - *over* - move up and over directories
@@ -969,6 +1073,8 @@ $ over 2 dirA/dirB
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/over.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="pathadd">pathadd</a>** - *path add* - add to the `PATH` system variable
 
@@ -980,6 +1086,8 @@ $ pathadd /new/path/ after    # appends to PATH
 **Dependencies**: `echo`, `export`, `grep`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/pathadd.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="pathdedup">pathdedup</a>** - *path deduplicate* - deduplicate (remove duplicates) from the `PATH` system variable
@@ -994,6 +1102,8 @@ $ pathdedup
 **Dependencies**: `export`, `printf`, `awk`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/pathdedup.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="pathrm">pathrm</a>** - *path remove* - remove from the `PATH` system variable
@@ -1010,6 +1120,8 @@ $ echo $PATH
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/pathrm.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="pause">pause</a>** - *pause* - pause execution of the current process and wait for user input
 
@@ -1021,6 +1133,8 @@ Press any key to continue...
 **Dependencies**: `read`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/pause.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="per">per</a>** - *percentage* - shows the percentage of each filetype for the current directory (default) or a specific directory
@@ -1036,6 +1150,8 @@ $ per ../dir0
 **Dependencies**: `printf`, `echo`, `wc`, `bc`, `sed`, `column`
 
 **Compatibility**: *Linux* only
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/per.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="psgrep">psgrep</a>** - *process list, grep* - grep (search) for a process by name
@@ -1054,6 +1170,8 @@ wcarhart           437   0.0  0.0  4296240    392 s000  S+    2Jun19   0:00.04 -
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/psgrep.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="publicip">publicip</a>** - *public ip address* - show your public IP address
 
@@ -1065,6 +1183,8 @@ $ publicip
 **Dependencies**: `echo`, `dig`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/publicip.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="randimal">randimal</a>** - *random animal* - draws a randimal on the terminal screen with some helpful advice
@@ -1078,6 +1198,8 @@ $ randimal "Hello, Konphig!"  # guess you'll have to try this one out to see wha
 **Dependencies**: `cowsay`, `fortune`, `echo`, `lolcat`, `tail`, `tr`, `gshuf`
 
 **Compatibility**: *MacOS* only
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/MacOS/randimal.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="random">random</a>** - *random* - generates a random alphanumeric string of length 30 (default) or specified length
@@ -1093,6 +1215,8 @@ Po05B
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/random.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="ranf">ranf</a>** - *random files* - adds nonempty text files to the current directory for testing purposes (default is 100 files)
 
@@ -1104,6 +1228,8 @@ $ ranf 10    # adds 10 text files
 **Dependencies**: `echo`, `touch`, `cat`, `rm`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/ranf.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="rcreate">rcreate</a>** - *remote create* - create new remote repository on GitHub and push the current commit to it
@@ -1143,6 +1269,8 @@ Branch master set up to track remote branch master from origin.
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/rcreate.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="rmf">rmf</a>** - *remove function* - removes a function from either the `.bashrc` or `.bash_functions` file
 
@@ -1157,6 +1285,8 @@ rmf: err: cls not found in .bashrc
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/rmf.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="resetbar">resetbar</a>** - *reset Macbook Pro touch bar* - restart the Macbook Pro touch bar if it has crashed or malfunctioned
 
@@ -1167,6 +1297,8 @@ $ resetbar     # automatically resets touch bar
 **Dependencies**: `pkill`, `killall`
 
 **Compatibility**: *MacOS* only
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/MacOS/resetbar.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="rev">rev</a>** - *reverse* - reverse input
@@ -1182,6 +1314,8 @@ $ echo "Hello!" | rev
 
 **Compatibility**: *MacOS* (limited functionality) and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/rev.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="rickroll">rickroll</a>** - *rickroll* - do you really need a description
 
@@ -1192,6 +1326,8 @@ $ rickroll               # guess you'll have to try this one out to see what it 
 **Dependencies**: `printf`, `yes`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/rickroll.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="rmd">rmd</a>** - *remove subdirectories* - remove all subdirectories of the current directory (**WARNING**: will forcefully remove nonempty subdirectories)
@@ -1205,6 +1341,8 @@ $ rmd d/      # removes all subdirectories in d (i.e. d/dir0, d/dir1, ...)
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/rmd.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="rmr">rmr</a>** - *remove recursively* - removes specific filetypes recursively (in the current directory and all subdirectories)
 
@@ -1216,6 +1354,8 @@ $ rmr *.txt *.py  # removes all .txt and .py files recursively
 **Dependencies**: `find`, `echo`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/rmr.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="sbs">sbs</a>** - *sort-by-size* - list the contents of the a directory sorted by disk usage
@@ -1232,6 +1372,8 @@ $ sbs dir0
 **Dependencies**: `gdu` (MacOS), `du` (Linux), `sort`, `sed`, `echo`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/sbs.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="show">show</a>** - *show* - recursively list all files of a specific type
@@ -1256,6 +1398,8 @@ dir0/file1.txt
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/show.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="siren">siren</a>** - *siren* - sound the alarm
 
@@ -1266,6 +1410,8 @@ $ siren                  # guess you'll have to try this one out to see what it 
 **Dependencies**: `printf`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/siren.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="snag">snag</a>** - *snag* - "snag" the most recent document (default) or documents from the Downloads folder and move them to the current directory
@@ -1278,6 +1424,8 @@ $ snag 3          # move the 3 most recently downloaded files to the current dir
 **Dependencies**: `head`, `ls`, `mv`, `seq`
 
 **Compatibility**: *MacOS* only
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/MacOS/snag.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="up">up</a>** - *up* - move up a directory (default) or multiple directories (replaces `cd ..`, `cd ../..`, etc.)
@@ -1295,6 +1443,8 @@ dir0/dir1/
 
 **Compatibility**: *MacOS* and *Linux*
 
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/up.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
+
 ---
 **<a id="update">update</a>** - *update* - updates system configurations based on Konphig files
 
@@ -1309,6 +1459,8 @@ Nothing to update
 **Dependencies**: [`ostype`](https://github.com/wcarhart/Konphig/blob/master/functions.md#ostype), `md5` (MacOS), `md5sum` (Linux), `echo`, `yes`, `cp`, `source`, `mkdir`, `basename`
 
 **Compatibility**: *MacOS* and *Linux*
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/update.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
 **<a id="what">what</a>** - *what* - lists what kinds of files are in the current directory (default) or a specific directory
@@ -1327,5 +1479,7 @@ Makefile
 **Dependencies**: `find`, `perl`
 
 **Compatibility**: *Linux* only
+
+<a href="https://github.com/wcarhart/Konphig/blob/master/.bash_functions/Linux/what.sh"><i>View source code</i></a> | <a href="#bash-functions"><i>Scroll to Top</i></a>
 
 ---
