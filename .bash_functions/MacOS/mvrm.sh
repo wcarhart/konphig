@@ -7,17 +7,17 @@ mvrm() {
 		return 1
 	fi
 
-  DIR=`greadlink -m "$1"`
+    DIR=`greadlink -m "$1"`
 
-  if [[ ! -d "$DIR" ]] ; then
-    echo "mvrm: err: no such directory $DIR"
-    return 1
-  fi
+    if [[ ! -d "$DIR" ]] ; then
+        echo "mvrm: err: no such directory $DIR"
+        return 1
+    fi
 
-  if [[ `pwd` == "$DIR" ]] ; then
-    echo "mvrm: err: cannot remove the current directory"
-    return 1
-  fi
+    if [[ `pwd` == "$DIR" ]] ; then
+        echo "mvrm: err: cannot remove the current directory"
+        return 1
+    fi
 
 	mv * "$DIR"
 	OLD=`pwd`
