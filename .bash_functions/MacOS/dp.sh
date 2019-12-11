@@ -5,6 +5,20 @@ dp() {
 	if [[ $# -eq 0 ]] ; then
 		# default
 		export __PS1__=''
+    elif [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+        # help menu
+        echo "dp ~ change to a different prompt"
+        echo
+        echo "Usage: "
+        echo "  dp [-h] NUM"
+        echo
+        echo "Available prompts:"
+        echo "  default: full prompt with face"
+        echo "  1: minimalist"
+        echo "  2: date only"
+        echo "  3: date and pwd"
+        echo "  4: mood based on last command"
+        echo "  5: date and git prompt"
 	elif [[ "$1" == "1" ]] ; then
 		# minimalist
 		export __PS1__="\\$ "
