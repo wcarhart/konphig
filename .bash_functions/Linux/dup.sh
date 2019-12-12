@@ -6,6 +6,7 @@ dup() {
 	DIR=`echo "$DIR/" | sed -e 's;//;/;'`
 	if [[ ! -d "$DIR" ]] ; then
 		echo "dup: err: $1 is not a valid directory"
+    return 1
 	fi
 
 	du -sh --apparent-size "$DIR"*
