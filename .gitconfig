@@ -1,5 +1,5 @@
 [user]
-  email = wcarhart@sandiego.edu
+  email = carhartwill@gmail.com
   name = Will Carhart
 
 [alias]
@@ -42,3 +42,6 @@
 [core]
   editor = subl -n -w
   ignorecase = false
+
+[includeIf "gitdir:~/personal/*"]
+  path = ~/personal/.gitconfig
