@@ -128,6 +128,14 @@ yes | cp -rf ~/Konphig/gpg-agent.conf ~ >/dev/null 2>&1
 # set environment variables
 export __UPDIR__=""
 
+# configure personal git environment
+mkdir -p ~/personal
+cat << EndOfGit >> ~/personal/.gitconfig
+[user]
+  name = Will Carhart
+  email = carhartwill@gmail.com
+EndOfGit
+
 # install dependencies
 if [[ $DEPS -eq 1 ]] ; then
 	INSTALL=""
