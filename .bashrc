@@ -29,7 +29,7 @@ prompt_function() {
     fi
 
     if [[ "$__PS1__" == "" ]] ; then
-        FACES=( "༼ つ ◕_◕ ༽つ" "ʕっ•ᴥ•ʔっ" "༼つ ் ▽  ் ༽つ" )
+        FACES=( "༼つ◕_◕༽つ" "ʕっ•ᴥ•ʔっ" )
         RAND=$[$RANDOM % ${#FACES[@]}]
         FACE="${FACES[$RAND]}"
         PS1="${RESET}[\A]${git_color}$(__git_ps1) ${RESET}\W \[\e[0;35m\]$FACE \[\e[0m\]"
