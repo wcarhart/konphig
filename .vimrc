@@ -2,6 +2,8 @@ set number
 syntax on
 
 set hlsearch
+nnoremap <CR> :noh<CR><CR>
+let @/ = ""
 
 inoremap<F5> <c-o>:w<cr>
 
