@@ -25,6 +25,7 @@ brew install pinentry-mac
 brew install postgresql
 brew install python3
 brew install rabbitmq
+brew install s3cmd
 brew install shellcheck
 brew install sqlite
 brew install tmux
