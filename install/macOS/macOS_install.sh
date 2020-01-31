@@ -13,6 +13,7 @@ brew install coreutils
 brew install cowsay
 brew install doctl
 brew install dos2unix
+brew install fish
 brew install fortune
 brew install git
 brew install grip
