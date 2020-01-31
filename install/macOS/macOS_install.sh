@@ -39,6 +39,7 @@ brew cask install docker
 brew cask install hyper
 brew cask install slack
 brew cask install zoomus
+brew cask install java
 
 # Remove outdated versions from the cellar
 brew cleanup
