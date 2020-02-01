@@ -36,6 +36,9 @@ brew install wine
 brew install wget
 brew install xz
 
+# Link commands
+brew link --overwrite coreutils
+
 # Install macOS apps
 brew cask install docker
 brew cask install hyper
