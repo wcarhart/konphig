@@ -40,11 +40,14 @@ brew install xz
 brew link --overwrite coreutils
 
 # Install macOS apps
+brew cask install brave-browser
 brew cask install docker
 brew cask install hyper
-brew cask install slack
-brew cask install zoomus
 brew cask install java
+brew cask install slack
+brew cask install spotify
+brew cask install sublime-text
+brew cask install zoomus
 
 # Remove outdated versions from the cellar
 brew cleanup
