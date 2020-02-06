@@ -20,6 +20,7 @@ brew install grip
 brew install heroku
 brew install hyper
 brew install jq
+brew install llvm
 brew install lolcat
 brew install lynx
 brew install pinentry-mac
