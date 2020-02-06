@@ -45,6 +45,7 @@ brew cask install brave-browser
 brew cask install docker
 brew cask install google-cloud-sdk
 brew cask install hyper
+brew cask install itsycal
 brew cask install java
 brew cask install slack
 brew cask install spotify
