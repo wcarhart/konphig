@@ -46,9 +46,11 @@ brew link --overwrite coreutils
 brew cask install brave-browser
 brew cask install docker
 brew cask install google-cloud-sdk
+brew cask install flycut
 brew cask install hyper
 brew cask install itsycal
 brew cask install java
+brew cask install nordvpn
 brew cask install slack
 brew cask install spotify
 brew cask install sublime-text
