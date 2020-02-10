@@ -23,6 +23,7 @@ brew install jq
 brew install llvm
 brew install lolcat
 brew install lynx
+brew install node
 brew install pinentry-mac
 brew install postgresql
 brew install python3
@@ -36,6 +37,7 @@ brew install vapor
 brew install wine
 brew install wget
 brew install xz
+brew install yarn
 
 # Link commands
 brew link --overwrite coreutils
