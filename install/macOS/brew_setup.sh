@@ -16,8 +16,10 @@ brew install dos2unix
 brew install fish
 brew install fortune
 brew install git
+brew install github/gh/gh
 brew install grip
 brew install heroku
+brew install hub
 brew install hyper
 brew install jq
 brew install llvm
@@ -38,6 +40,11 @@ brew install wine
 brew install wget
 brew install xz
 brew install yarn
+
+# My CLI tools :)
+brew install koi
+brew install lurker
+brew install thoth
 
 # Link commands
 brew link --overwrite coreutils
