@@ -48,6 +48,7 @@ brew cask install docker
 brew cask install google-cloud-sdk
 brew cask install flycut
 brew cask install hyper
+brew cask install icons8
 brew cask install itsycal
 brew cask install java
 brew cask install nordvpn
