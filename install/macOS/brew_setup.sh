@@ -1,3 +1,5 @@
+#!/bin/bash
+
 # Install brew
 /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
@@ -41,7 +43,8 @@ brew install wget
 brew install xz
 brew install yarn
 
-# My CLI tools :)
+# Install my CLI tools :)
+brew tap wcarhart/tools
 brew install koi
 brew install lurker
 brew install thoth
@@ -62,6 +65,7 @@ brew cask install nordvpn
 brew cask install slack
 brew cask install spotify
 brew cask install sublime-text
+brew cask install ticktick
 brew cask install zoomus
 
 # Remove outdated versions from the cellar
