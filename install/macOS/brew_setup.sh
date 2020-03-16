@@ -54,6 +54,7 @@ brew link --overwrite coreutils
 
 # Install macOS apps
 brew cask install brave-browser
+brew cask install discord
 brew cask install docker
 brew cask install google-cloud-sdk
 brew cask install flycut
