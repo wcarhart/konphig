@@ -19,9 +19,11 @@ brew install fish
 brew install fortune
 brew install git
 brew install github/gh/gh
+brew install go
 brew install grip
 brew install heroku
 brew install hub
+brew install hugo
 brew install hyper
 brew install jq
 brew install llvm
