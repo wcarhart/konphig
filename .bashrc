@@ -1,26 +1,27 @@
-# .bashrc
+#!/bin/bash
 
-# GIT
+# set up git tab completion
 source ~/.git-prompt.sh
 if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
+# configure customizable PS1
 export __PS1__=''
 
 prompt_function() {
-    local         BLUE='\[\033[0;34m\]'
-    local          RED='\[\033[0;31m\]'
-    local    LIGHT_RED='\[\033[1;31m\]'
-    local        GREEN='\[\033[0;32m\]'
-    local  LIGHT_GREEN='\[\033[1;32m\]'
-    local       YELLOW='\[\033[0;33m\]'
-    local        WHITE='\[\033[1;37m\]'
-    local   LIGHT_GRAY='\[\033[0;37m\]'
-    local         GRAY='\[\033[1;30m\]'
-    local        RESET='\[\033[0m\]'
-    local  TITLE_START='\[\033]0;'
-    local    TITLE_END='\007\]'
+    local         blue='\[\033[0;34m\]'
+    local          red='\[\033[0;31m\]'
+    local    light_red='\[\033[1;31m\]'
+    local        green='\[\033[0;32m\]'
+    local  light_green='\[\033[1;32m\]'
+    local       yellow='\[\033[0;33m\]'
+    local        white='\[\033[1;37m\]'
+    local   light_gray='\[\033[0;37m\]'
+    local         gray='\[\033[1;30m\]'
+    local        reset='\[\033[0m\]'
+    local  title_start='\[\033]0;'
+    local    title_end='\007\]'
   
     if test $(git status 2> /dev/null | grep -c :) -eq 0 ; then
         git_color="${GREEN}"
@@ -28,11 +29,12 @@ prompt_function() {
         git_color="${RED}"
     fi
 
+    local faces rand face
     if [[ "$__PS1__" == "" ]] ; then
-        FACES=( "༼つ◕_◕༽つ" "ʕっ•ᴥ•ʔっ" )
-        RAND=$[$RANDOM % ${#FACES[@]}]
-        FACE="${FACES[$RAND]}"
-        PS1="${RESET}[\A]${git_color}$(__git_ps1) ${RESET}\W \[\e[0;35m\]$FACE \[\e[0m\]"
+        faces=( "༼つ•_•༽つ" "ʕっ•ᴥ•ʔっ" "ฅ^•ﻌ•^ฅ" )
+        rand=$[$RANDOM % ${#faces[@]}]
+        face="${faces[$rand]}"
+        PS1="${reset}[\A]${git_color}$(__git_ps1) ${reset}\W \[\e[0;35m\]$face \[\e[0m\]"
     else
         PS1="$__PS1__"
     fi
@@ -40,19 +42,20 @@ prompt_function() {
 
 export PROMPT_COMMAND='prompt_function'
 
-## history (also check .bash_variables)
+# configure history traversing for interactive shells
 if [[ $- == *i* ]] ; then
     bind '"\e[A": history-search-backward'
     bind '"\e[B": history-search-forward'
     bind "set completion-ignore-case on"
     bind "set show-all-if-ambiguous on"
 fi
+
+# other nice features
 set show-all-if-ambiguous on
 set completion-ignore-case on
 shopt -s histappend
-set SSH_ASKPASS
 
-# user specific aliases and functions
+# source konphig functions
 if [[ -d ~/.bash_functions ]] ; then
 	FILES=( ~/.bash_functions/*.sh )
 	if [[ "${#FILES[@]}" -gt 0 ]] ; then
@@ -61,9 +64,13 @@ if [[ -d ~/.bash_functions ]] ; then
 	    done
 	fi
 fi
+
+# source konphig aliases
 if [[ -f ~/.bash_aliases ]] ; then
   source ~/.bash_aliases
 fi
+
+# source konphig variables
 if [[ -f ~/.bash_variables ]] ; then
   source ~/.bash_variables
 fi

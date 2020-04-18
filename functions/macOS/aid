@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# get help and hint for a command
+function aid {
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93maid [-h] CMD...\033[0m"
+		echo "Get help and hints for a command"
+		echo "  cmd    (+) the command for which to get help"
+		return 0
+	fi
+
+	if [[ $# -eq 0 ]] ; then
+		echo "aid: err: incorrect number of arguments"
+        return 1
+    fi
+
+	while [[ $# -gt 0 ]] ; do
+		curl cheat.sh/$1
+		shift
+	done
+}

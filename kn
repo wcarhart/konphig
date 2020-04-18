@@ -1,0 +1,65 @@
+#!/bin/bash
+set -e
+
+source koi
+koiname=kn
+koidescription="CLI manager for konphig"
+
+function init {
+	__addarg "-h" "--help" "help" "optional" "" "Initialize kn"
+	__addarg "" "path" "positionalvalue" "required" "" "Path to konphig repository" "__verifydirectory"
+	__parseargs "$@"
+}
+
+function alias {
+	__addarg "-h" "--help" "help" "optional" "" "Create a new alias"
+	__addarg "-g" "--global" "flag" "optional" "" "Also add the alias to the installed list of aliases"
+	__addarg "" "alias" "positionalvalue" "required" "" "The alias for the new command"
+	__addarg "" "meaning" "positionalvalue" "required" "" "The meaning of the new alias (what the alias expands to)"
+	__parseargs "$@"
+}
+
+function variable {
+	__addarg "-h" "--help" "help" "optional" "" "Create a new variable"
+	__addarg "-g" "--global" "flag" "optional" "" "Also add the alias to the installed list of variables"
+	__addarg "" "name" "positionalvalue" "required" "" "The name of the new variable"
+	__addarg "" "value" "positionalvalue" "required" "" "The value of the new variable"
+	__parseargs "$@"
+}
+
+function update {
+	__addarg "-h" "--help" "help" "optional" "" "Update system files to match those in konphig"
+	__parseargs "$@"
+}
+
+function fn {
+	__addarg "-h" "--help" "help" "optional" "" "Interact with konphig functions"
+	__addarg "-c" "--count" "flag" "optional" "" "Show the number of functions"
+	__addarg "-l" "--list" "flag" "optional" "" "List all functions"
+	__addarg "-g" "--get" "storevalue" "optional" "" "Get a specific function"
+	__addarg "-q" "--quiet" "flag" "optional" "" "If included, omit supplemental output"
+	__parseargs "$@"
+}
+
+function pull {
+	__addarg "-h" "--help" "help" "optional" "" "Pull all registered repositories"
+	__parseargs "$@"
+}
+
+function repo {
+	__addarg "-h" "--help" "help" "optional" "" "Register a new repository with kn"
+	__addarg "" "repo" "positionalvalue" "required" "" "The repository to register" "__verifydirectory"
+	__parseargs "$@"
+}
+
+function new {
+	__addarg "-h" "--help" "help" "optional" "" "Add a new entity to konphig"
+	__addarg ""
+}
+
+function status {
+	__addarg "-h" "--help" "help" "optional" "" "Get the status of the konphig repo"
+	__parseargs "$@"
+}
+
+__koirun "$@"
