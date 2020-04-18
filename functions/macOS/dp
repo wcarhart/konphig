@@ -1,16 +1,19 @@
 #!/bin/bash
 
-# cycle through different prompts (different PS1 variables)
+# change to a different prompt (different PS1 variables)
 dp() {
+
+    local red green reset
+
 	if [[ $# -eq 0 ]] ; then
 		# default
 		export __PS1__=''
     elif [[ "$1" == "-h" || "$1" == "--help" ]] ; then
         # help menu
-        echo "dp ~ change to a different prompt"
+        echo -e "\033[93mdp ~ change to a different prompt\033[0m"
         echo
-        echo "Usage: "
-        echo "  dp [-h] NUM"
+        echo "dp [-h] NUM"
+        echo "  num    the prompt index"
         echo
         echo "Available prompts:"
         echo "  default: full prompt with face"
@@ -19,6 +22,7 @@ dp() {
         echo "  3: date and pwd"
         echo "  4: mood based on last command"
         echo "  5: date and git prompt"
+        echo "  6: comment box"
 	elif [[ "$1" == "1" ]] ; then
 		# minimalist
 		export __PS1__="\\$ "
@@ -33,17 +37,19 @@ dp() {
 		export __PS1__="\`if [ \$? = 0 ]; then echo \[\e[33m\]^_^\[\e[0m\]; else echo \[\e[31m\]O_O\[\e[0m\]; fi\` \\$ "
     elif [[ "$1" == "5" ]] ; then
         # nice git prompt
-        RED='\[\033[0;31m\]'
-        GREEN='\[\033[0;32m\]'
-        RESET='\[\033[0m\]'
+        red='\[\033[0;31m\]'
+        green='\[\033[0;32m\]'
+        reset='\[\033[0m\]'
         if test $(git status 2> /dev/null | grep -c :) -eq 0 ; then
-            git_color="${GREEN}"
+            git_color="${green}"
         else
-            git_color="${RED}"
+            git_color="${red}"
         fi
-        export __PS1__="${RESET}[\A] \W${git_color}$(__git_ps1) ${RESET}> "
+        export __PS1__="${reset}[\A] \W${git_color}$(__git_ps1) ${reset}> "
+    elif [[ "$1" == "6" ]] ; then
+        export __PS1__=":; "
 	else
-		echo "dp: err: invalid prompt index, must be [1,4]"
+		>&2 echo "dp: err: invalid prompt index, must be [1,4]"
 		return 1
 	fi
 }

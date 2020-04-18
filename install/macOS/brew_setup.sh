@@ -47,9 +47,10 @@ brew install yarn
 
 # Install my CLI tools :)
 brew tap wcarhart/tools
-brew install koi
-brew install lurker
-brew install thoth
+brew install wcarhart/tools/birdhouse
+brew install wcarhart/tools/koi
+brew install wcarhart/tools/lurker
+brew install wcarhart/tools/thoth
 
 # Link commands
 brew link --overwrite coreutils
@@ -60,6 +61,7 @@ brew cask install discord
 brew cask install docker
 brew cask install google-cloud-sdk
 brew cask install flycut
+brew cask install gitkraken
 brew cask install hyper
 brew cask install icons8
 brew cask install itsycal

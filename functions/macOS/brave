@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# open a file in Brave Browser
+function brave {
+	
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mbrave ~ open a file in the Brave Browser\033[0m"
+		echo
+		echo "brave [-h] FILE..."
+		echo "  file    (+) the file(s) to open"
+		return 0
+	fi
+
+	if [[ $# -eq 0 ]] ; then
+		>&2 echo "brave: err: incorrect number of arguments"
+		return 1
+	fi
+
+	local arg
+	for arg in "$@" ; do
+		open -a "Brave Browser" "$arg"
+	done
+}

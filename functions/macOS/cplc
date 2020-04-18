@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# copy previous commadn to the clipboard
+function cplc {
+	
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mcplc ~ copy previous command to the clipboard\033[0m"
+		echo
+		echo "cplc [-h]"
+		return 0
+	fi
+
+	local raw cmd
+	raw=$(history | tail -2 | head -1)
+	cmd=( $raw )
+	echo -n "${cmd[@]:1}" | pbcopy
+}

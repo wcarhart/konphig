@@ -2,17 +2,19 @@
 
 # add a variable on the fly
 function addv {
+	
 	# help and usage
 	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
-		echo -e "\033[93maddv [-h] NAME VALUE\033[0m"
-		echo "Add an variable on the fly"
+		echo -e "\033[93maddv ~ add an variable on the fly\033[0m"
+		echo
+		echo "addv [-h] NAME VALUE"
 		echo "  name     the name of the new variable"
 		echo "  value    the value of the new variable"
 		return 0
 	fi
 
 	if [[ $# -ne 2 ]] ; then
-		echo "addv: err: incorrect number of arguments"
+		>&2 echo "addv: err: incorrect number of arguments"
 		return 1
 	fi
 

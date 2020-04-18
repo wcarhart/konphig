@@ -1,14 +1,24 @@
 #!/bin/bash
 
 # show most commonly used commands
-common() {
+function common {
+	
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mcommon ~ show the most commonly used commands\033[0m"
+		echo
+		echo "common [-h] [NUM]"
+		echo "  num    the number of commands to show"
+		return 0
+	fi
+
 	if [[ $# -ne 0 ]] ; then
 		[ -n "$1" ] && [ "$1" -eq "$1" ] 2>/dev/null
 		if [[ $? -ne 0 ]] ; then
-			echo "common: err: argument must be a number"
+			>&2 echo "common: err: argument must be a number"
 			return 1
 		elif [[ $1 -lt 1 ]] ; then
-			echo "common: err: argument must be a positive integer"
+			>&2 echo "common: err: argument must be a positive integer"
 			return 1
 		fi
 	fi

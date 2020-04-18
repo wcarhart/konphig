@@ -1,4 +1,4 @@
-# .bash_aliases
+#!/bin/bash
 
 # tools
 alias vim='vim -S ~/.vimrc'
@@ -38,3 +38,5 @@ alias dlogin='docker login'
 alias starwars='telnet towel.blinkenlights.nl'
 alias django='python3 manage.py'
 alias gitroot='cd $(git rev-parse --show-toplevel) && echo "$_"'
+alias busy='cat /dev/urandom | hexdump -C | grep "ca fe"'
+alias cppwd='echo -n "$(pwd)" | pbcopy'

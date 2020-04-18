@@ -54,7 +54,11 @@ function repo {
 
 function new {
 	__addarg "-h" "--help" "help" "optional" "" "Add a new entity to konphig"
-	__addarg ""
+	__addarg "-b" "--brew" "storevalue" "optional" "" "Add a new Homebrew formula to konphig"
+	__addarg "-c" "--cask" "flag" "optional" "" "Use a Homebrew cask instead of a regular formula"
+	__addarg "-y" "--yarn" "storevalue" "optional" "" "Add a new yarn package to konphig"
+	__addarg "-H" "--hyper" "storevalue" "optional" "" "Add a new hyper package to konphig"
+	__parseargs "$@"
 }
 
 function status {
