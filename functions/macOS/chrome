@@ -8,7 +8,8 @@ function chrome {
 		echo -e "\033[93mchrome ~ open a file in Google Chrome\033[0m"
 		echo
 		echo "chrome [-h] FILE..."
-		echo "  file    (+) the file(s) to open"
+		echo "  -h, --help    show this menu and exit"
+		echo "  file          (+) the file(s) to open"
 		return 0
 	fi
 

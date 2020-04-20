@@ -8,7 +8,8 @@ function down {
 		echo -e "\033[93mdown ~ go down a directory\033[0m"
 		echo
 		echo "down [-h] [NUM]"
-		echo "  num    the number of directories to go down"
+		echo "  -h, --help    show this menu and exit"
+		echo "  num           the number of directories to go down"
 		return 0
 	fi
 

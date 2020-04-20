@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# get the current git branch
+function gb {
+
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mgb ~ get the current git branch\033[0m"
+		echo
+		echo "gb [-h] FILETYPE"
+		echo "  -h, --help    show this menu and exit"
+		return 0
+	fi
+
+	git status > /dev/null 2>&1
+	if [[ $? -ne 0 ]] ; then
+		>&2 echo "gitb: err: not a git repository"
+		return 1
+	fi
+	git branch | grep \* | cut -d ' ' -f2
+}

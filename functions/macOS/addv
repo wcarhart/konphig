@@ -8,8 +8,9 @@ function addv {
 		echo -e "\033[93maddv ~ add an variable on the fly\033[0m"
 		echo
 		echo "addv [-h] NAME VALUE"
-		echo "  name     the name of the new variable"
-		echo "  value    the value of the new variable"
+		echo "  -h, --help    show this menu and exit"
+		echo "  name          the name of the new variable"
+		echo "  value         the value of the new variable"
 		return 0
 	fi
 

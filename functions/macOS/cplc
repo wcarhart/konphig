@@ -8,6 +8,7 @@ function cplc {
 		echo -e "\033[93mcplc ~ copy previous command to the clipboard\033[0m"
 		echo
 		echo "cplc [-h]"
+		echo "  -h, --help    show this menu and exit"
 		return 0
 	fi
 

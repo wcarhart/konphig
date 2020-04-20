@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# get disk usage for specific filetype
+function duf {
+
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mduf ~ get disk usage for specific filetype\033[0m"
+		echo
+		echo "duf [-h] FILETYPE"
+		echo "  -h, --help    show this menu and exit"
+		echo "  filetype      the filetype for which to get disk usage"
+		return 0
+	fi
+
+	if [[ $# -eq 0 ]] ; then
+		>&2 echo "duf: err: incorrect number of arguments"
+		return 1
+	fi
+
+	local filetype count arg size arr
+
+	if [[ "${1:0:1}" == "." ]] ; then
+		count=( $(find . -name "*$1") )
+	else
+		count=( $(find . -name "*.$1") )
+	fi
+	if [[ "${#count[@]}" -eq 0 ]] ; then
+		>&2 echo "duf: err: no $1 files found in the current directory"
+		return 1
+	fi
+
+	for arg in "$@"; do
+		if [[ "${1:0:1}" == "." ]] ; then
+			size=$(find . -name "*$arg" -print0 | xargs -0 gdu --apparent-size -ch | tail -n1)
+		else
+			size=$(find . -name "*.$arg" -print0 | xargs -0 gdu --apparent-size -ch | tail -n1)
+		fi
+
+		read -ra arr <<<"$size"
+		echo "$1: ${arr[0] - $1}"
+
+		shift
+	done
+}

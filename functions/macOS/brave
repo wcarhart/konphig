@@ -8,7 +8,8 @@ function brave {
 		echo -e "\033[93mbrave ~ open a file in the Brave Browser\033[0m"
 		echo
 		echo "brave [-h] FILE..."
-		echo "  file    (+) the file(s) to open"
+		echo "  -h, --help    show this menu and exit"
+		echo "  file          (+) the file(s) to open"
 		return 0
 	fi
 

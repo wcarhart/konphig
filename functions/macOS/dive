@@ -8,7 +8,8 @@ function dive {
         echo -e "\033[93mdive ~ follow a directory tree down to its childmost subdirectory\033[0m"
         echo
         echo "dive [-h] DIRECTORY"
-        echo "  directory    the directory into which to dive"
+        echo "  -h, --help    show this menu and exit"
+        echo "  directory     the directory into which to dive"
         return 0
     fi
 

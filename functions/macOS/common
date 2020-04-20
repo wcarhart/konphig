@@ -8,7 +8,8 @@ function common {
 		echo -e "\033[93mcommon ~ show the most commonly used commands\033[0m"
 		echo
 		echo "common [-h] [NUM]"
-		echo "  num    the number of commands to show"
+		echo "  -h, --help    show this menu and exit"
+		echo "  num           the number of commands to show"
 		return 0
 	fi
 

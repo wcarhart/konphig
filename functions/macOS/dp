@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # change to a different prompt (different PS1 variables)
-dp() {
+function dp {
 
     local red green reset
 
@@ -49,7 +49,7 @@ dp() {
     elif [[ "$1" == "6" ]] ; then
         export __PS1__=":; "
 	else
-		>&2 echo "dp: err: invalid prompt index, must be [1,4]"
+		>&2 echo "dp: err: invalid prompt index, must be [1,6]"
 		return 1
 	fi
 }

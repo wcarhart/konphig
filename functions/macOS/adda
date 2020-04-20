@@ -8,8 +8,9 @@ function adda {
 		echo -e "\033[93madda ~ add an alias on the fly\033[0m"
 		echo
 		echo "adda [-h] ALIAS MEANING"
-		echo "  alias      the new alias"
-		echo "  meaning    the full command that the alias expands to"
+		echo "  -h, --help    show this menu and exit"
+		echo "  alias         the new alias"
+		echo "  meaning       the full command that the alias expands to"
 		return 0
 	fi
 

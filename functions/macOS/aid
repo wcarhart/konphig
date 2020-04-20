@@ -5,10 +5,11 @@ function aid {
 	
 	# help and usage
 	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
-		echo -e "\033[93maid ~ get help and hints for a command\033[0m"
+		echo -e "\033[93maid ~ get helpful hints for a command\033[0m"
 		echo
 		echo "aid [-h] CMD..."
-		echo "  cmd    (+) the command for which to get help"
+		echo "  -h, --help    show this menu and exit"
+		echo "  cmd           (+) the command for which to get help"
 		return 0
 	fi
 

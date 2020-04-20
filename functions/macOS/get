@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# select files at random from a directory
+function get {
+
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mget ~ select files at random from a directory\033[0m"
+		echo
+		echo "get [-h] [NUM]"
+		echo "  -h, --help    show this menu and exit"
+		echo "  num           the number of random files to get"
+		return 0
+	fi
+
+	local files index
+	files=( * )
+	for index in $(seq 1 ${1:-1}) ; do
+		echo "${files[$RANDOM % ${#files[@]} ]}"
+	done
+}

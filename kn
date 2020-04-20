@@ -30,6 +30,7 @@ function variable {
 function update {
 	__addarg "-h" "--help" "help" "optional" "" "Update system files to match those in konphig"
 	__parseargs "$@"
+	# once install with brew, need to update /usr/local/bin/kn
 }
 
 function fn {
@@ -53,7 +54,7 @@ function repo {
 }
 
 function new {
-	__addarg "-h" "--help" "help" "optional" "" "Add a new entity to konphig"
+	__addarg "-h" "--help" "help" "optional" "" "Add a new entity to track in konphig"
 	__addarg "-b" "--brew" "storevalue" "optional" "" "Add a new Homebrew formula to konphig"
 	__addarg "-c" "--cask" "flag" "optional" "" "Use a Homebrew cask instead of a regular formula"
 	__addarg "-y" "--yarn" "storevalue" "optional" "" "Add a new yarn package to konphig"

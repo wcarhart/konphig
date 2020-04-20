@@ -8,7 +8,8 @@ function del {
 		echo -e "\033[93mdel ~ remove files at random\033[0m"
 		echo
 		echo "del [-h] [NUM]"
-		echo "  num    the number of files to remove"
+		echo "  -h, --help    show this menu and exit"
+		echo "  num           the number of files to remove"
 		return 0
 	fi
 
