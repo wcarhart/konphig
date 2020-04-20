@@ -24,9 +24,9 @@ prompt_function() {
     local    title_end='\007\]'
   
     if test $(git status 2> /dev/null | grep -c :) -eq 0 ; then
-        git_color="${GREEN}"
+        git_color="${green}"
     else
-        git_color="${RED}"
+        git_color="${red}"
     fi
 
     local faces rand face
@@ -73,4 +73,9 @@ fi
 # source konphig variables
 if [[ -f ~/.bash_variables ]] ; then
   source ~/.bash_variables
+fi
+
+# set up kn, if it is installed
+if [[ -f /usr/local/bin/kn ]] ; then
+    source /usr/local/bin/kn
 fi
