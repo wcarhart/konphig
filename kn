@@ -30,7 +30,7 @@ function variable {
 function update {
 	__addarg "-h" "--help" "help" "optional" "" "Update system files to match those in konphig"
 	__parseargs "$@"
-	# once install with brew, need to update /usr/local/bin/kn
+	# once install with brew, need to source /usr/local/bin/kn
 }
 
 function fn {
