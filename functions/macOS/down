@@ -9,11 +9,11 @@ function down {
 		echo
 		echo "down [-h] [NUM]"
 		echo "  -h, --help    show this menu and exit"
-		echo "  num           the number of directories to go down"
+		echo "  num           the number of directories to go down (default: 1)"
 		return 0
 	fi
 
-	local to from target targetarr i
+	local to from target targetarr i tempdir
 
 	# get directory set from UP
 	to="$__UPDIR__"
@@ -29,22 +29,28 @@ function down {
 			>&2 echo "down: err: argument must be a number"
 			return 1
 		fi
+		if [[ "$1" -lt 1 ]] ; then
+			>&2 echo "down: err: argument must be a positive integer"
+			return 1
+		fi
 	fi
 
 	# go down directories
 	from="$(pwd)"
 	for i in $(seq 1 $1) ; do
 		target="${to##$from}"
+
 		if [[ "$target" == "" ]] ; then
+			cd "$from"
 			pwd
 			return 0
 		fi
 		
-		targetarr=(${target//// })
+		targetarr=( ${target//// } )
 		if [[ -d "$from/${targetarr[0]}" ]] ; then
-			from="$(cd "$from/${targetarr[0]}" ; pwd)"
+			tempdir=$(sed 's*//*/*g' <<< "$from/${targetarr[0]}")
+			from="$(cd "$tempdir" ; pwd)"
 		else
-			>&2 echo "down: err: no such directory '$from/${targetarr[0]}'"
 			break
 		fi
 	done

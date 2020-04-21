@@ -9,7 +9,7 @@ function del {
 		echo
 		echo "del [-h] [NUM]"
 		echo "  -h, --help    show this menu and exit"
-		echo "  num           the number of files to remove"
+		echo "  num           the number of files to remove (default: 1)"
 		return 0
 	fi
 

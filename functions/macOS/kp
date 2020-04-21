@@ -7,8 +7,9 @@ function kp {
 	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
 		echo -e "\033[93mkp ~ kill process by name\033[0m"
 		echo
-		echo "kp [-h] FILETYPE"
+		echo "kp [-h] PROCESS"
 		echo "  -h, --help    show this menu and exit"
+		echo "  process       the name of the process to kill"
 		return 0
 	fi
 

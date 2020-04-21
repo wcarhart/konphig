@@ -9,7 +9,7 @@ function cf {
 		echo
 		echo "cf [-h] [DIRECTORY]"
 		echo "  -h, --help    show this menu and exit"
-		echo "  directory     the directory in which to count files"
+		echo "  directory     the directory in which to count files (default: .)"
 		return 0
 	fi
 

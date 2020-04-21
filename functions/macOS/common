@@ -9,7 +9,7 @@ function common {
 		echo
 		echo "common [-h] [NUM]"
 		echo "  -h, --help    show this menu and exit"
-		echo "  num           the number of commands to show"
+		echo "  num           the number of commands to show (default: 10)"
 		return 0
 	fi
 

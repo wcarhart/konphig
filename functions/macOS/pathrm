@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# remove from PATH variable
+pathrm() {
+
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mpathrm ~ # remove from the PATH variable\033[0m"
+		echo
+		echo "pathrm [-h] DIRECTORY..."
+		echo "  -h, --help     show this menu and exit"
+		echo "  directory      the director(y|ies) to remove from the PATH"
+		return 0
+	fi
+
+	if [[ $# -eq 0 ]] ; then
+		>&2 echo "pathrm: err: incorrect number of arguments"
+		return 1
+	fi
+	
+	local remove workingpath
+	for remove in "$@" ; do
+		if ! grep -E -q "(^|:)$remove($|:)" <<< "$PATH" ; then
+			>&2 echo "pathrm: err: '$remove' is not on the PATH"
+			return 1
+		fi
+
+		workingpath=:$PATH:
+		workingpath=${workingpath/:$remove:/:}
+		workingpath=${workingpath%:}
+		workingpath=${workingpath#:}
+		export PATH="$workingpath"
+	done
+}

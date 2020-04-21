@@ -7,7 +7,7 @@ function gb {
 	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
 		echo -e "\033[93mgb ~ get the current git branch\033[0m"
 		echo
-		echo "gb [-h] FILETYPE"
+		echo "gb [-h]"
 		echo "  -h, --help    show this menu and exit"
 		return 0
 	fi

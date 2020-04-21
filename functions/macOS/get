@@ -9,7 +9,7 @@ function get {
 		echo
 		echo "get [-h] [NUM]"
 		echo "  -h, --help    show this menu and exit"
-		echo "  num           the number of random files to get"
+		echo "  num           the number of random files to get (default: 1)"
 		return 0
 	fi
 

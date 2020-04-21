@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# run a command silently in the background
+function silent {
+
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93msilent ~ run a command silently in the background\033[0m"
+		echo
+		echo "silent [-h] CMD [ARGS...]"
+		echo "  -h, --help    show this menu and exit"
+		echo "  cmd           the command to run silently"
+		echo "  args          (+) the args for cmd"
+		return 0
+	fi
+
+	if [[ $# -eq 0 ]] ; then
+		>&2 echo "silent: err: incorrect number of arguments"
+		return 1
+	fi
+
+	local cmd args
+	cmd="$1"
+	shift
+
+	("$cmd" "$*" > /dev/null &)
+}

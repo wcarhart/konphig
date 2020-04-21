@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# spy on the stdout and stderr for a process
+function spy {
+
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mspy ~ spy on the stdout and stderr for a process\033[0m"
+		echo
+		echo "spy [-h] PID"
+		echo "  -h, --help    show this menu and exit"
+		echo "  pid           the PID of the process on which to spy"
+		return 0
+	fi
+
+	if [[ $# -ne 1 ]] ; then
+		>&2 echo "spy: err: incorrect number of arguments"
+		return 1
+	fi
+
+	strace -p"$1" -s9999 -e write
+}

@@ -7,7 +7,7 @@ function getlocation {
 	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
 		echo -e "\033[93mgetlocation ~ get location for your public IP address\033[0m"
 		echo
-		echo "getlocation [-h] FILETYPE"
+		echo "getlocation [-h]"
 		echo "  -h, --help    show this menu and exit"
 		return 0
 	fi

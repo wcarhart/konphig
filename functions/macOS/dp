@@ -12,8 +12,8 @@ function dp {
         # help menu
         echo -e "\033[93mdp ~ change to a different prompt\033[0m"
         echo
-        echo "dp [-h] NUM"
-        echo "  num    the prompt index"
+        echo "dp [-h] [NUM]"
+        echo "  [num]    the prompt index"
         echo
         echo "Available prompts:"
         echo "  default: full prompt with face"

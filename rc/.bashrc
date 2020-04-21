@@ -6,6 +6,12 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
+# configure PATH
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin:/opt/X11/bin"
+if [[ "$(uname -s)" == *Darwin* ]] ; then
+    export PATH="/Users/$(whoami)/bin:/Users/$(whoami):$PATH"
+fi
+
 # configure customizable PS1
 export __PS1__=''
 
