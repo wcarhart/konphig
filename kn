@@ -31,11 +31,10 @@ function init {
 	echo "Initialized ~/.konphig"
 }
 
-function alias {
-	__addarg "-h" "--help" "help" "optional" "" "Create a new alias"
-	__addarg "-g" "--global" "flag" "optional" "" "Also add the alias to the installed list of aliases"
-	__addarg "" "alias" "positionalvalue" "required" "" "The alias for the new command"
-	__addarg "" "meaning" "positionalvalue" "required" "" "The meaning of the new alias (what the alias expands to)"
+function install {
+	__addarg "-h" "--help" "help" "optional" "" "Install konphig files"
+	__addarg "-f" "--force" "flag" "optional" "" "Overwrite existing files"
+	__addarg "-e" "--extra" "flag" "optional" "" "Run extra, OS-based installation scripts"
 	__parseargs "$@"
 
 	local source
@@ -43,50 +42,7 @@ function alias {
 	__verifykn
 	source="$(cat ~/.konphig/source)"
 
-	if [[ ! -f "${source}/aliases" ]] ; then
-		__errortext "$koiname: err: no such file '${source}/aliases'"
-		return 1
-	fi
 
-	echo "alias ${alias}='${meaning}'" >> "${source}/aliases"
-
-	if [[ $global -eq 1 ]] ; then
-		if [[ ! -f ~/.konphig/functions/adda ]] ; then
-			__errortext "$koiname: err: cannot add global alias, no such file '~/.konphig/functions/adda'"
-			return 1
-		fi
-		~/.konphig/functions/adda "$alias" "$meaning"
-		echo "Added alias '$alias' globally, you will have to run 'source ~/.bashrc' for the new alias to be present in this shell"
-	fi
-}
-
-function variable {
-	__addarg "-h" "--help" "help" "optional" "" "Create a new variable"
-	__addarg "-g" "--global" "flag" "optional" "" "Also add the alias to the installed list of variables"
-	__addarg "" "name" "positionalvalue" "required" "" "The name of the new variable"
-	__addarg "" "value" "positionalvalue" "required" "" "The value of the new variable"
-	__parseargs "$@"
-
-	local source
-
-	__verifykn
-	source="$(cat ~/.konphig/source)"
-
-	if [[ ! -f "${source}/variables" ]] ; then
-		__errortext "$koiname: err: no such file '${source}/variables'"
-		return 1
-	fi
-
-	echo "export ${name}=${value}" >> "${source}/variables"
-
-	if [[ $global -eq 1 ]] ; then
-		if [[ ! -f ~/.konphig/functions/addv ]] ; then
-			__errortext "$koiname: err: cannot add global variable, no such file '~/.konphig/functions/addv'"
-			return 1
-		fi
-		~/.konphig/functions/addv "$name" "$value"
-		echo "Added variable '$name' globally, you will have to run 'source ~/.bashrc' for the new variable to be present in this shell"
-	fi
 }
 
 function update {
@@ -321,33 +277,78 @@ function __listrepos {
 
 function new {
 	__addarg "-h" "--help" "help" "optional" "" "Add a new entity to track in konphig"
+	__addarg "-a" "--alias" "flag" "optional" "" "Add a new alias to konphig"
+	__addarg "" "--aliasname" "storevalue" "optional" "" "The name of the new alias"
+	__addarg "" "--aliasvalue" "storevalue" "optional" "" "The value of the new alias"
+
+	__addarg "-v" "--variable" "flag" "optional" "" "Add a new variable to konphig"
+	__addarg "" "--variablename" "storevalue" "optional" "" "The name of the new variable"
+	__addarg "" "--variablevalue" "storevalue" "optional" "" "The value of the new variable"
+
+	__addarg "-g" "--global" "flag" "optional" "" "Also add the new alias or variable to the installed list of aliases or variables"
+
 	__addarg "-b" "--brew" "storevalue" "optional" "" "Add a new Homebrew formula to konphig"
 	__addarg "-c" "--cask" "flag" "optional" "" "Use a Homebrew cask instead of a regular formula"
 	__addarg "-y" "--yarn" "storevalue" "optional" "" "Add a new yarn package to konphig"
 	__addarg "-H" "--hyper" "storevalue" "optional" "" "Add a new hyper package to konphig"
-	__addgroup "installflags" "XOR" "required" "--brew" "--yarn" "--hyper"
+
+	__addgroup "installflags" "XOR" "required" "--brew" "--yarn" "--hyper" "--alias" "--variable"
+	__addgroup "alias" "AND" "optional" "--alias" "--aliasname" "--aliasvalue"
+	__addgroup "variable" "AND" "optional" "--variable" "--variablename" "--variablevalue"
 	__parseargs "$@"
+
+	local source
 
 	__verifykn
 	source="$(cat ~/.konphig/source)"
 
-	if [[ "$brew" != "" ]] ; then
+	if [[ $alias -eq 1 ]] ; then
+		if [[ ! -f "${source}/aliases" ]] ; then
+			__errortext "$koiname: err: no such file '${source}/aliases'"
+			return 1
+		fi
+
+		echo "alias ${aliasname}='${aliasvalue}'" >> "${source}/aliases"
+
+		if [[ $global -eq 1 ]] ; then
+			if [[ ! -f ~/.konphig/functions/adda ]] ; then
+				__errortext "$koiname: err: cannot add global alias, no such file '~/.konphig/functions/adda'"
+				return 1
+			fi
+			~/.konphig/functions/adda "$aliasname" "$aliasvalue"
+			echo "Added alias '$aliasname' globally, you will have to run 'source ~/.bashrc' for the new alias to be present in this shell"
+		fi
+	elif [[ $variable -eq 1 ]] ; then
+		if [[ ! -f "${source}/variables" ]] ; then
+			__errortext "$koiname: err: no such file '${source}/variables'"
+			return 1
+		fi
+
+		echo "export ${variablename}=${variablevalue}" >> "${source}/variables"
+
+		if [[ $global -eq 1 ]] ; then
+			if [[ ! -f ~/.konphig/functions/addv ]] ; then
+				__errortext "$koiname: err: cannot add global variable, no such file '~/.konphig/functions/addv'"
+				return 1
+			fi
+			~/.konphig/functions/addv "$variablename" "$variablevalue"
+			echo "Added variable '$variablename' globally, you will have to run 'source ~/.bashrc' for the new variable to be present in this shell"
+		fi
+	elif [[ $global -eq 1 ]] ; then
+		__errortext "$koiname: err: '--global' is only valid with '--alias' or '--variable'"
+		return 1
+	elif [[ "$brew" != "" ]] ; then
 		if [[ $cask -eq 1 ]] ; then
 			echo "brew cask install $brew" >> "${source}/install/macOS/brew_setup.sh"
 		else
 			echo "brew install $brew" >> "${source}/install/macOS/brew_setup.sh"
 		fi
+	elif [[ $cask -eq 1 ]] ; then
+		__errortext "$koiname: err: the '--cask' option is only valid when used with the '--brew' option"
+		return 1
 	elif [[ "$yarn" != "" ]] ; then
-		if [[ $cask -eq 1 ]] ; then
-			__errortext "$koiname: err: the '--cask' option is only valid when used with the '--brew' option"
-			return 1
-		fi
 		echo "yarn global add $yarn" >> "${source}/install/macOS/yarn_setup.sh"
 	elif [[ "$hyper" != "" ]] ; then
-		if [[ $cask -eq 1 ]] ; then
-			__errortext "$koiname: err: the '--cask' option is only valid when used with the '--brew' option"
-			return 1
-		fi
 		echo "hyper install $hyper" >> "${source}/install/macOS/hyper_setup.sh"
 	fi
 }
