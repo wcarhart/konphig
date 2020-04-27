@@ -5,7 +5,7 @@ function over {
 
 	# help and usage
 	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
-		echo -e "\033[93mover ~  move up and over when changing directories\033[0m"
+		echo -e "\033[93mover ~ move up and over when changing directories\033[0m"
 		echo
 		echo "over [-h] [NUM] DIRECTORY"
 		echo "  -h, --help    show this menu and exit"
