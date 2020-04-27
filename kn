@@ -234,9 +234,12 @@ function fn {
 	fi
 }
 
-function pull {
-	__addarg "-h" "--help" "help" "optional" "" "Pull all registered repositories"
-	__addarg "-l" "--list" "flag" "optional" "" "If included, simply list registered repositories"
+function repo {
+	__addarg "-h" "--help" "help" "optional" "" "Register a new repository with kn"
+	__addarg "-a" "--add" "storevalue" "optional" "" "The repository to register" "__verifydirectory"
+	__addarg "-p" "--pull" "flag" "optional" "" "Pull all registered repositories"
+	__addarg "-l" "--list" "flag" "optional" "" "List all registered repositories"
+	__addgroup "flags" "XOR" "optional" "--pull" "--list" "--add"
 	__parseargs "$@"
 
 	__verifykn
@@ -256,61 +259,56 @@ function pull {
 				output="${output} ├── ${repolist[$i]}\n"
 			fi
 		done
-		echo "Registered repositories:"
-		echo -e "$output"
-		return
-	fi
-
-	local topull r name
-	topull=()
-	while read -r line ; do
-		if [[ "$line" == "" ]] ; then continue ; fi
-		topull+=( "${line#*: }" )
-	done < ~/.konphig/repos
-	for r in "${topull[@]}" ; do
-		name="$(basename "$r")"
-		echo -n "Pulling ${name}..."
-		(cd "$r" ; git pull > /dev/null 2>&1)
-		if [[ $? -ne 0 ]] ; then
-			echo "ERROR"
-		else
-			echo "DONE"
+		if [[ "$output" != "" ]] ; then
+			echo "Registered repositories:"
+			echo -e "$output"
 		fi
-	done
-}
+		return
+	elif [[ $pull -eq 1 ]] ; then
+		local topull r name
+		topull=()
+		while read -r line ; do
+			if [[ "$line" == "" ]] ; then continue ; fi
+			topull+=( "${line#*: }" )
+		done < ~/.konphig/repos
+		for r in "${topull[@]}" ; do
+			name="$(basename "$r")"
+			echo -n "Pulling ${name}..."
+			(cd "$r" ; git pull > /dev/null 2>&1)
+			if [[ $? -ne 0 ]] ; then
+				echo "ERROR"
+			else
+				echo "DONE"
+			fi
+		done
+		return
+	else
+		# check if repo/.git exists
+		if [[ ! -d "${add}/.git" ]] ; then
+			__errortext "$koiname: err: '$add' is not a git repository"
+			return 1
+		fi
 
-function repo {
-	__addarg "-h" "--help" "help" "optional" "" "Register a new repository with kn"
-	__addarg "" "repo" "positionalvalue" "required" "" "The repository to register" "__verifydirectory"
-	__parseargs "$@"
+		local name abspath found
 
-	__verifykn
+		# resolve absolute path
+		abspath="$(cd "$add" ; pwd)"
+		name="$(basename "$abspath")"
 
-	# check if repo/.git exists
-	if [[ ! -d "${repo}/.git" ]] ; then
-		__errortext "$koiname: err: '$repo' is not a git repository"
-		return 1
+		# check if the repository is already registered
+		found=0
+		for r in $(__listrepos) ; do
+			if [[ "$r" == "$name" ]] ; then found=1 ; fi
+		done
+		if [[ $found -eq 1 ]] ; then
+			__errortext "$koiname: err: '$name' is already registered"
+			return 1
+		fi
+		
+		# register repository with konphig
+		echo "${name}: ${abspath}" >> ~/.konphig/repos
+		echo "Registered repository '$name'"
 	fi
-
-	local name abspath found
-
-	# resolve absolute path
-	abspath="$(cd "$repo" ; pwd)"
-	name="$(basename "$abspath")"
-
-	# check if the repository is already registered
-	found=0
-	for r in $(__listrepos) ; do
-		if [[ "$r" == "$name" ]] ; then found=1 ; fi
-	done
-	if [[ $found -eq 1 ]] ; then
-		__errortext "$koiname: err: '$name' is already registered"
-		return 1
-	fi
-	
-	# register repository with konphig
-	echo "${name}: ${abspath}" >> ~/.konphig/repos
-	echo "Registered repository '$name'"
 }
 
 function __listrepos {
