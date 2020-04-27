@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# add a variable on the fly
+function addv {
+	
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93maddv ~ add an variable on the fly\033[0m"
+		echo
+		echo "addv [-h] NAME VALUE"
+		echo "  -h, --help    show this menu and exit"
+		echo "  name          the name of the new variable"
+		echo "  value         the value of the new variable"
+		return 0
+	fi
+
+	if [[ $# -ne 2 ]] ; then
+		>&2 echo "addv: err: incorrect number of arguments"
+		return 1
+	fi
+
+	local file
+	if [[ ! -f ~/.bash_variables ]] ; then
+		file=~/.bashrc
+	else
+		file=~/.bash_variables
+	fi
+
+	echo "export $1=$2" >> "$file"
+	source ~/.bashrc
+}

@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# detect if a virtual environment is active
+function venv? {
+
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mvenv? ~ detect if a virtual environment is active\033[0m"
+		echo
+		echo "venv? [-h]"
+		echo "  -h, --help    show this menu and exit"
+		return 0
+	fi
+
+    if [[ "$VIRTUAL_ENV" == "" ]] ; then
+        echo "false"
+        return 1
+    fi
+    echo "true"
+}

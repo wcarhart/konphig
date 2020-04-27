@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# count files in a directory and its subdirectories
+function cf {
+	
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mcf ~ count files in a directory and its subdirectories\033[0m"
+		echo
+		echo "cf [-h] [DIRECTORY]"
+		echo "  -h, --help    show this menu and exit"
+		echo "  directory     the directory in which to count files (default: .)"
+		return 0
+	fi
+
+	if [[ $# -gt 0 ]] && [[ ! -d "$1" ]] ; then
+		>&2 echo "cf: err: no such directory '$1'"
+		return 1
+	fi
+
+	local num
+	num=$(find ${1:-"."}/ -type f | wc -l)
+	echo "$num files" | xargs
+}

@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# add an alias on the fly
+function adda {
+	
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93madda ~ add an alias on the fly\033[0m"
+		echo
+		echo "adda [-h] ALIAS MEANING"
+		echo "  -h, --help    show this menu and exit"
+		echo "  alias         the new alias"
+		echo "  meaning       the full command that the alias expands to"
+		return 0
+	fi
+
+	if [[ $# -ne 2 ]] ; then
+		>&2 echo "adda: err: incorrect number of arguments"
+		return 1
+	fi
+
+	local file
+	if [[ ! -f ~/.bash_aliases ]] ; then
+		file=~/.bashrc
+	else
+		file=~/.bash_aliases
+	fi
+
+	echo "alias $1='$2'" >> "$file"
+	source ~/.bashrc
+}

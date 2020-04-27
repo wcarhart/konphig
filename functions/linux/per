@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# show percentage of each filetype in the current directory
+function per {
+
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mper ~ show percentage of each filetype in the current directory\033[0m"
+		echo
+		echo "per [-h]"
+		echo "  -h, --help    show this menu and exit"
+		return 0
+	fi
+
+	local total files file ext vars v
+
+	total=0
+	files=()
+	vars=()
+	for file in * ; do
+		if [[ ! -f "$file" ]] ; then continue ; fi
+
+		if [[ "$file" == *.* ]] ; then
+			ext="${file#*.}"
+		else
+			ext=
+		fi
+
+		if [[ "$ext" == "" ]] ; then
+			if [[ ! -z "$extensionless" ]] ; then
+				(( extensionless += 1 ))
+			else
+				local extensionless
+				extensionless=1
+				vars+=( extensionless )
+			fi
+		else
+			if [[ ! -z "${!ext}" ]] ; then
+				(( "${ext}" += 1 ))
+			else
+				local "${ext}"
+				read "${ext}" <<< 1
+				vars+=( "${ext}" )
+			fi
+		fi
+
+		(( total += 1 ))
+	done
+
+	if [[ $total -eq 0 ]] ; then
+		echo "No files here"
+		return 0
+	fi
+
+	for v in "${vars[@]}" ; do
+		printf "$(sed 's/extensionless/_/g' <<< "${v}: ")"
+		printf '%.2f' "$(bc <<< "scale=10; (${!v}/$total) * 100")"
+		printf '%s\n' '%'
+	done
+}

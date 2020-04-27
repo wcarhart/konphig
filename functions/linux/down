@@ -1,0 +1,60 @@
+#!/bin/bash
+
+# go down a directory
+function down {
+
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mdown ~ go down a directory\033[0m"
+		echo
+		echo "down [-h] [NUM]"
+		echo "  -h, --help    show this menu and exit"
+		echo "  num           the number of directories to go down (default: 1)"
+		return 0
+	fi
+
+	local to from target targetarr i tempdir
+
+	# get directory set from UP
+	to="$__UPDIR__"
+	if [[ "$to" == "" ]] ; then
+		pwd
+		return 0
+	fi
+
+	# use command line argument to determine how far we are going down
+	if [[ $# -gt 0 ]] ; then
+		[ -n "$1" ] && [ "$1" -eq "$1" ] 2>/dev/null
+		if [[ $? -ne 0 ]] ; then
+			>&2 echo "down: err: argument must be a number"
+			return 1
+		fi
+		if [[ "$1" -lt 1 ]] ; then
+			>&2 echo "down: err: argument must be a positive integer"
+			return 1
+		fi
+	fi
+
+	# go down directories
+	from="$(pwd)"
+	for i in $(seq 1 $1) ; do
+		target="${to##$from}"
+
+		if [[ "$target" == "" ]] ; then
+			cd "$from"
+			pwd
+			return 0
+		fi
+		
+		targetarr=( ${target//// } )
+		if [[ -d "$from/${targetarr[0]}" ]] ; then
+			tempdir=$(sed 's*//*/*g' <<< "$from/${targetarr[0]}")
+			from="$(cd "$tempdir" ; pwd)"
+		else
+			break
+		fi
+	done
+
+	cd "$from"
+	pwd
+}

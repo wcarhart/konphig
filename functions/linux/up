@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# go up a directory
+function up {
+
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mup ~ go up a directory\033[0m"
+		echo
+		echo "up [-h] [NUM]"
+		echo "  -h, --help    show this menu and exit"
+		echo "  num           the number of directories to go up (default: 1)"
+		return 0
+	fi
+
+	if [[ "$__UPDIR__" == "" ]] || [[ "$__UPDIR__" != $(pwd)* ]] ; then
+		export __UPDIR__=$(pwd)
+	fi
+
+	local count cdstr
+
+	if [[ -z "$1" ]] ; then
+		cd ..
+	elif [[ "$1" -gt 0 ]] ; then
+		let count=1
+		cdstr=".."
+		while [[ $count -lt $1 ]] ; do
+			cdstr="$cdstr/.."
+			let count=count+1
+		done
+		cd "$cdstr"
+	else
+		>&2 echo "up: err: argument must be a positive integer"
+		return 1
+	fi
+	pwd
+}

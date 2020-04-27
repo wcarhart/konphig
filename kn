@@ -121,22 +121,26 @@ function update {
 	for functionfile in "${functions[@]}" ; do
 		fn=$(basename "$functionfile")
 		if [[ ! -f ~/.konphig/functions/$fn ]] ; then
-			echo "Adding function $fn"
+			echo "Adding function '$fn'"
 			yes | cp -f "$functionfile" ~/.konphig/functions/$fn
 		else
-			__update "$functionfile" ~/.konphig/functions/$fn
+			echo "Updating function '$fn'"
+			__update -q "$functionfile" ~/.konphig/functions/$fn
 		fi
 	done
 	installed_functions=( ~/.konphig/functions/* )
 	for functionfile in "${installed_functions[@]}" ; do
 		fn=$(basename "$functionfile")
 		if [[ ! -f "${source}/functions/${ostype}/${fn}" ]] ; then
+			echo "Removing function '$fn'"
 			rm -f "$functionfile"
 		fi
 	done
 
 	if [[ $__updated -eq 0 ]] ; then
 		echo "Nothing to update"
+	else
+		echo "Please run 'source ~/.bashrc' to reload the current shell"
 	fi
 }
 
@@ -144,8 +148,19 @@ function __update {
 	# update a konphig source file
 	# $1 is the repository konphig file
 	# $2 is the system file
+
+	local quiet
+	if [[ "$1" == "-q" || "$1" == "--quiet" ]] ; then
+		quiet=1
+		shift
+	else
+		quiet=0
+	fi
+
 	if ! __check "$1" "$2" ; then
-		echo "Updating $2"
+		if [[ $quiet -eq 0 ]] ; then
+			echo "Updating '$2'"
+		fi
 		__updated=1
 		yes | cp -f "$1" "$2"
 	fi
@@ -172,7 +187,7 @@ function fn {
 	__addarg "-l" "--list" "flag" "optional" "" "List all functions"
 	__addarg "-g" "--get" "storevalue" "optional" "" "Get a specific function"
 	__addarg "-q" "--quiet" "flag" "optional" "" "If included, omit supplemental output"
-	# __addgroup "flags" "required" "XOR" "--count" "--list" "--get"
+	__addgroup "cmds" "XOR" "required" "--count" "--list" "--get"
 	__parseargs "$@"
 
 	local fns source
@@ -216,9 +231,6 @@ function fn {
 			return 1
 		fi
 		cat ~/.konphig/functions/"$get"
-	else
-		__errortext "$koiname: err: invalid or no option selected"
-		return 1
 	fi
 }
 
@@ -315,7 +327,7 @@ function new {
 	__addarg "-c" "--cask" "flag" "optional" "" "Use a Homebrew cask instead of a regular formula"
 	__addarg "-y" "--yarn" "storevalue" "optional" "" "Add a new yarn package to konphig"
 	__addarg "-H" "--hyper" "storevalue" "optional" "" "Add a new hyper package to konphig"
-	# __addgroup "options" "required" "XOR" "--brew" "--yarn" "--hyper"
+	__addgroup "installflags" "XOR" "required" "--brew" "--yarn" "--hyper"
 	__parseargs "$@"
 
 	__verifykn
@@ -339,9 +351,6 @@ function new {
 			return 1
 		fi
 		echo "hyper install $hyper" >> "${source}/install/macOS/hyper_setup.sh"
-	else
-		__errortext "$koiname: err: invalid or no option selected"
-		return 1
 	fi
 }
 
