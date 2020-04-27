@@ -49,9 +49,9 @@
   ## generate a changelog since the last tagged release
   changelog = !git log --oneline --no-merges `git describe --tags`..
   ## check what changes you're about to pull from the current branch in the remote
-  upstream = !git log --oneline --no-merges ..origin/`git branch | grep \* | cut -d ' ' -f2`
+  upstream = !git log --oneline --no-merges ..origin/$(git branch | grep \\* | cut -d ' ' -f2)
   ## review your local commits before a push
-  local = !git log --oneline --no-merges origin/`git branch | grep \* | cut -d ' ' -f2`..HEAD
+  local = !git log --oneline --no-merges origin/$(git branch | grep \\* | cut -d ' ' -f2)..HEAD
   ## graph complex logs
   graph = log --graph --all --decorate --stat --date=iso
   ## undo the last commit
@@ -61,7 +61,7 @@
   ## pull all submodules
   all = !git submodule foreach git pull origin master
   ## get the default branch
-  default = "!f() { git remote show "${1:-origin}" | grep "HEAD branch" | cut -d ":" -f 2; }; f"
+  default = "!f() { git remote show \"${1:-origin}\" | grep \"HEAD branch\" | cut -d \":\" -f 2; }; f"
 
 [color]
   diff = auto

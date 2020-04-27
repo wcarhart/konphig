@@ -69,13 +69,12 @@ function install {
 
 	# backup files
 	__backup
-	__backup -f
 
 	# install konphig files
 	yes | cp -f "${source}/aliases" "${HOME}/.bash_aliases" >/dev/null 2>&1
-	yes | cp -f "${source}/vairables" "${HOME}/.bash_variables" >/dev/null 2>&1
+	yes | cp -f "${source}/variables" "${HOME}/.bash_variables" >/dev/null 2>&1
 	for f in "${source}/functions/${ostype}"/* ; do
-		yes | cp -f "$(basename "$f")" "${HOME}/.konphig/functions" >/dev/null 2>&1
+		yes | cp -f "$f" "${HOME}/.konphig/functions" >/dev/null 2>&1
 	done
 	yes | cp -f "${source}/rc/.bash_profile"  ~ >/dev/null 2>&1
 	yes | cp -f "${source}/rc/.bashrc"        ~ >/dev/null 2>&1
@@ -115,6 +114,7 @@ function install {
 # trap
 function __cleanup {
 	if [[ -f ~/.konphig/installing ]] ; then
+		rm -f ~/.konphig/installing
 		__errortext "$koiname: err: installation failed! Please review the konphig source repository and reclone it, if necessary"
 		exit 1
 	else
