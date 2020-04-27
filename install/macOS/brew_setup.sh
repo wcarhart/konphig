@@ -48,6 +48,7 @@ brew install yarn
 # Install my CLI tools :)
 brew tap wcarhart/tools
 brew install wcarhart/tools/birdhouse
+brew install wcarhart/tools/kn
 brew install wcarhart/tools/koi
 brew install wcarhart/tools/lurker
 brew install wcarhart/tools/thoth

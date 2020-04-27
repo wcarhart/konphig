@@ -3,7 +3,7 @@
 # set up git tab completion
 source ~/.git-prompt.sh
 if [ -f ~/.git-completion.bash ]; then
-  . ~/.git-completion.bash
+  source ~/.git-completion.bash
 fi
 
 # configure PATH
@@ -62,13 +62,12 @@ set completion-ignore-case on
 shopt -s histappend
 
 # source konphig functions
-if [[ -d ~/.bash_functions ]] ; then
-	FILES=( ~/.bash_functions/*.sh )
-	if [[ "${#FILES[@]}" -gt 0 ]] ; then
-	    for FILE in ~/.bash_functions/*.sh ; do
-	        source $FILE
-	    done
-	fi
+if [[ -d ~/.konphig/functions ]] ; then
+    shopt -s nullglob
+    for f in ~/.konphig/functions/* ; do
+        source "$f"
+    done
+    shopt -u nullglob
 fi
 
 # source konphig aliases

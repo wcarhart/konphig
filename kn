@@ -27,22 +27,148 @@ function init {
 	echo "$abspath" > ~/.konphig/source
 	echo > ~/.konphig/repos
 	mkdir -p ~/.konphig/functions
+	mkdir -p ~/.konphig/backups
 
 	echo "Initialized ~/.konphig"
 }
 
 function install {
 	__addarg "-h" "--help" "help" "optional" "" "Install konphig files"
-	__addarg "-f" "--force" "flag" "optional" "" "Overwrite existing files"
 	__addarg "-e" "--extra" "flag" "optional" "" "Run extra, OS-based installation scripts"
+	__addarg "-p" "--personal" "flag" "optional" "" "Add a personal Git workspace"
 	__parseargs "$@"
 
-	local source
+	local source ostype osname f
 
 	__verifykn
 	source="$(cat ~/.konphig/source)"
 
+	trap __cleanup EXIT
+	touch ~/.konphig/installing
 
+	if [[ "$(uname -s)" == *Darwin* ]] ; then
+		ostype=macOS
+	elif [[ "$(uname -s)" == *Linux* ]] ; then
+		ostype=linux
+	fi
+
+	# verify environment
+	if [[ "$(basename "$SHELL")" != "bash" ]] ; then
+		__errortext "$koiname: err: konphig is not supported for this shell"
+		return 1
+	fi
+	if [[ ! -f /bin/bash && ! -L /bin/bash ]] ; then
+		__errortext "$koiname: err: could not find Bash at /bin/bash"
+		__errortext "  Use 'ln -sf bash /bin/bash' to link Bash to /bin/bash and then try installing again"
+		return 1
+	fi
+	if [[ "$ostype" != "macOS" && "$ostype" != "linux" ]] ; then
+		__errortext "$koiname: err: konphig does not support this OS"
+		return 1
+	fi
+
+	# backup files
+	__backup
+	__backup -f
+
+	# install konphig files
+	yes | cp -f "${source}/aliases" "${HOME}/.bash_aliases" >/dev/null 2>&1
+	yes | cp -f "${source}/vairables" "${HOME}/.bash_variables" >/dev/null 2>&1
+	for f in "${source}/functions/${ostype}"/* ; do
+		yes | cp -f "$(basename "$f")" "${HOME}/.konphig/functions" >/dev/null 2>&1
+	done
+	yes | cp -f "${source}/rc/.bash_profile"  ~ >/dev/null 2>&1
+	yes | cp -f "${source}/rc/.bashrc"        ~ >/dev/null 2>&1
+	yes | cp -f "${source}/rc/.git-prompt.sh" ~ >/dev/null 2>&1
+	yes | cp -f "${source}/rc/.gitconfig"     ~ >/dev/null 2>&1
+	yes | cp -f "${source}/rc/.profile"       ~ >/dev/null 2>&1
+	yes | cp -f "${source}/rc/.tmux.conf"     ~ >/dev/null 2>&1
+	yes | cp -f "${source}/rc/.vimrc"         ~ >/dev/null 2>&1
+	yes | cp -f "${source}/rc/.pypirc"        ~ >/dev/null 2>&1
+	yes | cp -f "${source}/rc/.hyper.js"      ~ >/dev/null 2>&1
+
+	# configure personal git environment
+	if [[ $personal -eq 1 ]] ; then
+		mkdir -p ~/personal
+		cat <<- EndOfGit >> ~/personal/.gitconfig
+		[user]
+		  name = Will Carhart
+		  email = carhartwill@gmail.com
+		EndOfGit
+	fi
+
+	if [[ $extra -eq 1 ]] ; then
+		if [[ "$ostype" == "macOS" ]] ; then
+			"${source}"/install/macOS/brew_setup.sh
+			"${source}"/install/macOS/hyper_setup.sh
+			"${source}"/install/macOS/subl_setup.sh
+			"${source}"/install/macOS/write_defaults.sh
+			"${source}"/install/macOS/yarn_setup.sh
+		else
+			"${source}"/install/linux/brew_setup.sh
+		fi
+	fi
+
+	rm -f ~/.konphig/installing
+}
+
+# trap
+function __cleanup {
+	if [[ -f ~/.konphig/installing ]] ; then
+		__errortext "$koiname: err: installation failed! Please review the konphig source repository and reclone it, if necessary"
+		exit 1
+	else
+		if [[ "$(uname -s)" == *Darwin* ]] ; then
+			echo -n "source ~/.bashrc" | pbcopy
+		fi
+		echo "Setup successful!"
+		echo "To complete installation, please run:"
+		printf "  \033[93msource ~/.bashrc\033[0m"
+		if [[ "$(uname -s)" == *Darwin* ]] ; then
+			printf " (\033[35mpress ⌘ + V\033[0m)\n"
+		else
+			echo
+		fi
+		exit 0
+	fi
+}
+
+function __backup {
+	# back up konphig files
+
+	local backup f
+	backup="$(date '+%Y%m%d-%H%M%S')"
+	mkdir -p "${HOME}/.konphig/backups/${backup}"
+
+	__movetobackup "${HOME}/.konphig/backups/${backup}" "${HOME}/.bashrc"
+	__movetobackup "${HOME}/.konphig/backups/${backup}" "${HOME}/.bash_profile"
+	__movetobackup "${HOME}/.konphig/backups/${backup}" "${HOME}/.git-prompt.sh"
+	__movetobackup "${HOME}/.konphig/backups/${backup}" "${HOME}/.gitconfig"
+	__movetobackup "${HOME}/.konphig/backups/${backup}" "${HOME}/.profile"
+	__movetobackup "${HOME}/.konphig/backups/${backup}" "${HOME}/.tmux.conf"
+	__movetobackup "${HOME}/.konphig/backups/${backup}" "${HOME}/.vimrc"
+	__movetobackup "${HOME}/.konphig/backups/${backup}" "${HOME}/.pypirc"
+	__movetobackup "${HOME}/.konphig/backups/${backup}" "${HOME}/.hyper.js"
+	mkdir -p "${HOME}/.konphig/backups/${backup}/functions"
+	for f in "${HOME}/.konphig/functions"/* ; do
+		__movetobackup "${HOME}/.konphig/backups/${backup}/functions" "$f"
+	done
+}
+
+function __movetobackup {
+	# move a set of files to the backup location
+	# $1 is the backup location
+	# $2+ are the files to backup
+
+	local backup f
+	backup="$1"
+	shift
+
+	for f in "$@" ; do
+		if [[ -f "$f" ]] ; then
+			cp "$f" "$backup"
+		fi
+	done
 }
 
 function update {
@@ -59,6 +185,9 @@ function update {
 	else
 		ostype=linux
 	fi
+
+	# create backup
+	__backup
 
 	# update source files
 	__update "${source}/aliases" ~/.bash_aliases
@@ -386,6 +515,11 @@ function __verifykn {
 
 	if [[ ! -d ~/.konphig/functions ]] ; then
 		__errortext "$koiname: err: missing konphig functions directory"
+		__errortext "  Use 'kn init --force' to reinitialize"
+		return 1
+	fi
+	if [[ ! -d "$(cat ~/.konphig/source)" ]] ; then
+		__errortext "$koiname: err: no such source directory '$(cat ~/.konphig/source)'"
 		__errortext "  Use 'kn init --force' to reinitialize"
 		return 1
 	fi
