@@ -1,9 +1,8 @@
 #!/bin/bash
-set -e
-
 source koi
 koiname=kn
 koidescription="CLI manager for konphig"
+koishowhints=0
 
 __updated=0
 
@@ -38,6 +37,27 @@ function alias {
 	__addarg "" "alias" "positionalvalue" "required" "" "The alias for the new command"
 	__addarg "" "meaning" "positionalvalue" "required" "" "The meaning of the new alias (what the alias expands to)"
 	__parseargs "$@"
+
+	local source
+
+	__verifykn
+	source="$(cat ~/.konphig/source)"
+
+	if [[ ! -f "${source}/aliases" ]] ; then
+		__errortext "$koiname: err: no such file '${source}/aliases'"
+		return 1
+	fi
+
+	echo "alias ${alias}='${meaning}'" >> "${source}/aliases"
+
+	if [[ $global -eq 1 ]] ; then
+		if [[ ! -f ~/.konphig/functions/adda ]] ; then
+			__errortext "$koiname: err: cannot add global alias, no such file '~/.konphig/functions/adda'"
+			return 1
+		fi
+		~/.konphig/functions/adda "$alias" "$meaning"
+		echo "Added alias '$alias' globally, you will have to run 'source ~/.bashrc' for the new alias to be present in this shell"
+	fi
 }
 
 function variable {
@@ -46,35 +66,55 @@ function variable {
 	__addarg "" "name" "positionalvalue" "required" "" "The name of the new variable"
 	__addarg "" "value" "positionalvalue" "required" "" "The value of the new variable"
 	__parseargs "$@"
+
+	local source
+
+	__verifykn
+	source="$(cat ~/.konphig/source)"
+
+	if [[ ! -f "${source}/variables" ]] ; then
+		__errortext "$koiname: err: no such file '${source}/variables'"
+		return 1
+	fi
+
+	echo "export ${name}=${value}" >> "${source}/variables"
+
+	if [[ $global -eq 1 ]] ; then
+		if [[ ! -f ~/.konphig/functions/addv ]] ; then
+			__errortext "$koiname: err: cannot add global variable, no such file '~/.konphig/functions/addv'"
+			return 1
+		fi
+		~/.konphig/functions/addv "$name" "$value"
+		echo "Added variable '$name' globally, you will have to run 'source ~/.bashrc' for the new variable to be present in this shell"
+	fi
 }
 
 function update {
 	__addarg "-h" "--help" "help" "optional" "" "Update system files to match those in konphig"
 	__parseargs "$@"
-	# once install with brew, need to source /usr/local/bin/kn
-
-	__verifykn
 
 	local ostype source functions fn
+
+	__verifykn
+	source="$(cat ~/.konphig/source)"
+
 	if [[ "$(uname -s)" == *Darwin* ]] ; then
 		ostype=macOS
 	else
 		ostype=linux
 	fi
 
-	source="$(cat ~/.konphig/source)"
-
 	# update source files
-	# __update "${source}/aliases" ~/.bash_aliases
-	# __update "${source}/rc/.bash_profile" ~/.bash_profile
-	# __update "${source}/rc/.bashrc" ~/.bashrc
-	# __update "${source}/variables" ~/.bash_variables
-	# __update "${source}/rc/.gitconfig" ~/.gitconfig
-	# __update "${source}/rc/.git-prompt.sh" ~/.git-prompt.sh
-	# __update "${source}/rc/.profile" ~/.profile
-	# __update "${source}/rc/.pypirc" ~/.pypirc
-	# __update "${source}/rc/.tmux.conf" ~/.tmux-conf
-	# __update "${source}/rc/.vimrc" ~/.vimrc
+	__update "${source}/aliases" ~/.bash_aliases
+	__update "${source}/rc/.bash_profile" ~/.bash_profile
+	__update "${source}/rc/.bashrc" ~/.bashrc
+	__update "${source}/variables" ~/.bash_variables
+	__update "${source}/rc/.gitconfig" ~/.gitconfig
+	__update "${source}/rc/.git-prompt.sh" ~/.git-prompt.sh
+	__update "${source}/rc/.profile" ~/.profile
+	__update "${source}/rc/.pypirc" ~/.pypirc
+	__update "${source}/rc/.tmux.conf" ~/.tmux-conf
+	__update "${source}/rc/.vimrc" ~/.vimrc
 
 	# update functions
 	functions=( "${source}/functions/${ostype}"/* )
@@ -82,7 +122,7 @@ function update {
 		fn=$(basename "$functionfile")
 		if [[ ! -f ~/.konphig/functions/$fn ]] ; then
 			echo "Adding function $fn"
-			# yes | cp -f "$functionfile" ~/.konphig/functions/$fn
+			yes | cp -f "$functionfile" ~/.konphig/functions/$fn
 		else
 			__update "$functionfile" ~/.konphig/functions/$fn
 		fi
@@ -94,17 +134,20 @@ function update {
 			rm -f "$functionfile"
 		fi
 	done
+
+	if [[ $__updated -eq 0 ]] ; then
+		echo "Nothing to update"
+	fi
 }
 
 function __update {
 	# update a konphig source file
 	# $1 is the repository konphig file
 	# $2 is the system file
-
 	if ! __check "$1" "$2" ; then
 		echo "Updating $2"
 		__updated=1
-		# yes | cp -f "$1" "$2"
+		yes | cp -f "$1" "$2"
 	fi
 }
 
@@ -129,12 +172,99 @@ function fn {
 	__addarg "-l" "--list" "flag" "optional" "" "List all functions"
 	__addarg "-g" "--get" "storevalue" "optional" "" "Get a specific function"
 	__addarg "-q" "--quiet" "flag" "optional" "" "If included, omit supplemental output"
+	# __addgroup "flags" "required" "XOR" "--count" "--list" "--get"
 	__parseargs "$@"
+
+	local fns source
+
+	__verifykn
+	source="$(cat ~/.konphig/source)"
+
+	shopt -s nullglob
+	fns=( ~/.konphig/functions/* )
+	shopt -u nullglob
+
+	if [[ $count -eq 1 ]] ; then
+		echo -n "${#fns[@]}"
+		if [[ $quiet -eq 0 ]] ; then
+			echo -n " function"
+			if [[ "${#fns[@]}" -ne 1 ]] ; then
+				echo "s"
+			else
+				echo
+			fi
+		else
+			echo
+		fi
+	elif [[ $list -eq 1 ]] ; then
+		local output
+		if [[ "${#fns[@]}" -eq 0 ]] ; then return ; fi
+		if [[ $quiet -eq 0 ]] ; then
+			echo "Functions:"
+		fi
+		for i in "${!fns[@]}" ; do
+			if [[ $i -eq $(( ${#fns[@]} - 1 )) ]] ; then
+				output="${output} └── $(basename "${fns[$i]}")"
+			else
+				output="${output} ├── $(basename "${fns[$i]}\n")"
+			fi
+		done
+		echo -e "$output"
+	elif [[ "$get" != "" ]] ; then
+		if [[ ! -f ~/.konphig/functions/"$get" ]] ; then
+			__errortext "$koiname: err: no such konphig function '$get'"
+			return 1
+		fi
+		cat ~/.konphig/functions/"$get"
+	else
+		__errortext "$koiname: err: invalid or no option selected"
+		return 1
+	fi
 }
 
 function pull {
 	__addarg "-h" "--help" "help" "optional" "" "Pull all registered repositories"
+	__addarg "-l" "--list" "flag" "optional" "" "If included, simply list registered repositories"
 	__parseargs "$@"
+
+	__verifykn
+
+	if [[ $list -eq 1 ]] ; then
+		local line repolist i output
+		output=
+		repolist=()
+		while read -r line ; do
+			if [[ "$line" == "" ]] ; then continue ; fi
+			repolist+=( "${line%%:*} (${line#*: })" )
+		done < ~/.konphig/repos
+		for i in "${!repolist[@]}" ; do
+			if [[ $i -eq $(( ${#repolist[@]} - 1 )) ]] ; then
+				output="${output} └── ${repolist[$i]}"
+			else
+				output="${output} ├── ${repolist[$i]}\n"
+			fi
+		done
+		echo "Registered repositories:"
+		echo -e "$output"
+		return
+	fi
+
+	local topull r name
+	topull=()
+	while read -r line ; do
+		if [[ "$line" == "" ]] ; then continue ; fi
+		topull+=( "${line#*: }" )
+	done < ~/.konphig/repos
+	for r in "${topull[@]}" ; do
+		name="$(basename "$r")"
+		echo -n "Pulling ${name}..."
+		(cd "$r" ; git pull > /dev/null 2>&1)
+		if [[ $? -ne 0 ]] ; then
+			echo "ERROR"
+		else
+			echo "DONE"
+		fi
+	done
 }
 
 function repo {
@@ -144,14 +274,39 @@ function repo {
 
 	__verifykn
 
-	# should check if repo is already registered
-	
-	local name abspath
-	name="$(basename "$repo")"
-	abspath="$(cd "$repo" ; pwd)"
-	echo "${name}: ${abspath}" >> ~/.konphig/repos
+	# check if repo/.git exists
+	if [[ ! -d "${repo}/.git" ]] ; then
+		__errortext "$koiname: err: '$repo' is not a git repository"
+		return 1
+	fi
 
+	local name abspath found
+
+	# resolve absolute path
+	abspath="$(cd "$repo" ; pwd)"
+	name="$(basename "$abspath")"
+
+	# check if the repository is already registered
+	found=0
+	for r in $(__listrepos) ; do
+		if [[ "$r" == "$name" ]] ; then found=1 ; fi
+	done
+	if [[ $found -eq 1 ]] ; then
+		__errortext "$koiname: err: '$name' is already registered"
+		return 1
+	fi
+	
+	# register repository with konphig
+	echo "${name}: ${abspath}" >> ~/.konphig/repos
 	echo "Registered repository '$name'"
+}
+
+function __listrepos {
+	local line
+	while read -r line ; do
+		if [[ "$line" == "" ]] ; then continue ; fi
+		echo "${line%%:*}"
+	done < ~/.konphig/repos
 }
 
 function new {
@@ -160,7 +315,34 @@ function new {
 	__addarg "-c" "--cask" "flag" "optional" "" "Use a Homebrew cask instead of a regular formula"
 	__addarg "-y" "--yarn" "storevalue" "optional" "" "Add a new yarn package to konphig"
 	__addarg "-H" "--hyper" "storevalue" "optional" "" "Add a new hyper package to konphig"
+	# __addgroup "options" "required" "XOR" "--brew" "--yarn" "--hyper"
 	__parseargs "$@"
+
+	__verifykn
+	source="$(cat ~/.konphig/source)"
+
+	if [[ "$brew" != "" ]] ; then
+		if [[ $cask -eq 1 ]] ; then
+			echo "brew cask install $brew" >> "${source}/install/macOS/brew_setup.sh"
+		else
+			echo "brew install $brew" >> "${source}/install/macOS/brew_setup.sh"
+		fi
+	elif [[ "$yarn" != "" ]] ; then
+		if [[ $cask -eq 1 ]] ; then
+			__errortext "$koiname: err: the '--cask' option is only valid when used with the '--brew' option"
+			return 1
+		fi
+		echo "yarn global add $yarn" >> "${source}/install/macOS/yarn_setup.sh"
+	elif [[ "$hyper" != "" ]] ; then
+		if [[ $cask -eq 1 ]] ; then
+			__errortext "$koiname: err: the '--cask' option is only valid when used with the '--brew' option"
+			return 1
+		fi
+		echo "hyper install $hyper" >> "${source}/install/macOS/hyper_setup.sh"
+	else
+		__errortext "$koiname: err: invalid or no option selected"
+		return 1
+	fi
 }
 
 function status {

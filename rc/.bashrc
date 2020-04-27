@@ -80,8 +80,3 @@ fi
 if [[ -f ~/.bash_variables ]] ; then
   source ~/.bash_variables
 fi
-
-# set up kn, if it is installed
-if [[ -f /usr/local/bin/kn ]] ; then
-    source /usr/local/bin/kn
-fi
