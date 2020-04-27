@@ -57,11 +57,11 @@
   ## undo the last commit
   undo = reset HEAD~1 --mixed
   ## remove local branches that do not exist in the remote
-  clean = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs git branch -d; }; f"
+  clean = "!f() { git branch --merged "${1:-master}" | grep -v " ${1:-master}$" | xargs git branch -d; }; f"
   ## pull all submodules
   all = !git submodule foreach git pull origin master
   ## get the default branch
-  default = !git remote show "${1:-origin}" | grep "HEAD branch" | cut -d ":" -f 2
+  default = "!f() { git remote show "${1:-origin}" | grep "HEAD branch" | cut -d ":" -f 2; }; f"
 
 [color]
   diff = auto
