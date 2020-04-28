@@ -14,6 +14,7 @@ function up {
 	fi
 
 	if [[ "$__UPDIR__" == "" ]] || [[ "$__UPDIR__" != $(pwd)* ]] ; then
+		# shellcheck disable=SC2155
 		export __UPDIR__=$(pwd)
 	fi
 
@@ -22,12 +23,13 @@ function up {
 	if [[ -z "$1" ]] ; then
 		cd ..
 	elif [[ "$1" -gt 0 ]] ; then
-		let count=1
+		count=1
 		cdstr=".."
 		while [[ $count -lt $1 ]] ; do
 			cdstr="$cdstr/.."
-			let count=count+1
+			(( count += 1 ))
 		done
+		# shellcheck disable=SC2164
 		cd "$cdstr"
 	else
 		>&2 echo "up: err: argument must be a positive integer"

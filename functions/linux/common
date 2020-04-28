@@ -15,6 +15,7 @@ function common {
 
 	if [[ $# -ne 0 ]] ; then
 		[ -n "$1" ] && [ "$1" -eq "$1" ] 2>/dev/null
+		# shellcheck disable=SC2181
 		if [[ $? -ne 0 ]] ; then
 			>&2 echo "common: err: argument must be a number"
 			return 1

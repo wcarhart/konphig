@@ -12,7 +12,8 @@ function venvfix {
 		return 0
 	fi
 
-	ENV_PATH="$(dirname "$(dirname "$(which pip)")")"
+	ENV_PATH="$(dirname "$(dirname "$(command -v pip)")")"
+	# shellcheck disable=SC2230
 	SYSTEM_VIRTUALENV="$(which -a virtualenv | tail -1)"
 
 	BAD_ENV_PATHS="/usr/local"

@@ -36,6 +36,7 @@ function pathadd {
 	fi
 
 	if [[ -d "$new" ]] && ! grep -E -q "(^|:)$new($|:)" <<< "$PATH" ; then
+		# shellcheck disable=SC2164
 		dir="$(cd "$new" ; pwd)"
 		if [[ "$after" -eq 1 ]] ; then
 			export PATH="$PATH:$dir"
@@ -52,5 +53,6 @@ function pathadd {
 		fi
 	fi
 
+	# shellcheck disable=SC2155
 	export PATH=$(printf %s "$PATH" | awk -v RS=: -v ORS=: '!arr[$0]++')
 }

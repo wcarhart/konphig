@@ -43,6 +43,7 @@ function dive {
         fi
     done
 
+    # shellcheck disable=SC2164
     cd "$target"
     pwd 
 }

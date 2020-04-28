@@ -12,10 +12,9 @@ function per {
 		return 0
 	fi
 
-	local total files file ext vars v
+	local total file ext vars v output
 
 	total=0
-	files=()
 	vars=()
 	for file in * ; do
 		if [[ ! -f "$file" ]] ; then continue ; fi
@@ -27,7 +26,7 @@ function per {
 		fi
 
 		if [[ "$ext" == "" ]] ; then
-			if [[ ! -z "$extensionless" ]] ; then
+			if [[ -n "$extensionless" ]] ; then
 				(( extensionless += 1 ))
 			else
 				local extensionless
@@ -35,10 +34,11 @@ function per {
 				vars+=( extensionless )
 			fi
 		else
-			if [[ ! -z "${!ext}" ]] ; then
+			if [[ -n "${!ext}" ]] ; then
 				(( "${ext}" += 1 ))
 			else
 				local "${ext}"
+				# shellcheck disable=SC2229,SC2162
 				read "${ext}" <<< 1
 				vars+=( "${ext}" )
 			fi
@@ -52,9 +52,14 @@ function per {
 		return 0
 	fi
 
+	output=
 	for v in "${vars[@]}" ; do
-		printf "$(sed 's/extensionless/_/g' <<< "${v}: ")"
-		printf '%.2f' "$(bc <<< "scale=10; (${!v}/$total) * 100")"
-		printf '%s\n' '%'
+		# shellcheck disable=SC2001
+		output="${output}$(printf '%s' "$(sed 's/extensionless/_/g' <<< "${v}: ")")"
+		output="${output}$(printf '%s' "${!v} (")"
+		output="${output}$(printf '%.2f' "$(bc <<< "scale=10; (${!v}/$total) * 100")")"
+		output="${output}$(printf '%s' '%)\n')"
 	done
+
+	echo -e "$output" | column -t
 }

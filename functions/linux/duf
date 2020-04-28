@@ -18,11 +18,13 @@ function duf {
 		return 1
 	fi
 
-	local filetype count arg size arr
+	local count arg size arr
 
 	if [[ "${1:0:1}" == "." ]] ; then
+		# shellcheck disable=SC2207
 		count=( $(find . -name "*$1") )
 	else
+		# shellcheck disable=SC2207
 		count=( $(find . -name "*.$1") )
 	fi
 	if [[ "${#count[@]}" -eq 0 ]] ; then

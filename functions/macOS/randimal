@@ -14,8 +14,8 @@ randimal() {
 	fi
 
 	if [[ $# -eq 0 ]] ; then
-		fortune | cowsay -f $(cowsay -l | tail -n +2 | tr ' ' '\n' | gshuf -n 1) | lolcat
+		fortune | cowsay -f "$(cowsay -l | tail -n +2 | tr ' ' '\n' | gshuf -n 1)" | lolcat
 	else
-		echo "$*" | cowsay -f $(cowsay -l | tail -n +2 | tr ' ' '\n' | gshuf -n 1) | lolcat
+		echo "$*" | cowsay -f "$(cowsay -l | tail -n +2 | tr ' ' '\n' | gshuf -n 1)" | lolcat
 	fi
 }

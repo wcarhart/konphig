@@ -13,7 +13,7 @@ function snag {
 		return 0
 	fi
 
-	local num file i
+	local num file
 	if [[ $# -eq 0 ]] ; then
 		num=1
 	else
@@ -21,6 +21,7 @@ function snag {
 	fi
 
 	[ -n "$num" ] && [ "$num" -eq "$num" ] 2>/dev/null
+	# shellcheck disable=SC2181
 	if [[ $? -ne 0 ]] ; then
 		echo "snag: err: argument must be a number"
 		return 1
@@ -35,7 +36,8 @@ function snag {
 		return 1
 	fi
 
-	for i in $(seq 1 $num) ; do
+	for _ in $(seq 1 "$num") ; do
+		# shellcheck disable=SC2012
 		file=$(ls -t ~/Downloads | head -1)
 		mv ~/Downloads/"$file" .
 	done

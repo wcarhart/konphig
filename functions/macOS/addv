@@ -27,5 +27,6 @@ function addv {
 	fi
 
 	echo "export $1=$2" >> "$file"
+	# shellcheck disable=SC1090
 	source ~/.bashrc
 }

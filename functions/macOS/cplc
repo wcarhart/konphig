@@ -14,6 +14,7 @@ function cplc {
 
 	local raw cmd
 	raw=$(history | tail -2 | head -1)
+	# shellcheck disable=SC2206
 	cmd=( $raw )
 	echo -n "${cmd[@]:1}" | pbcopy
 }

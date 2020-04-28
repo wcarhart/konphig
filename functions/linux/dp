@@ -40,11 +40,13 @@ function dp {
         red='\[\033[0;31m\]'
         green='\[\033[0;32m\]'
         reset='\[\033[0m\]'
+        # shellcheck disable=SC2046
         if test $(git status 2> /dev/null | grep -c :) -eq 0 ; then
             git_color="${green}"
         else
             git_color="${red}"
         fi
+        # shellcheck disable=SC2155
         export __PS1__="${reset}[\A] \W${git_color}$(__git_ps1) ${reset}> "
     elif [[ "$1" == "6" ]] ; then
         export __PS1__=":; "

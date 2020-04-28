@@ -14,13 +14,12 @@ function makes {
 		return 0
 	fi
 
-	fc -rnl > /dev/null 2>&1
-	if [[ $? -ne 0 ]] ; then 
+	if ! fc -rnl > /dev/null 2>&1 ; then 
 		>&2 echo "makes: err: history is empty"
 		return 1
 	fi
 
-	local num name namestr rando line
+	local num name namestr rando
 
 	if [[ $# -eq 0 ]] ; then
 		num=1
@@ -37,6 +36,7 @@ function makes {
 	fi
 
 	[ -n "$num" ] && [ "$num" -eq "$num" ] 2>/dev/null
+	# shellcheck disable=SC2181
 	if [ $? -ne 0 ]; then
 		>&2 echo "makes: err: first argument must be a number"
 		return 1
@@ -52,8 +52,8 @@ function makes {
 		return 1
 	fi
 
-	rando=$(gshuf -zer -n${1:-30} {A..Z} {a..z} {0..9})
-	fc -rnl | head -$num > "$rando"
+	rando=$(shuf -zer -n"${1:-30}" {A..Z} {a..z} {0..9})
+	fc -rnl | head -"$num" > "$rando"
 
 	tac "$rando" > "$name"
 	rm -rf "$rando"

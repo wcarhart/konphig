@@ -19,7 +19,7 @@ function over {
 		return 1
 	fi
 
-	local num dir pre i
+	local num dir pre
 
 	if [[ $# -eq 1 ]] ; then
 		num=1
@@ -35,6 +35,7 @@ function over {
 	fi
 
 	[ -n "$num" ] && [ "$num" -eq "$num" ] 2>/dev/null
+	# shellcheck disable=SC2181
 	if [ $? -ne 0 ]; then
 		>&2 echo "over: err: number of parent directories must be a number"
 		return 1
@@ -45,7 +46,7 @@ function over {
 	fi
 
 	pre=""
-	for i in $(seq 1 $num) ; do
+	for _ in $(seq 1 "$num") ; do
 		pre="../$pre"
 
 	done
@@ -55,8 +56,10 @@ function over {
 		return 1
 	fi
 
+	# shellcheck disable=SC2164
 	cd "$pre$dir"
 	pwd
 
+	# shellcheck disable=SC2155
 	export __UPDIR__=$(pwd)
 }

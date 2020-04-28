@@ -27,5 +27,6 @@ function adda {
 	fi
 
 	echo "alias $1='$2'" >> "$file"
+	# shellcheck disable=SC1090
 	source ~/.bashrc
 }

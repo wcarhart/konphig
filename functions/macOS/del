@@ -15,6 +15,7 @@ function del {
 
 	if [[ $# -ne 0 ]] ; then
 		[ -n "$1" ] && [ "$1" -eq "$1" ] 2>/dev/null
+		# shellcheck disable=SC2181
 		if [[ $? -ne 0 ]] ; then
 			>&2 echo "del: err: argument must be a number"
 			return 1
@@ -24,16 +25,17 @@ function del {
 		fi
 	fi
 
-	local files file index tempfile temparr
+	local files file tempfile temparr
 
 	files=()
 	for file in * ; do if [[ -f "$file" ]] ; then files+=( "$file" ) ; fi ; done
 
-	for index in $(seq 1 ${1:-1}) ; do
+	for _ in $(seq 1 "${1:-1}") ; do
 		tempfile="${files[$RANDOM % ${#files[@]} ]}"
-		rm "$tempfile"
+		rm -f "$tempfile"
 		temparr=()
 		for file in "${files[@]}" ; do if [[ "$file" != "$tempfile" ]] ; then temparr+=( "$file" ) ; fi ; done
-		files=( ${temparr[@]} )
+		# shellcheck disable=SC2206
+		files=( "${temparr[@]}" )
 	done
 }

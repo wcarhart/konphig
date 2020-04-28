@@ -12,10 +12,11 @@ function gb {
 		return 0
 	fi
 
-	git status > /dev/null 2>&1
-	if [[ $? -ne 0 ]] ; then
+	if ! git status > /dev/null 2>&1 ; then
 		>&2 echo "gitb: err: not a git repository"
 		return 1
 	fi
+
+	# shellcheck disable=SC2063
 	git branch | grep \* | cut -d ' ' -f2
 }

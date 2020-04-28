@@ -13,7 +13,7 @@ function down {
 		return 0
 	fi
 
-	local to from target targetarr i tempdir
+	local to from target targetarr tempdir
 
 	# get directory set from UP
 	to="$__UPDIR__"
@@ -25,6 +25,7 @@ function down {
 	# use command line argument to determine how far we are going down
 	if [[ $# -gt 0 ]] ; then
 		[ -n "$1" ] && [ "$1" -eq "$1" ] 2>/dev/null
+		# shellcheck disable=SC2181
 		if [[ $? -ne 0 ]] ; then
 			>&2 echo "down: err: argument must be a number"
 			return 1
@@ -37,24 +38,30 @@ function down {
 
 	# go down directories
 	from="$(pwd)"
-	for i in $(seq 1 $1) ; do
+	# shellcheck disable=SC2086
+	for _ in $(seq 1 $1) ; do
 		target="${to##$from}"
 
 		if [[ "$target" == "" ]] ; then
+			# shellcheck disable=SC2164
 			cd "$from"
 			pwd
 			return 0
 		fi
 		
+		# shellcheck disable=SC2206
 		targetarr=( ${target//// } )
 		if [[ -d "$from/${targetarr[0]}" ]] ; then
+			# shellcheck disable=SC2001
 			tempdir=$(sed 's*//*/*g' <<< "$from/${targetarr[0]}")
+			# shellcheck disable=SC2164
 			from="$(cd "$tempdir" ; pwd)"
 		else
 			break
 		fi
 	done
 
+	# shellcheck disable=SC2164
 	cd "$from"
 	pwd
 }

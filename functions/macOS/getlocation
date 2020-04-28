@@ -15,24 +15,32 @@ function getlocation {
 	local myip details frmt index line city country state location
 
 	myip=$(dig +short myip.opendns.com @resolver1.opendns.com)
-	details=$(lynx -dump "$(publicip)".ip-adress.com | egrep 'City|State Code|Country Code')
+	details=$(lynx -dump "$(publicip)".ip-adress.com | grep -E 'City|State Code|Country Code')
+	# shellcheck disable=SC2181
+	if [[ $? -ne 0 ]] ; then
+		>&2 echo "getlocation: err: could not determine IP address"
+		return 1
+	fi
 	frmt="IP: $myip\n"
 	index=0
 
 	while IFS= read -r line ; do
 		if [[ $index -eq 0 ]] ; then
-			city=$(echo $line | cut -d " " -f2-)
-			let index=index+1
+			# shellcheck disable=SC2086
+			city=$(cut -d " " -f2- <<< $line)
+			(( index += 1 ))
 		elif [[ $index -eq 1 ]] ; then
-			country=$(echo $line | cut -d " " -f3-)
-			let index=index+1
+			# shellcheck disable=SC2086
+			country=$(cut -d " " -f3- <<< $line)
+			(( index += 1 ))
 		else
-			state=$(echo $line | cut -d " " -f3-)
-			let index=index+1
+			# shellcheck disable=SC2086
+			state=$(cut -d " " -f3- <<< $line)
+			(( index += 1 ))
 		fi
 	done <<< "$details"
 
 	location="Location: $city, $state, $country"
 	frmt+="$location"
-	echo -e $frmt
+	echo -e "$frmt"
 }

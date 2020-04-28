@@ -13,9 +13,21 @@ function get {
 		return 0
 	fi
 
-	local files index
+	[ -n "$1" ] && [ "$1" -eq "$1" ] 2>/dev/null
+	# shellcheck disable=SC2181
+	if [[ $? -ne 0 ]] ; then
+		>&2 echo "get: err: argument must be a number"
+		return 1
+	elif [[ $1 -lt 1 ]] ; then
+		>&2 echo "get: err: argument must be a positive integer"
+		return 1
+	fi
+
+	local files
 	files=( * )
-	for index in $(seq 1 ${1:-1}) ; do
+
+	# shellcheck disable=SC2086
+	for _ in $(seq 1 ${1:-1}) ; do
 		echo "${files[$RANDOM % ${#files[@]} ]}"
 	done
 }

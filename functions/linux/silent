@@ -19,7 +19,7 @@ function silent {
 		return 1
 	fi
 
-	local cmd args
+	local cmd
 	cmd="$1"
 	shift
 

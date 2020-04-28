@@ -19,6 +19,6 @@ function cf {
 	fi
 
 	local num
-	num=$(find ${1:-"."}/ -type f | wc -l)
+	num=$(find "${1:-.}"/ -type f | wc -l)
 	echo "$num files" | xargs
 }
