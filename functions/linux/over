@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# move up and over when changing directories
+function over {
+
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mover ~ move up and over when changing directories\033[0m"
+		echo
+		echo "over [-h] [NUM] DIRECTORY"
+		echo "  -h, --help    show this menu and exit"
+		echo "  num           the number of directories to go up before going over (default: 1)"
+		echo "  directory     the directory to go over to"
+		return 0
+	fi
+
+	if [[ $# -eq 0 ]] || [[ $# -gt 2 ]] ; then
+		>&2 echo "over: err: incorrect number of arguments"
+		return 1
+	fi
+
+	local num dir pre
+
+	if [[ $# -eq 1 ]] ; then
+		num=1
+		dir="$1"
+	else
+		num="$1"
+		dir="$2"
+	fi
+
+	if [[ "$dir" == "" ]] ; then
+		>&2 echo "over: err: missing target directory"
+		return 1
+	fi
+
+	[ -n "$num" ] && [ "$num" -eq "$num" ] 2>/dev/null
+	# shellcheck disable=SC2181
+	if [ $? -ne 0 ]; then
+		>&2 echo "over: err: number of parent directories must be a number"
+		return 1
+	fi
+	if [[ "$num" -lt 1 ]] ; then
+		>&2 echo "over: err: number of parent directories must be a positive integer"
+		return 1
+	fi
+
+	pre=""
+	for _ in $(seq 1 "$num") ; do
+		pre="../$pre"
+
+	done
+
+	if [[ ! -d "$pre$dir" ]] ; then
+		echo "over: err: no such directory '$pre$dir'"
+		return 1
+	fi
+
+	# shellcheck disable=SC2164
+	cd "$pre$dir"
+	pwd
+
+	# shellcheck disable=SC2155
+	export __UPDIR__=$(pwd)
+}

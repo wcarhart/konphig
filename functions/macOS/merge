@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# join a list of strings with a common character
+function merge {
+
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mmerge ~ join a list of strings with a common character\033[0m"
+		echo
+		echo "merge [-h] CHAR [WORD...]"
+		echo "  -h, --help    show this menu and exit"
+		echo "  char          the character to join with"
+		echo "  word          (+) the word(s) to join"
+		return 0
+	fi
+
+	local IFS
+	typeset IFS="$1"
+	shift
+	echo "$*"
+}

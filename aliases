@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# tools
+alias vim='vim -S ~/.vimrc'
+
+# system
+alias cp='cp -i'
+alias dirs='dirs -v'
+alias la='ls -alG'
+alias mkdir='mkdir -p'
+alias mv='mv -i'
+alias rm='rm -i'
+
+# shortcuts
+alias c='clear'
+alias p='python'
+alias l='ls'
+alias p3='python3'
+alias s='ls'
+alias upls='up && ls'
+
+# typos
+alias eit=exit
+alias gti='git'
+alias pytho='python'
+alias pythoon='python'
+alias ptyhon='python'
+alias tre='tree'
+
+# other
+alias siren="printf '\033[5m\033[91m%b\033[0m' '\'{127,105,105,40,127,117,117} && echo"
+alias busy='cat /dev/urandom | hexdump -C | grep "ca fe"'
+alias calc='python -ic "from __future__ import division; from math import *"'
+alias cppwd='echo -n "$(pwd)" | pbcopy'
+alias django='python3 manage.py'
+alias dlogin='docker login'
+alias gitroot='cd $(git rev-parse --show-toplevel) && echo "$_"'
+alias hs='history | grep'
+alias pathdedup="export PATH=$(printf %s "$PATH" | awk -v RS=: -v ORS=: '!arr[$0]++')"
+alias pause='read -n 0 -rsp $"Press any key to continue...\n"'
+alias publicip='dig +short myip.opendns.com @resolver1.opendns.com'
+alias recent='ls -t | head -1'
+alias resetbar="if [[ $(uname -s) == *Darwin* ]] ; then pkill 'Touch Bar agent' ; killall 'ControlStrip' ; else >&2 echo 'resetbar is only applicable on macOS' ; fi"
+alias rickroll="yes \"$(printf '%b' '\'{116,145,166,145,162,040,147,157,156,156,141,040,147,151,166,145,040,171,157,165,040,165,160,056,056,056})\""
+alias rmd='rm -rf -- */'
+alias sb='source ~/.bashrc'
+alias spin='while :;do for s in / - \\ \|; do printf "\r$s";sleep .1;done;done'
+alias starwars='telnet towel.blinkenlights.nl'

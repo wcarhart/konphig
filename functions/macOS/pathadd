@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# add to the PATH variable
+function pathadd {
+
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mpathadd ~ add to the PATH variable\033[0m"
+		echo
+		echo "pathadd [-h] [-a] DIRECTORY"
+		echo "  -h, --help     show this menu and exit"
+		echo "  -a, --after    if included, append to the PATH, rather than prepend"
+		echo "  directory      the directory to add to the PATH"
+		return 0
+	fi
+
+	local new after dir
+
+	if [[ $# -eq 1 ]] ; then
+		new="${1%/}"
+		after=0
+	elif [[ $# -eq 2 ]] ; then
+		if [[ "$1" == "-a" || "$1" == "--after" ]] ; then
+			new="${2%/}"
+			after=1
+		elif [[ "$2" == "-a" || "$2" == "--after" ]] ; then
+			new="${1%/}"
+			after=1
+		else
+			>&2 echo "pathadd: err: when using two arguments, one must be -a/--after"
+			return 1
+		fi
+	else
+		>&2 echo "pathadd: err: incorrect number of arguments"
+		return 1
+	fi
+
+	if [[ -d "$new" ]] && ! grep -E -q "(^|:)$new($|:)" <<< "$PATH" ; then
+		# shellcheck disable=SC2164
+		dir="$(cd "$new" ; pwd)"
+		if [[ "$after" -eq 1 ]] ; then
+			export PATH="$PATH:$dir"
+		else
+			export PATH="$dir:$PATH"
+		fi
+	else
+		if [[ ! -d "$new" ]] ; then
+			>&2 echo "pathadd: err: no such directory '$new'"
+			return 1
+		else
+			>&2 echo "pathadd: err: '$new' is already in the PATH"
+			return 1
+		fi
+	fi
+
+	# shellcheck disable=SC2155
+	export PATH=$(printf %s "$PATH" | awk -v RS=: -v ORS=: '!arr[$0]++')
+}

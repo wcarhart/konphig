@@ -1,0 +1,61 @@
+#!/bin/bash
+
+# make a shell script out of previous commands
+function makes {
+
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mmakes ~ make a shell script out of previous commands\033[0m"
+		echo
+		echo "makes [-h] [NUM] [SCRIPT]"
+		echo "  -h, --help    show this menu and exit"
+		echo "  num           the number of previous commands to use (default: 1)"
+		echo "  script        the name of the new script (default: script.sh)"
+		return 0
+	fi
+
+	if ! fc -rnl > /dev/null 2>&1 ; then 
+		>&2 echo "makes: err: history is empty"
+		return 1
+	fi
+
+	local num name namestr rando
+
+	if [[ $# -eq 0 ]] ; then
+		num=1
+		name="script.sh"
+	elif [[ $# -eq 1 ]] ; then
+		num="$1"
+		name="script.sh"
+	elif [[ $# -eq 2 ]] ; then
+		num="$1"
+		name="$2"
+	else
+		>&2 echo "makes: err: incorrect number of arguments"
+		return 1
+	fi
+
+	[ -n "$num" ] && [ "$num" -eq "$num" ] 2>/dev/null
+	# shellcheck disable=SC2181
+	if [ $? -ne 0 ]; then
+		>&2 echo "makes: err: first argument must be a number"
+		return 1
+	fi
+	if [[ $num -lt 1 ]] ; then
+		>&2 echo "makes: err: first argument must be a positive integer"
+		return 1
+	fi
+
+	namestr=( "$name" )
+	if [[ ${#namestr[@]} -gt 1 ]] ; then
+		>&2 echo "makes: err: name of function cannot contain spaces"
+		return 1
+	fi
+
+	rando=$(shuf -zer -n"${1:-30}" {A..Z} {a..z} {0..9})
+	fc -rnl | head -"$num" > "$rando"
+
+	tac "$rando" > "$name"
+	rm -rf "$rando"
+	chmod +x "$name"
+}

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# open a file in Google Chrome from the command line
+function chrome {
+	
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mchrome ~ open a file in Google Chrome\033[0m"
+		echo
+		echo "chrome [-h] FILE..."
+		echo "  -h, --help    show this menu and exit"
+		echo "  file          (+) the file(s) to open"
+		return 0
+	fi
+
+	if [[ $# -eq 0 ]] ; then
+		>&2 echo "chrome: err: incorrect number of arguments"
+		return 1
+	fi
+
+	local arg
+	for arg in "$@" ; do
+		open -a "Google Chrome" "$arg"
+	done
+}

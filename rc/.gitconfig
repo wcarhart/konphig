@@ -1,0 +1,82 @@
+[user]
+  email = carhartwill@gmail.com
+  name = Will Carhart
+
+[alias]
+  # print all aliases
+  alias = ! git config --get-regexp ^alias\\. | sed -e s/^alias\\.// -e s/\\ /\\ =\\ /
+
+  # compound commands
+  a = !git add . && git status
+  aa = !git add . && git add -u . && git status
+  ac = !git add . && git commit
+  acm = !git add . && git commit -m
+  au = !git add -u . && git status
+  m = !git add -A && git commit -m
+  discard = !git clean -df && git checkout --
+
+  # helpful shortcuts
+  b = branch
+  c = commit
+  ca = commit --amend
+  cb = checkout -b
+  ch = checkout
+  cm = commit -m
+  d = diff
+  l = log --graph --all --pretty=format:'%C(yellow)%h%C(cyan)%d%Creset %s %C(white)- %an, %ar%Creset'
+  last = log -1 HEAD
+  lg = log --color --graph --pretty=format:'%C(bold white)%h%Creset -%C(bold green)%d%Creset %s %C(bold green)(%cr)%Creset %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  llg = log --color --graph --pretty=format:'%C(bold white)%H %d%Creset%n%s%n%+b%C(bold blue)%an <%an>%Creset %C(bold green)%cr (%ci)' --abbrev-commit
+  master = checkout master
+  s = status
+  unstage = reset HEAD -
+
+  # nifty tools
+  ## see who's committed the most to a repo
+  leaderboard = shortlog -sn --all --no-merges
+  ## see the git diff for words only
+  words = diff --word-diff
+  ## get the three most recently updated branches
+  recent = for-each-ref --count=3 --sort=-committerdate refs/heads/ --format="%(refname:short)"
+  ## get all the commits in the last sprint (2 week period)
+  sprint = log --all --since='2 weeks' --oneline --no-merges
+  ## get all the commits in the last longer sprint (3 week period)
+  lsprint = log --all --since='3 weeks' --oneline --no-merges
+  ## see all my commits in a repo
+  recap = !git log --all --oneline --no-merges --author=`git config user.email`
+  ## see all my commits in a repo today
+  today = !git log --since=00:00:00 --all --no-merges --oneline --author=`git config user.email`
+  ## generate a changelog since the last tagged release
+  changelog = !git log --oneline --no-merges `git describe --tags`..
+  ## check what changes you're about to pull from the current branch in the remote
+  upstream = !git log --oneline --no-merges ..origin/$(git branch | grep \\* | cut -d ' ' -f2)
+  ## review your local commits before a push
+  local = !git log --oneline --no-merges origin/$(git branch | grep \\* | cut -d ' ' -f2)..HEAD
+  ## graph complex logs
+  graph = log --graph --all --decorate --stat --date=iso
+  ## undo the last commit
+  undo = reset HEAD~1 --mixed
+  ## remove local branches that do not exist in the remote
+  clean = "!f() { git branch --merged "${1:-master}" | grep -v " ${1:-master}$" | xargs git branch -d; }; f"
+  ## pull all submodules
+  all = !git submodule foreach git pull origin master
+  ## get the default branch
+  default = "!f() { git remote show \"${1:-origin}\" | grep \"HEAD branch\" | cut -d \":\" -f 2; }; f"
+
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  interactive = auto
+  ui = true
+  pager = true
+
+[push]
+  default = simple
+
+[core]
+  editor = vim
+  ignorecase = false
+
+[includeIf "gitdir:~/personal/*"]
+  path = ~/personal/.gitconfig

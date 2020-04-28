@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# follow a directory tree down to its childmost directory
+function dive {
+
+    # help and usage
+    if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+        echo -e "\033[93mdive ~ follow a directory tree down to its childmost subdirectory\033[0m"
+        echo
+        echo "dive [-h] DIRECTORY"
+        echo "  -h, --help    show this menu and exit"
+        echo "  directory     the directory into which to dive"
+        return 0
+    fi
+
+    if [[ $# -ne 1 ]] ; then
+        >&2 echo "dive: err: incorrect number of arguments"
+        return 1
+    fi
+    
+    if [[ ! -d "$1" ]] ; then
+        >&2 echo "dive: err: no such directory '$1'"
+        return 1
+    fi
+
+    local target end dirs thing
+
+    target="$(pwd)/$1"
+    end=0
+
+    while [[ $end -eq 0 ]] ; do
+        dirs=()
+        for thing in "$target"/* ; do
+            if [[ -d "$thing" ]] ; then
+                dirs+=( "$(basename "$thing")" )
+            fi
+        done
+        if [[ ${#dirs[@]} -eq 1 ]] ; then
+            target="$target/${dirs[0]}"
+            end=0
+        else
+            end=1
+        fi
+    done
+
+    # shellcheck disable=SC2164
+    cd "$target"
+    pwd 
+}

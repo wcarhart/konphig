@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# show most commonly used commands
+function common {
+	
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mcommon ~ show the most commonly used commands\033[0m"
+		echo
+		echo "common [-h] [NUM]"
+		echo "  -h, --help    show this menu and exit"
+		echo "  num           the number of commands to show (default: 10)"
+		return 0
+	fi
+
+	if [[ $# -ne 0 ]] ; then
+		[ -n "$1" ] && [ "$1" -eq "$1" ] 2>/dev/null
+		# shellcheck disable=SC2181
+		if [[ $? -ne 0 ]] ; then
+			>&2 echo "common: err: argument must be a number"
+			return 1
+		elif [[ $1 -lt 1 ]] ; then
+			>&2 echo "common: err: argument must be a positive integer"
+			return 1
+		fi
+	fi
+
+	history | awk '{CMD[$2]++;count++;}END { for (a in CMD)print CMD[a] " " CMD[a]/count*100 "% " a;}' | grep -v "./" | column -c3 -s " " -t | sort -nr | nl | head "-n${1:-10}"
+}

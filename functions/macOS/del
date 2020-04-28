@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# remove files at random
+function del {
+	
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mdel ~ remove files at random\033[0m"
+		echo
+		echo "del [-h] [NUM]"
+		echo "  -h, --help    show this menu and exit"
+		echo "  num           the number of files to remove (default: 1)"
+		return 0
+	fi
+
+	if [[ $# -ne 0 ]] ; then
+		[ -n "$1" ] && [ "$1" -eq "$1" ] 2>/dev/null
+		# shellcheck disable=SC2181
+		if [[ $? -ne 0 ]] ; then
+			>&2 echo "del: err: argument must be a number"
+			return 1
+		elif [[ $1 -lt 1 ]] ; then
+			>&2 echo "del: err: argument must be a positive integer"
+			return 1
+		fi
+	fi
+
+	local files file tempfile temparr
+
+	files=()
+	for file in * ; do if [[ -f "$file" ]] ; then files+=( "$file" ) ; fi ; done
+
+	for _ in $(seq 1 "${1:-1}") ; do
+		tempfile="${files[$RANDOM % ${#files[@]} ]}"
+		rm -f "$tempfile"
+		temparr=()
+		for file in "${files[@]}" ; do if [[ "$file" != "$tempfile" ]] ; then temparr+=( "$file" ) ; fi ; done
+		# shellcheck disable=SC2206
+		files=( "${temparr[@]}" )
+	done
+}

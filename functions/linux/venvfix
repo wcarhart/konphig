@@ -1,0 +1,40 @@
+#!/bin/bash
+
+# fix broken virtual environments
+function venvfix {
+
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mvenvfix ~ fix broken virtual environments\033[0m"
+		echo
+		echo "venvfix [-h]"
+		echo "  -h, --help    show this menu and exit"
+		return 0
+	fi
+
+	ENV_PATH="$(dirname "$(dirname "$(command -v pip)")")"
+	# shellcheck disable=SC2230
+	SYSTEM_VIRTUALENV="$(which -a virtualenv | tail -1)"
+
+	BAD_ENV_PATHS="/usr/local"
+
+	echo "Ensure the root of the broken virtualenv:"
+	echo "    $ENV_PATH"
+
+	if [[ -z "$ENV_PATH" ]] || [[ "$ENV_PATH" = *"$BAD_ENV_PATHS"* ]]; then
+	    >&2 echo "The root path above doesn't seems to be a valid one."
+	    >&2 echo "Please make sure you ACTIVATED the broken virtualenv."
+	    >&2 echo "‼️  Exiting for your safety..."
+	    return 1
+	fi
+
+	read -p "‼️  Press Enter if you are not sure (y/N) " -n 1 -r
+	echo
+	if [[ $REPLY =~ ^[Yy]$ ]]; then
+	    echo "♻️  Removing old symbolic links......"
+	    find "$ENV_PATH" -type l -delete -print
+	    echo "💫  Creating new symbolic links......"
+	    $SYSTEM_VIRTUALENV "$ENV_PATH"
+	    echo "🎉  Done!"
+	fi
+}

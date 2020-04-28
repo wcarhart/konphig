@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# generate a random string of specified length, great for passwords
+function random {
+
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mrandom ~ generate a random string of specified length, great for passwords\033[0m"
+		echo
+		echo "random [-h] [NUM]"
+		echo "  -h, --help    show this menu and exit"
+		echo "  num           the length of the generated string (default: 30)"
+		return 0
+	fi
+
+	if [[ $# -ne 0 ]] ; then
+		[ -n "$1" ] && [ "$1" -eq "$1" ] 2>/dev/null
+		# shellcheck disable=SC2181
+		if [[ $? -ne 0 ]] ; then
+			>&2 echo "random: err: argument must be a number"
+			return 1
+		fi
+		if [[ "$1" -lt 1 ]] ; then
+			>&2 echo "random: err: argument must be a positive integer"
+			return 1
+		fi
+	fi
+	
+	shuf -zer -n"${1:-30}" {A..Z} {a..z} {0..9} && echo
+}

@@ -1,20 +1,13 @@
 root = true
 
-[.bash_functions/MacOS/*]
+[functions/macOS/*]
 end_of_line = lf
 insert_final_newline = true
 indent_style = tab
 indent_size = 4
 trim_trailing_whitespace = true
 
-[.bash_functions/Linux/*]
-end_of_line = lf
-insert_final_newline = true
-indent_style = tab
-indent_size = 4
-trim_trailing_whitespace = true
-
-[tests/*]
+[functions/Linux/*]
 end_of_line = lf
 insert_final_newline = true
 indent_style = tab

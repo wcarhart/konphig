@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# draw a random speech animal
+randimal() {
+
+	# help and usage
+	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
+		echo -e "\033[93mrandimal ~ draw a random speech animal\033[0m"
+		echo
+		echo "randimal [-h] [CONTENT]"
+		echo "  -h, --help    show this menu and exit"
+		echo "  content       the content to use in the randimal's speech"
+		return 0
+	fi
+
+	if [[ $# -eq 0 ]] ; then
+		fortune | cowsay -f "$(cowsay -l | tail -n +2 | tr ' ' '\n' | gshuf -n 1)" | lolcat
+	else
+		echo "$*" | cowsay -f "$(cowsay -l | tail -n +2 | tr ' ' '\n' | gshuf -n 1)" | lolcat
+	fi
+}
