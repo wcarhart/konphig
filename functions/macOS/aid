@@ -9,7 +9,7 @@ function aid {
 		echo
 		echo "aid [-h] CMD..."
 		echo "  -h, --help    show this menu and exit"
-		echo "  cmd           (+) the command for which to get help"
+		echo "  cmd           (+) the command(s) for which to get help"
 		return 0
 	fi
 
