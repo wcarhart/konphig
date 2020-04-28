@@ -1,109 +1,124 @@
-# Konphig
-Config files for safe keeping 😏
+<p align="center"><img alt="konphig logo" src="logo.png" /></p>
+
+<h1 align="center">konphig</h1>
+<h5 align="center">Config files for safe keeping 😏</h5>
 
 ## Summary
-Konphig contains custom settings for the following tools:
-* Bash
-* git
-* tmux
-* vim
-* gpg
-* PyPI
+Konphig contains custom settings for common UNIX tools. You can think of it as a dotfiles repo, with some extra bells and whistles.
+
+**Documentation:** read konphig's [full documentation](https://willcarhart.dev/docs/konphig)
+
+**Installation:** see [install](#install)
 
 ## Key Features
-Read the full Bash functions documentation by [clicking here](https://github.com/wcarhart/Konphig/blob/master/functions.md).
+Konphig comes packed out of the box with tons of cool functionality. Here are a few highlights.
 
-**`up` and `down`** - move up and down the file tree
+### A powerful CLI
+_Pull multiple registered repositories at once_
+```bash
+kn repo --pull
 ```
-$ pwd
-/dir0/dir1/dir2/dir3/dir4
-$ up 4
-/dir0
-$ down 2
-/dir0/dir1/dir2
 ```
-**`adda`** - add a permanent alias on the fly
+Pulling birdhouse...
+Pulling koi...
+Pulling lurker...
 ```
-$ adda e echo
-$ e "Hello, Konphig!"
-Hello, Konphig!
+_Add Homebrew, Yarn, and other packages to track in version control_
+```bash
+kn new --brew yarn
 ```
-**`makef`** - create a permanent bash function from commands in the history on the fly
 ```
-$ clear
-$ ls
-file0.txt file1.txt
-$ makef 2 cls
-$ cat ~/.bashrc
-cls() {
-  clear
-  ls
-}
-```
-**`rcreate`** - create a remote in GitHub
-```
-$ git add -A
-$ git commit -m "Initial commit"
-$ basename `pwd`
-cool_new_project
-$ rcreate
-Enter passphrase for key '/Users/username/.ssh/id_rsa': 
-Counting objects: 1, done.
-Writing objects: 100% (1/1), 8 bytes | 0 bytes/s, done.
-Total 1 (delta 0), reused 0 (delta 0)
-remote:
-remote: Create a pull request for 'master' on GitHub by visiting:
-remote:      https://github.com/username/cool_new_project/pull/new/master
-remote:
-To https://github.com/username/cool_new_project.git
- * [new branch]      master -> master
-Branch master set up to track remote branch master from origin.
-```
-**`getlocation`** - get your current location (based on your public IP address)
-```
-$ getlocation
-IP: 105.38.27.128
-Location: San Francisco, CA, USA
-```
-**`duf`** - show disk usage by filetype
-```
-$ duf py md
-py: 30K
-md: 4.7K
-```
-**`gitcfb`** - copy a file from a different git branch to the current one
-```
-$ cat test.txt
-I am a text file on the develop branch.
-$ gitcfb master test.txt
-$ cat test.txt
-I am a text file on the master branch.
-```
-**`dp`** - change to a different prompt
-```
-$ dp 1
-[11:57] ~ ༼ つ ◕_◕ ༽つ dp 2
-[11:57] > dp 3
-[wcarhart@willcarhart] Wed Jun 19, 11:57:23 <~> $ dp 4
-^_^ $ command_that_fails
--bash: command_that_fails: command not found
-O_O $ cd ~
-^_^ $ dp 1
+Added brew formula 'yarn' to konphig
 ```
 
-And many, many more! Read the full Bash functions documentation by [clicking here](https://github.com/wcarhart/Konphig/blob/master/functions.md).
+### Helpful Bash functions
+_Join a list of strings_
+```bash
+merge '-' 'a b' c d
+```
+```
+a b-c-d
+```
+_Add a permanent alias on the fly_
+```bash
+adda e echo
+e 'Hello, konphig!'
+```
+```
+Hello, konphig!
+```
+_Move up and down directories_
+```bash
+pwd
+# /dir0/dir1/dir2/dir3/dir4
+up 4
+# /dir0
+down 2
+# /dir0/dir1/dir2
+```
+
+### Clever Git extras
+_Remove local branches not present in the remote_
+```bash
+git clean
+```
+_Review local commits not present in the current branch in the remote_
+```bash
+git local
+```
+_Get the commits for the last sprint_
+```bash
+git sprint
+```
+_Get the primary authors for the repository_
+```bash
+git leaderboard
+```
+_Get all available git aliases_
+```bash
+git alias
+```
+
+### Much, much more
+_Reset the macOS Touch Bar_
+```bash
+resetbar
+```
+_Get your public IP address_
+```bash
+publicip
+```
+_Change your command prompt on the fly_
+```bash
+dp 5    # change to 'different prompt' #5
+```
+
+## Documentation
+Read more information in [konphig's complete documentation](https://willcarhart.dev/docs/konphig).
 
 ## Install
-This will install all of the configuration files from Konphig to your system. Konphig is currently supported for MacOS and most Linux-based environments. Use the following:
+To install konphig, use the following:
+1. Install `kn` with [Homebrew](https://brew.sh).
 ```bash
-$ git clone https://github.com/wcarhart/Konphig.git
-$ cd ~/Konphig
-$ chmod +x install.sh
-$ ./install.sh
-$ source ~/.bashrc
+brew install wcarhart/tools/kn
 ```
-You can also use `./install.sh -d` to install Konphig files and all necessary dependencies.
+2. Clone this repository.
+```bash
+git clone https://github.com/wcarhart/konphig.git ~/konphig
+```
+3. Initialize `kn` to point to your local repository (if you cloned konphig to somewhere other than `~/konphig`, make sure you pass in the correct path).
+```bash
+kn init ~/konphig
+```
+4. Install konphig via `kn`.
+```bash
+kn install
+```
+5. To complete the installation, the final step is to source your `.bashrc`.
+```bash
+source ~/.bashrc
+```
 
-From now on, you can use `sb` instead of `source ~/.bashrc` to manually push updates to your system configurations.
+Konphig should now be installed! You can interact with konphig via the `kn` CLI. To get started, use `kn --help`.
 
-In addition, if you ever make a change to any of your Konphig files, you can run [`update`](https://github.com/wcarhart/Konphig/blob/master/functions.md#update) to update your system files. `update` dynamically matches your system files to your Konphig files and sources them for you automatically.
+For more information, head over to [konphig's complete documentation](https://willcarhart.dev/docs/konphig).

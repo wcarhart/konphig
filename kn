@@ -446,6 +446,8 @@ function new {
 			fi
 			~/.konphig/functions/adda "$aliasname" "$aliasvalue"
 			echo "Added alias '$aliasname' globally, you will have to run 'source ~/.bashrc' for the new alias to be present in this shell"
+		else
+			echo "Added alias '$aliasname' to konphig"
 		fi
 	elif [[ $variable -eq 1 ]] ; then
 		if [[ ! -f "${source}/variables" ]] ; then
@@ -462,6 +464,8 @@ function new {
 			fi
 			~/.konphig/functions/addv "$variablename" "$variablevalue"
 			echo "Added variable '$variablename' globally, you will have to run 'source ~/.bashrc' for the new variable to be present in this shell"
+		else
+			echo "Added variable '$variablename' to konphig"
 		fi
 	elif [[ $global -eq 1 ]] ; then
 		__errortext "$koiname: err: '--global' is only valid with '--alias' or '--variable'"
@@ -469,16 +473,20 @@ function new {
 	elif [[ "$brew" != "" ]] ; then
 		if [[ $cask -eq 1 ]] ; then
 			echo "brew cask install $brew" >> "${source}/install/macOS/brew_setup.sh"
+			echo "Added brew cask '$brew' to konphig"
 		else
 			echo "brew install $brew" >> "${source}/install/macOS/brew_setup.sh"
+			echo "Added brew formula '$brew' to konphig"
 		fi
 	elif [[ $cask -eq 1 ]] ; then
 		__errortext "$koiname: err: the '--cask' option is only valid when used with the '--brew' option"
 		return 1
 	elif [[ "$yarn" != "" ]] ; then
 		echo "yarn global add $yarn" >> "${source}/install/macOS/yarn_setup.sh"
+		echo "Added yarn package '$yarn' to konphig"
 	elif [[ "$hyper" != "" ]] ; then
 		echo "hyper install $hyper" >> "${source}/install/macOS/hyper_setup.sh"
+		echo "Added hyper package '$hyper' to konphig"
 	fi
 }
 
