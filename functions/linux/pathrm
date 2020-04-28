@@ -5,7 +5,7 @@ pathrm() {
 
 	# help and usage
 	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
-		echo -e "\033[93mpathrm ~ # remove from the PATH variable\033[0m"
+		echo -e "\033[93mpathrm ~ remove from the PATH variable\033[0m"
 		echo
 		echo "pathrm [-h] DIRECTORY..."
 		echo "  -h, --help     show this menu and exit"

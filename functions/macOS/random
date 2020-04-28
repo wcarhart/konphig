@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# generate a random string of specified length, great for passwords
+# generate a random string of specified length
 function random {
 
 	# help and usage
 	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
-		echo -e "\033[93mrandom ~ generate a random string of specified length, great for passwords\033[0m"
+		echo -e "\033[93mrandom ~ generate a random string of specified length\033[0m"
 		echo
 		echo "random [-h] [NUM]"
 		echo "  -h, --help    show this menu and exit"
