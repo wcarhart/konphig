@@ -198,7 +198,7 @@ function update {
 	__update "${source}/rc/.git-prompt.sh" ~/.git-prompt.sh
 	__update "${source}/rc/.profile" ~/.profile
 	__update "${source}/rc/.pypirc" ~/.pypirc
-	__update "${source}/rc/.tmux.conf" ~/.tmux-conf
+	__update "${source}/rc/.tmux.conf" ~/.tmux.conf
 	__update "${source}/rc/.vimrc" ~/.vimrc
 
 	# update functions
