@@ -249,7 +249,7 @@ function __update {
 		shift
 		shift
 	else
-		text="Updating '$2'"
+		text="Updating '$(basename "$2")'"
 	fi
 
 	if ! __check "$1" "$2" ; then
