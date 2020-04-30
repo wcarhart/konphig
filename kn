@@ -175,7 +175,7 @@ function update {
 	__addarg "-h" "--help" "help" "optional" "" "Update system files to match those in konphig"
 	__parseargs "$@"
 
-	local ostype source functions fn
+	local ostype source functions functionfile fn
 
 	__verifykn
 	source="$(cat ~/.konphig/source)"
@@ -198,7 +198,7 @@ function update {
 	__update "${source}/rc/.git-prompt.sh" ~/.git-prompt.sh
 	__update "${source}/rc/.profile" ~/.profile
 	__update "${source}/rc/.pypirc" ~/.pypirc
-	__update "${source}/rc/.tmux.conf" ~/.tmux-conf
+	__update "${source}/rc/.tmux.conf" ~/.tmux.conf
 	__update "${source}/rc/.vimrc" ~/.vimrc
 
 	# update functions
@@ -207,10 +207,10 @@ function update {
 		fn=$(basename "$functionfile")
 		if [[ ! -f ~/.konphig/functions/$fn ]] ; then
 			echo "Adding function '$fn'"
+			__updated=1
 			yes | cp -f "$functionfile" ~/.konphig/functions/$fn
 		else
-			echo "Updating function '$fn'"
-			__update -q "$functionfile" ~/.konphig/functions/$fn
+			__update -t "Updating function '$fn'" "$functionfile" ~/.konphig/functions/$fn
 		fi
 	done
 	installed_functions=( ~/.konphig/functions/* )
@@ -218,6 +218,7 @@ function update {
 		fn=$(basename "$functionfile")
 		if [[ ! -f "${source}/functions/${ostype}/${fn}" ]] ; then
 			echo "Removing function '$fn'"
+			__updated=1
 			rm -f "$functionfile"
 		fi
 	done
@@ -225,7 +226,15 @@ function update {
 	if [[ $__updated -eq 0 ]] ; then
 		echo "Nothing to update"
 	else
-		echo "Please run 'source ~/.bashrc' to reload the current shell"
+		if [[ "$(uname -s)" == *Darwin* ]] ; then
+			echo -n "source ~/.bashrc" | pbcopy
+		fi
+		printf "\033[93mPlease run 'source ~/.bashrc' to reload the current shell\033[0m"
+		if [[ "$(uname -s)" == *Darwin* ]] ; then
+			printf " (\033[35mpress ⌘ + V\033[0m)\n"
+		else
+			echo
+		fi
 	fi
 }
 
@@ -234,18 +243,16 @@ function __update {
 	# $1 is the repository konphig file
 	# $2 is the system file
 
-	local quiet
-	if [[ "$1" == "-q" || "$1" == "--quiet" ]] ; then
-		quiet=1
+	local text
+	if [[ "$1" == "-t" || "$1" == "--text" ]] ; then
+		text="$2"
+		shift
 		shift
 	else
-		quiet=0
+		text="Updating '$(basename "$2")'"
 	fi
 
 	if ! __check "$1" "$2" ; then
-		if [[ $quiet -eq 0 ]] ; then
-			echo "Updating '$2'"
-		fi
 		__updated=1
 		yes | cp -f "$1" "$2"
 	fi
@@ -255,6 +262,9 @@ function __check {
 	# compare two files based on MD5 hash
 	# $1 is the first file
 	# $2 is the second file
+	if [[ ! -f "$1" || ! -f "$2" ]] ; then
+		return 1
+	fi
 	if [[ "$(uname -s)" == *Darwin* ]] ; then
 		if [[ "$(md5 -q "$1")" != "$(md5 -q "$2")" ]] ; then
 			return 1
@@ -323,11 +333,17 @@ function repo {
 	__addarg "-h" "--help" "help" "optional" "" "Register a new repository with kn"
 	__addarg "-a" "--add" "storevalue" "optional" "" "The repository to register" "__verifydirectory"
 	__addarg "-p" "--pull" "flag" "optional" "" "Pull all registered repositories"
+	__addarg "-v" "--verbose" "flag" "optional" "" "When pulling, print standard Git output"
 	__addarg "-l" "--list" "flag" "optional" "" "List all registered repositories"
 	__addgroup "flags" "XOR" "optional" "--pull" "--list" "--add"
 	__parseargs "$@"
 
 	__verifykn
+
+	if [[ $pull -eq 0 && $verbose -eq 1 ]] ; then
+		__errortext "$koiname: err: the '--verbose' option is only valid when used with the '--pull' option"
+		return 1
+	fi
 
 	if [[ $list -eq 1 ]] ; then
 		local line repolist i output
@@ -358,12 +374,17 @@ function repo {
 		done < ~/.konphig/repos
 		for r in "${topull[@]}" ; do
 			name="$(basename "$r")"
-			echo -n "Pulling ${name}..."
-			(cd "$r" ; git pull > /dev/null 2>&1)
-			if [[ $? -ne 0 ]] ; then
-				echo "ERROR"
+			if [[ $verbose -eq 0 ]] ; then
+				echo -ne "Pulling \033[93m${name}\033[0m..."
+				(cd "$r" ; git pull > /dev/null 2>&1)
+				if [[ $? -ne 0 ]] ; then
+					echo -e "\033[91mERROR\033[0m"
+				else
+					echo -e "\033[92mDONE\033[0m"
+				fi
 			else
-				echo "DONE"
+				echo -e "Pulling \033[93m${name}\033[0m..."
+				(cd "$r" ; git pull)
 			fi
 		done
 		return
@@ -444,7 +465,8 @@ function new {
 				__errortext "$koiname: err: cannot add global alias, no such file '~/.konphig/functions/adda'"
 				return 1
 			fi
-			~/.konphig/functions/adda "$aliasname" "$aliasvalue"
+			source ~/.konphig/functions/adda
+			adda "$aliasname" "$aliasvalue"
 			echo "Added alias '$aliasname' globally, you will have to run 'source ~/.bashrc' for the new alias to be present in this shell"
 		else
 			echo "Added alias '$aliasname' to konphig"
@@ -462,7 +484,8 @@ function new {
 				__errortext "$koiname: err: cannot add global variable, no such file '~/.konphig/functions/addv'"
 				return 1
 			fi
-			~/.konphig/functions/addv "$variablename" "$variablevalue"
+			source ~/.konphig/functions/addv
+			addv "$variablename" "$variablevalue"
 			echo "Added variable '$variablename' globally, you will have to run 'source ~/.bashrc' for the new variable to be present in this shell"
 		else
 			echo "Added variable '$variablename' to konphig"

@@ -1,13 +1,13 @@
 #!/bin/bash
 
-# extracts compressed and zipped files automatically
+# extract compressed and zipped files automatically
 function extract {
 
 	# help and usage
 	if [[ "$1" == "-h" || "$1" == "--help" ]] ; then
-		echo -e "\033[93mextract ~ extracts compressed and zipped files automatically\033[0m"
+		echo -e "\033[93mextract ~ extract compressed and zipped files automatically\033[0m"
 		echo
-		echo "duf [-h] FILE..."
+		echo "extract [-h] FILE..."
 		echo "  -h, --help    show this menu and exit"
 		echo "  file          (+) the file(s) to extract"
 		return 0
@@ -29,10 +29,10 @@ function extract {
 				*.tgz)          tar xzf "$file" ;;
 				*.zip)          unzip "$file" ;;
 				*.Z)            uncompress "$file" ;;
-				*)              echo "extract: err: '$file' cannot be extracted via extract" ; return 1 ;;
+				*)              echo "extract: err: '$file' cannot be extracted via extract" ; code=1 ;;
 			esac
 		else
-			>&2 echo "extract: err: $file is not a valid file"
+			>&2 echo "extract: err: '$file' is not a valid file"
 			code=1
 		fi
 	done

@@ -13,8 +13,8 @@ alias rm='rm -i'
 
 # shortcuts
 alias c='clear'
-alias p='python'
 alias l='ls'
+alias p='python'
 alias p3='python3'
 alias s='ls'
 alias upls='up && ls'
@@ -28,7 +28,6 @@ alias ptyhon='python'
 alias tre='tree'
 
 # other
-alias siren="printf '\033[5m\033[91m%b\033[0m' '\'{127,105,105,40,127,117,117} && echo"
 alias busy='cat /dev/urandom | hexdump -C | grep "ca fe"'
 alias calc='python -ic "from __future__ import division; from math import *"'
 alias cppwd='echo -n "$(pwd)" | pbcopy'
@@ -44,5 +43,6 @@ alias resetbar="if [[ $(uname -s) == *Darwin* ]] ; then pkill 'Touch Bar agent' 
 alias rickroll="yes \"$(printf '%b' '\'{116,145,166,145,162,040,147,157,156,156,141,040,147,151,166,145,040,171,157,165,040,165,160,056,056,056})\""
 alias rmd='rm -rf -- */'
 alias sb='source ~/.bashrc'
+alias siren="printf '\033[5m\033[91m%b\033[0m' '\'{127,105,105,40,127,117,117} && echo"
 alias spin='while :;do for s in / - \\ \|; do printf "\r$s";sleep .1;done;done'
 alias starwars='telnet towel.blinkenlights.nl'
