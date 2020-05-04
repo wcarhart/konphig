@@ -336,7 +336,7 @@ function repo {
 	__addarg "-p" "--pull" "flag" "optional" "" "Pull all registered repositories"
 	__addarg "-v" "--verbose" "flag" "optional" "" "When pulling, print standard Git output"
 	__addarg "-l" "--list" "flag" "optional" "" "List all registered repositories"
-	__addgroup "flags" "XOR" "optional" "--pull" "--list" "--add"
+	__addgroup "flags" "XOR" "required" "--pull" "--list" "--add"
 	__parseargs "$@"
 
 	__verifykn
