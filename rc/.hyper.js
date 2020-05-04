@@ -4,6 +4,7 @@
 
 module.exports = {
   config: {
+    shell: '/bin/bash',
     fontSize: 16,
     fontFamily:
       'Dank Mono, Operator Mono, Menlo, Monaco, "Courier New", monospace',
