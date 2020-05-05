@@ -13,6 +13,7 @@ alias rm='rm -i'
 
 # shortcuts
 alias c='clear'
+alias gits='git s'
 alias l='ls'
 alias p='python'
 alias p3='python3'
