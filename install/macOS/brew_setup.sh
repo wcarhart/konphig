@@ -29,6 +29,7 @@ brew install jq
 brew install llvm
 brew install lolcat
 brew install lynx
+brew install nektos/tap/act
 brew install node
 brew install pinentry-mac
 brew install postgresql
