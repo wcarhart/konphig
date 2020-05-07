@@ -56,10 +56,17 @@ if [[ $- == *i* ]] ; then
     bind "set show-all-if-ambiguous on"
 fi
 
-# other nice features
+# show all files when tab completion is ambiguous
 set show-all-if-ambiguous on
+
+# make tab completion case insensitive
 set completion-ignore-case on
+
+# append to history instead of overwriting
 shopt -s histappend
+
+# check window size after each command and update $LINES and $COLUMNS
+shopt -s checkwinsize
 
 # source konphig functions
 if [[ -d ~/.konphig/functions ]] ; then

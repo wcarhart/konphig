@@ -9,9 +9,13 @@ export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;31m'
 
-# shell stuff
+# don't put duplicates or commands starting with a space in the history
 export HISTCONTROL=ignoreboth
+
+# ignore commonly used commands
 export HISTIGNORE="&:ls:ll:la:l.:pwd:exit:clear"
+
+# increase history size
 export HISTFILESIZE=1000000
 export HISTSIZE=1000000
 
