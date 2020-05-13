@@ -72,6 +72,7 @@ brew cask install java
 brew cask install nordvpn
 brew cask install slack
 brew cask install spotify
+brew cask install steam
 brew cask install sublime-text
 brew cask install ticktick
 brew cask install zoomus
