@@ -13,7 +13,9 @@ cat << EndOfSubl > ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/User
                 "ayu",
                 "Dockerfile Syntax Highlighting",
                 "HighlightWords",
+				"JSON Reindent",
                 "Package Control"
+				"Terminus"
         ]
 }
 EndOfSubl
