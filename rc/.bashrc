@@ -3,7 +3,7 @@
 # set up git tab completion
 source ~/.git-prompt.sh
 if [ -f ~/.git-completion.bash ]; then
-  source ~/.git-completion.bash
+    source ~/.git-completion.bash
 fi
 
 # configure PATH
@@ -54,6 +54,12 @@ if [[ $- == *i* ]] ; then
     bind '"\e[B": history-search-forward'
     bind "set completion-ignore-case on"
     bind "set show-all-if-ambiguous on"
+fi
+
+# configure subl terminus
+if [[ "$TERM_PROGRAM" == "Terminus-Sublime" ]] ; then
+    bind '"\e[1;3C": forward-word'
+    bind '"\e[1;3D": backward-word'
 fi
 
 # show all files when tab completion is ambiguous
