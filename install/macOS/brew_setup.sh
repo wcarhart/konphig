@@ -13,11 +13,13 @@ brew install bash
 brew install bash-completion
 brew install coreutils
 brew install cowsay
+brew install deno
 brew install doctl
 brew install dos2unix
 brew install eddieantonio/eddieantonio/imgcat
 brew install fish
 brew install fortune
+brew install gcloud
 brew install git
 brew install github/gh/gh
 brew install go
