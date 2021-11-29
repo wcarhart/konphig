@@ -74,6 +74,11 @@ shopt -s histappend
 # check window size after each command and update $LINES and $COLUMNS
 shopt -s checkwinsize
 
+# configure NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "/usr/local/opt/nvm/nvm.sh" ] && . "/usr/local/opt/nvm/nvm.sh"
+[ -s "/usr/local/opt/nvm/etc/bash_completion.d/nvm" ] && . "/usr/local/opt/nvm/etc/bash_completion.d/nvm"
+
 # source konphig functions
 if [[ -d ~/.konphig/functions ]] ; then
     shopt -s nullglob
