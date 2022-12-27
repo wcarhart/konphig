@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# copy previous commadn to the clipboard
+# copy previous command to the clipboard
 function cplc {
 	
 	# help and usage

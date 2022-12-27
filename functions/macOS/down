@@ -40,7 +40,7 @@ function down {
 	from="$(pwd)"
 	# shellcheck disable=SC2086
 	for _ in $(seq 1 $1) ; do
-		target="${to##$from}"
+		target="${to##"$from"}"
 
 		if [[ "$target" == "" ]] ; then
 			# shellcheck disable=SC2164
