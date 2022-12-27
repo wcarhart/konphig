@@ -53,6 +53,7 @@ brew install yarn
 # Install my CLI tools :)
 brew tap wcarhart/tools
 brew install wcarhart/tools/birdhouse
+brew install wcarhart/tools/chiller
 brew install wcarhart/tools/kn
 brew install wcarhart/tools/koi
 brew install wcarhart/tools/lurker
@@ -63,21 +64,14 @@ brew link --overwrite coreutils
 
 # Install macOS apps
 brew cask install brave-browser
-brew cask install discord
 brew cask install docker
 brew cask install google-cloud-sdk
-brew cask install flycut
-brew cask install gitkraken
 brew cask install hyper
-brew cask install icons8
-brew cask install itsycal
 brew cask install java
 brew cask install nordvpn
 brew cask install slack
 brew cask install spotify
-brew cask install steam
 brew cask install sublime-text
-brew cask install ticktick
 brew cask install visual-studio-code
 brew cask install wireshark
 brew cask install zoomus

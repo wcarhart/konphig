@@ -1,4 +1,4 @@
 #!/bin/bash
 
-# Add quit option to Finder
-defaults write com.app.finder QuitMenuItem -bool true ; killall Finder
+# turn off accent menu when holding down keys
+defaults write -g ApplePressAndHoldEnabled -bool false
