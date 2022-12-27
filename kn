@@ -34,6 +34,7 @@ function init {
 
 function install {
 	__addarg "-h" "--help" "help" "optional" "" "Install konphig files"
+	__addarg "-f" "--force" "flag" "optional" "" "Bypass OS and shell checks (exercise caution)"
 	__addarg "-e" "--extra" "flag" "optional" "" "Run extra, OS-based installation scripts"
 	__addarg "-p" "--personal" "flag" "optional" "" "Add a personal Git workspace"
 	__parseargs "$@"
@@ -53,18 +54,20 @@ function install {
 	fi
 
 	# verify environment
-	if [[ "$(basename "$0")" != "bash" ]] ; then
-		__errortext "$koiname: err: konphig is not supported for this shell"
-		return 1
-	fi
-	if [[ ! -f /bin/bash && ! -L /bin/bash ]] ; then
-		__errortext "$koiname: err: could not find Bash at /bin/bash"
-		__errortext "  Use 'ln -sf bash /bin/bash' to link Bash to /bin/bash and then try installing again"
-		return 1
-	fi
-	if [[ "$ostype" != "macOS" && "$ostype" != "linux" ]] ; then
-		__errortext "$koiname: err: konphig does not support this OS"
-		return 1
+	if [[ $force -ne 1 ]] ; then
+		if [[ "$(basename "$0")" != "bash" ]] ; then
+			__errortext "$koiname: err: konphig is not supported for this shell"
+			return 1
+		fi
+		if [[ ! -f /bin/bash && ! -L /bin/bash ]] ; then
+			__errortext "$koiname: err: could not find Bash at /bin/bash"
+			__errortext "  Use 'ln -sf bash /bin/bash' to link Bash to /bin/bash and then try installing again"
+			return 1
+		fi
+		if [[ "$ostype" != "macOS" && "$ostype" != "linux" ]] ; then
+			__errortext "$koiname: err: konphig does not support this OS"
+			return 1
+		fi
 	fi
 
 	# backup files
