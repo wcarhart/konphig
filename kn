@@ -53,7 +53,7 @@ function install {
 	fi
 
 	# verify environment
-	if [[ "$(basename "$SHELL")" != "bash" ]] ; then
+	if [[ "$(basename "$0")" != "bash" ]] ; then
 		__errortext "$koiname: err: konphig is not supported for this shell"
 		return 1
 	fi
