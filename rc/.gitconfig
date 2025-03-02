@@ -47,6 +47,10 @@
   recap = !git log --all --oneline --no-merges --author=`git config user.email`
   ## see all my commits in a repo today
   today = !git log --since=00:00:00 --all --no-merges --oneline --author=`git config user.email`
+  ## get the top file in the list of modified files
+  top = !git diff --name-only | head -n 1
+  ## get the bottom file in the list of modified files
+  bottom = !git diff --name-only | tail -n 1
   ## generate a changelog since the last tagged release
   changelog = !git log --oneline --no-merges `git describe --tags`..
   ## check what changes you're about to pull from the current branch in the remote
