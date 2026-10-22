@@ -3,6 +3,9 @@
 <h1 align="center">konphig</h1>
 <h5 align="center">Config files for safe keeping 😏</h5>
 
+## 🚨 Heads up
+This repository is now deprecated in favor [dot](https://github.com/wcarhart/dot).
+
 ## Summary
 Konphig contains custom settings for common UNIX tools. You can think of it as a dotfiles repo, with some extra bells and whistles.
 
